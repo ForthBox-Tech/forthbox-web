@@ -95,3 +95,101 @@ export default {
     font-size: 0.7rem;
     overflow: hidden;
     @media (max-width: 768.89px) {
+      font-size: 0.65rem;
+    }
+    .lv {
+      position: absolute;
+      top: 0.7em;
+      left: 0.7em;
+      &::before {
+        content: '';
+        margin-right: 0.3rem;
+        display: inline-block;
+        width: 1em;
+        height: 1em;
+        background: url('~@/assets/page-market2/comp-card/icon-lv.png') 0 0 / 100% no-repeat;
+        vertical-align: -0.15em;
+      }
+    }
+    .status {
+      position: absolute;
+      top: 0.5rem;
+      right: -1.5rem;
+      width: 5rem;
+      line-height: 1.5;
+      text-align: center;
+      color: $color-white;
+      background-color: $color-blue;
+      transform: rotate(45deg);
+    }
+  }
+  .info {
+    padding: 0 0 0.4rem 0;
+  }
+  .row {
+    display: flex;
+    align-items: center;
+    font-size: 0.8rem;
+    line-height: 1.3;
+    padding: 1.5% 4.5% 1.5% 4.5%;
+    @media (max-width: 768.89px) {
+      font-size: 0.65rem;
+    }
+  }
+  .name {
+    flex: 1;
+    font-size: 1.2em;
+  }
+  .count {
+    min-width: 2rem;
+    padding: 0 0.1rem;
+    line-height: 1.3;
+    text-align: center;
+    font-size: 0.85em;
+    color: $color-white;
+    background-color: #ccc;
+    border-radius: 1rem;
+    @media (max-width: 768.89px) {
+      min-width: 1.2rem;
+    }
+  }
+  .label {
+    flex: 1;
+  }
+  .value {
+    padding-left: 0.5rem;
+    &::before {
+      content: '';
+      margin-right: 0.2rem;
+      display: inline-block;
+      width: 0.7rem;
+      height: 0.7rem;
+      background: url('~@/assets/common/token-fbx.png') 0 0 / 100% no-repeat;
+      vertical-align: -0.05rem;
+      @media (max-width: 768.89px) {
+        width: 0.5rem;
+        height: 0.5rem;
+        vertical-align: 0;
+      }
+    }
+  }
+  .cart {
+    position: absolute;
+    top: 48%;
+    right: -3.5%;
+    display: flex;
+    width: 12%;
+    background: $color-white url('~@/assets/page-market2/comp-card/icon-cart.png') center center /
+      50% no-repeat;
+    border: 0.05rem solid #ccc;
+    border-radius: 50%;
+    box-shadow: 0 0 0.6rem 0.05rem rgba(91, 92, 97, 0.13);
+    &::before {
+      content: '';
+      display: block;
+      padding-top: 100%;
+    }
+  }
+}
+</style>
+
