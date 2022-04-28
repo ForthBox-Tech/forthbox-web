@@ -63,3 +63,56 @@ export default {
       this.visible = !this.visible
     },
 
+    onFilterChange() {
+      const data = this.list.map((item) => item.value)
+      this.$emit('update:modelValue', data)
+      this.$emit('change', data)
+    },
+  },
+}
+</script>
+
+<style lang="scss" scoped>
+@import '@/common/css/variable.scss';
+
+.filter-collapse-multi {
+  padding: 0.5rem 0;
+  line-height: 1.8rem;
+  font-size: 0.7rem;
+  border-bottom: 0.05rem solid $color-border;
+  .header {
+    display: flex;
+    .title {
+      flex: 1;
+    }
+    .trigger {
+      position: relative;
+      width: 2rem;
+      cursor: pointer;
+      &::before {
+        content: '';
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -70%) rotate(45deg);
+        display: block;
+        width: 0.4rem;
+        height: 0.4rem;
+        border-bottom: 0.1rem solid $color-secondary;
+        border-right: 0.1rem solid $color-secondary;
+      }
+      &.active {
+        &::before {
+          transform: translate(-50%, -30%) rotate(-135deg);
+        }
+      }
+    }
+  }
+  .filter-collapse-inner {
+    &:last-child {
+      border-bottom: 0 none;
+    }
+  }
+}
+</style>
+
