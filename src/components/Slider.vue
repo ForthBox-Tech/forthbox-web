@@ -71,3 +71,66 @@ export default {
         this.index = nextIndex
         this.$emit('slide-end', { index: nextIndex })
 
+        if (this.autoplay) {
+          this.loop()
+        }
+      })
+    },
+    jump(targetIndex) {
+      if (this.index == targetIndex) return
+      const pages = this.pages
+      const currentIndex = this.index
+      const nextIndex = targetIndex
+      const direction = currentIndex > nextIndex ? 1 : -1
+      this.stop()
+      this.$emit('slide-start', { index: nextIndex })
+      animate(pages, currentIndex, nextIndex, direction, () => {
+        this.index = nextIndex
+        this.$emit('slide-end', { index: nextIndex })
+
+        if (this.autoplay) {
+          this.loop()
+        }
+      })
+    },
+
+    loop() {
+      const pages = this.pages
+      if (pages.length <= 1) return
+      clearTimeout(this._autoTimeout)
+      this._autoTimeout = setTimeout(() => {
+        const currentIndex = this.index
+        const nextIndex = (this.index + 1) % pages.length
+        this.$emit('slide-start', { index: nextIndex })
+        animate(pages, currentIndex, nextIndex, -1, () => {
+          this.index = nextIndex
+          this.$emit('slide-end', { index: nextIndex })
+
+          this.loop()
+        })
+      }, this.distance)
+    },
+    stop() {
+      clearTimeout(this._autoTimeout)
+    },
+
+    touchStart(event) {
+      this._startX = event.changedTouches[0].pageX
+    },
+    touchEnd(event) {
+      let currentX = event.changedTouches[0].pageX
+      if (currentX - this._startX > 20) {
+        this.prev()
+      } else {
+        this.next()
+      }
+    },
+    mouseover() {
+      this.stop()
+    },
+    mouseleave() {
+      if (this.autoplay) {
+        this.loop()
+      }
+    },
+
