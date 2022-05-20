@@ -1,0 +1,230 @@
+$color-purple: #9174ff;
+$color-blue: #03a9ff;
+$color-red: #e85757;
+
+$color-white: #fff;
+$color-gray: #999;
+$color-black: #000;
+
+$color-primary: #333;
+$color-secondary: #717a83;
+
+$color-border: #e5e8eb;
+
+$color-placeholder: #fbfbfb;
+$color-placeholder6: #f6f6f6;
+
+@mixin ellipsis($line) {
+  overflow: hidden;
+  text-overflow: ellipsis;
+
+  @if $line > 1 {
+    display: -webkit-box;
+    -webkit-line-clamp: $line;
+    -webkit-box-orient: vertical;
+  } @else {
+    white-space: nowrap;
+  }
+}
+
+@mixin btn-fill-color() {
+  padding: 0 0.7rem;
+  color: $color-white;
+  background-image: linear-gradient(90deg, #00aaff 0%, #df01ff 100%);
+  border: 0 none;
+  border-radius: 0.5rem;
+  @media (max-width: 768.89px) {
+    border-radius: 0.3rem;
+  }
+  &:hover {
+    color: $color-white;
+  }
+}
+
+@mixin btn-fill-pure($color-background: $color-blue) {
+  padding: 0 0.7rem;
+  color: $color-white;
+  background-color: $color-background;
+  border: 0 none;
+  border-radius: 0.5rem;
+  @media (max-width: 768.89px) {
+    border-radius: 0.3rem;
+  }
+}
+
+@mixin btn-stroke-pure(
+  $color: $color-blue,
+  $color-border: $color-border,
+  $color-hover: $color-blue,
+  $color-hover-border: $color-blue
+) {
+  padding: 0 0.7rem;
+  color: $color;
+  border: 0.05rem solid $color-border;
+  border-radius: 0.5rem;
+  @media (max-width: 768.89px) {
+    border-radius: 0.3rem;
+  }
+  &:hover {
+    color: $color-hover;
+    border-color: $color-hover-border;
+  }
+  &.disabled {
+    color: $color-white;
+  }
+}
+
+@mixin text-with-cert($gap: 0.5rem, $width: 1rem, $height: 1rem) {
+  position: relative;
+  display: inline-block;
+  box-sizing: border-box;
+  max-width: 100%;
+  padding-right: $gap + $width;
+  @include ellipsis(1);
+  &.cert::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    right: 0;
+    display: inline-block;
+    width: $width;
+    height: $height;
+    background: $color-placeholder6 url('~@/assets/common/icon-cert.png') 0 0 /
+      100% no-repeat;
+  }
+}
+
+// layout spacing
+$spacing-xs: 0.25rem;
+$spacing-sm: 0.5rem;
+
+// z-index layers
+$z-nav: 100;
+$z-modal: 1000;
+
+// status colors
+$color-success: #52c41a;
+$color-error: #ff4d4f;
+
+// transitions
+$transition-base: all 0.2s ease;
+
+// button
+$btn-height: 2.5rem;
+$btn-height-sm: 2rem;
+
+// card
+$card-radius: 0.75rem;
+$card-shadow: 0 4px 12px rgba(0,0,0,0.1);
+
+// promo theme
+$color-promo-gold: #f5c518;
+
+// nft card
+$nft-card-width: 14rem;
+
+// overlay
+$overlay-light: rgba(0,0,0,0.3);
+$overlay-dark: rgba(0,0,0,0.7);
+
+// animation
+$anim-fast: 0.15s;
+$anim-base: 0.3s;
+
+// game2 theme
+$color-game-accent: #7b5cff;
+
+$transition-card: transform 0.2s ease, box-shadow 0.2s ease;
+
+// slider
+$slider-dot: 0.5rem;
+$slider-dot-active: $color-purple;
+
+// carnival theme
+$color-carnival: #ff6b35;
+
+// dialog
+$dialog-sm: 24rem;
+$dialog-md: 36rem;
+
+// header
+$header-h: 3.5rem;
+$header-h-mobile: 3rem;
+
+// skeleton
+$skeleton-bg: #f0f2f5;
+$skeleton-shine: #e6e8eb;
+
+// share
+$share-icon-size: 2.5rem;
+
+// tooltip
+$tooltip-bg: #1a1a2e;
+$tooltip-color: #fff;
+
+// dark surface
+$dark-bg: #0d0d1a;
+$dark-surface: #1a1a2e;
+
+// chart
+$chart-tooltip-z: 1100;
+$chart-h: 16rem;
+
+// live badge
+$color-live: #ff4d4f;
+
+// comment
+$comment-avatar: 2rem;
+
+// rarity
+$rarity-common: #9d9d9d;
+$rarity-rare: #0070dd;
+$rarity-epic: #a335ee;
+
+// ranking
+$rank-gold: #f5c518;
+$rank-silver: #c0c0c0;
+$rank-bronze: #cd7f32;
+
+// price indicator
+$price-up: #52c41a;
+$price-down: #e85757;
+
+// cart
+$cart-item-h: 5rem;
+
+// analytics
+$chart-h-mobile: 10rem;
+
+// spotlight
+$spotlight-card-w: 20rem;
+
+// bridge
+$bridge-arrow: $color-purple;
+
+// portfolio
+$portfolio-chart-bg: rgba(145,116,255,0.05);
+
+// wizard
+$step-active: $color-purple;
+$step-done: $color-success;
+
+// health bar
+$health-safe: #52c41a;
+$health-warn: #faad14;
+$health-danger: #e85757;
+
+// awards
+$awards-gold: #ffd700;
+$awards-bg: #0d0d1a;
+
+// social
+$follow-btn-w: 6rem;
+
+// notification
+$notif-panel-w: 24rem;
+$notif-dot: 0.5rem;
+
+// gasless
+$gasless-bg: rgba(82,196,26,0.12);
+$gasless-color: #52c41a;
