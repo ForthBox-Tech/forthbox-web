@@ -1,0 +1,47 @@
+@import '@/common/css/variable.scss';
+
+.tabs-frame {
+  .main-panel {
+    padding: 1.4rem 0;
+    min-height: 25rem;
+    @media (max-width: 768.89px) {
+      padding: 1rem 0;
+    }
+  }
+  .search-wrap {
+    display: flex;
+    width: 100%;
+    .search-input {
+      flex: 1;
+    }
+    .search-select {
+      margin-left: 1rem;
+      max-width: 12rem;
+      width: 40%;
+      @media (max-width: 768.89px) {
+        margin-left: 0.5rem;
+      }
+    }
+  }
+  .table-wrap {
+    margin: 1rem 0;
+    overflow: auto;
+    .table {
+      width: 100%;
+      font-size: 0.7rem;
+      color: $color-primary;
+      border-collapse: collapse;
+      @media (max-width: 768.89px) {
+        font-size: 0.6rem;
+      }
+    }
+    .theader {
+      color: $color-secondary;
+      background-color: #fbf6f6;
+    }
+    th,
+    td {
+      width: 12.5%;
+      padding: 1rem 0.8rem;
+      line-height: 1.4;
+      @media (max-width: 768.89px) {
