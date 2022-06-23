@@ -45,3 +45,51 @@
       padding: 1rem 0.8rem;
       line-height: 1.4;
       @media (max-width: 768.89px) {
+        padding: 0.6rem 0.5rem;
+      }
+    }
+    .fbx {
+      width: 15%;
+      &::before {
+        content: '';
+        display: inline-block;
+        margin-right: 0.2rem;
+        width: 0.8rem;
+        height: 0.8rem;
+        background: url('~@/assets/common/token-fbx.png') 0 0 / 100% no-repeat;
+        vertical-align: -0.15rem;
+        @media (max-width: 768.89px) {
+          width: 0.6rem;
+          height: 0.6rem;
+        }
+      }
+    }
+    .ellipsis {
+      @include ellipsis(1);
+      max-width: 5rem;
+    }
+    .center {
+      text-align: center;
+    }
+    .link {
+      display: inline-block;
+      width: 1rem;
+      height: 1rem;
+      background: url('~@/assets/page-market2/page-profile/icon-link.png')
+        center center / 0.75rem no-repeat;
+      cursor: pointer;
+      &:hover {
+        background-image: url('~@/assets/page-market2/page-profile/icon-link-a.png');
+      }
+    }
+  }
+  .nfts-wrap {
+    margin: 1rem 0;
+    --template-columns-base: 0;
+    @media (max-width: 768.89px) {
+      --template-columns-base: 1;
+    }
+  }
+}
+
+

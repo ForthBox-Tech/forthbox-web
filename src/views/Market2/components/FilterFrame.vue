@@ -128,3 +128,103 @@ export default {
         }
       })
 
+      clearTimeout(this._filterTimeout)
+      this._filterTimeout = setTimeout(() => {
+        this.filter = filter
+      }, 500)
+    },
+
+    _handleDegreeFilter(filterItem, res) {
+      if (res.code != 200) {
+        filterItem.list = []
+        console.warn(res.msg)
+        return
+      }
+
+      filterItem.list = (res.data || [])
+        .map((degree) => {
+          const list = (degree.NftDegrees || [])
+            .map((item) => {
+              return {
+                text: item.DegreeName,
+                value: item.DegreeCode || item.DegreeName,
+              }
+            })
+            .filter((item) => item.value)
+
+          return {
+            title: degree.NftConfigName || '',
+            contract: degree.ContractAddr || '',
+            list,
+            value: [],
+          }
+        })
+        .filter((degree) => degree.list.length)
+    },
+    _handleNameFilter(filterItem, res) {
+      if (res.code != 200) {
+        filterItem.list = []
+        console.warn(res.msg)
+        return
+      }
+
+      filterItem.list = (res.data || [])
+        .map((item) => ({
+          text: item.NftConfigName,
+          value: item.NftConfigId,
+        }))
+        .filter((item) => item.value)
+    },
+  },
+}
+</script>
+
+<style lang="scss" scoped>
+@import '@/common/css/variable.scss';
+
+.filter-frame {
+  max-width: 15rem;
+  width: 30%;
+  margin-right: 3.6%;
+  @media (max-width: 768.89px) {
+    max-width: none;
+    width: 100%;
+    margin-right: 0;
+  }
+  .header {
+    display: flex;
+    align-items: center;
+    line-height: 1.6rem;
+    padding-bottom: 0.6rem;
+    font-size: 1.2rem;
+    border-bottom: 0.05rem solid $color-border;
+    @media (max-width: 768.89px) {
+      font-size: 0.9rem;
+      padding-bottom: 0.3rem;
+    }
+    .title {
+      flex: 1;
+      font-size: inherit;
+      font-weight: normal;
+    }
+    .icon {
+      margin-right: 0.5rem;
+      width: 1em;
+      height: 1em;
+      vertical-align: middle;
+    }
+    .text {
+      vertical-align: middle;
+    }
+    .btn-clear {
+      font-size: 0.6em;
+      color: $color-gray;
+      cursor: pointer;
+      &:hover {
+        color: darken($color-gray, 20);
+      }
+    }
+  }
+}
+</style>
+
