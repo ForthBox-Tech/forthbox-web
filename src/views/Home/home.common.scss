@@ -1,0 +1,17 @@
+@import '@/common/css/variable.scss';
+
+.home-section {
+  padding: 2.25rem 0;
+  @media (max-width: 768.89px) {
+    padding: 1.1rem 0;
+  }
+  .title {
+    line-height: 2;
+    font-size: 2rem;
+    @media (max-width: 768.89px) {
+      font-size: 1.2rem;
+    }
+  }
+}
+
+
