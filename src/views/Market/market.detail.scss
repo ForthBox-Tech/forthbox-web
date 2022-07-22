@@ -1,0 +1,59 @@
+@mixin layout-flex() {
+  flex: 1;
+  flex-basis: 40%;
+  max-width: 50%;
+  margin-bottom: 1.4rem;
+  border-radius: 1.2rem;
+  box-sizing: border-box;
+  &:nth-child(2n + 1) {
+    margin-right: 2rem;
+  }
+  @media (max-width: 768.89px) {
+    max-width: none;
+    margin-bottom: 1rem;
+    border-radius: 0.6rem;
+    &:nth-child(2n + 1) {
+      margin-right: auto;
+    }
+  }
+}
+
+.market-detail-page {
+  display: flex;
+  flex-wrap: wrap;
+  @media (max-width: 768.89px) {
+    display: block;
+  }
+
+  .forthbox-wrap {
+    .card-title {
+      font-size: 0.9rem;
+      font-weight: bold;
+      @media (max-width: 768.89px) {
+        font-size: 0.6rem;
+      }
+    }
+    .card-num {
+      margin: 0.8rem 0 0.5rem;
+      font-size: 1.5rem;
+      font-weight: bold;
+      &::before {
+        content: '';
+        display: inline-block;
+        margin-right: 0.5rem;
+        width: 2rem;
+        height: 2rem;
+        vertical-align: text-bottom;
+        background: url('../../assets/minting/overview-fbx.png') no-repeat;
+        background-size: 100%;
+      }
+      @media (max-width: 768.89px) {
+        margin: 0.5rem 0 0 0;
+        font-size: 0.75rem;
+        &::before {
+          margin-right: 0.2rem;
+          width: 1rem;
+          height: 1rem;
+        }
+      }
+    }

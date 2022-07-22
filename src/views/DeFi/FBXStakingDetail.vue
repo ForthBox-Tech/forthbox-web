@@ -412,3 +412,285 @@ export default {
         this.defiInfo = defiInfo
         console.log(defiInfo)
 
+        const lastNum = parseFloat(defiInfo.totalNum) - (parseFloat(defiInfo.alreadyStakeNum) || 0)
+        this.lastNum = lastNum.toFixed(2)
+      } catch (err) {
+        console.warn(err)
+      }
+    },
+    // 初始化
+    init() {
+      try {
+        const contract = STAKING[this.$route.query.id]
+        const additionalReward = contract.AdditionalReward
+        additionalReward.text = additionalReward.template
+          ? this.$t(additionalReward.template, additionalReward.params)
+          : '--'
+        this.contract = contract || {}
+        this.tokenContract = new ERC20(contract.token)
+        this.defiContract = new ERC20LockDefi(contract.defi)
+
+        this.getApprove()
+        this.getBalance()
+        this.getDefiInfo()
+        this.getStakeList()
+      } catch (err) {
+        console.warn(err)
+      }
+    },
+    _stopTimer() {
+      this._timer && this._timer.stop && this._timer.stop()
+    },
+  },
+  unmounted() {
+    this._stopTimer()
+  },
+}
+</script>
+
+<style lang="scss" scoped>
+@import '@/common/css/variable.scss';
+
+.fbx-staking-detail-page {
+  margin-top: 2rem;
+  @media (max-width: 768.89px) {
+    margin-top: 1rem;
+  }
+  .dashboard {
+    display: flex;
+    align-items: center;
+    margin-top: 1.6rem;
+    box-sizing: border-box;
+    border-radius: 0.5rem;
+    @media (max-width: 768.89px) {
+      display: block;
+      margin-top: 1rem;
+      background-color: $color-placeholder6;
+    }
+  }
+  .data-wrap {
+    flex: 1;
+    display: flex;
+    flex-wrap: wrap;
+    @media (max-width: 768.89px) {
+      padding: 1rem 0 0.3rem;
+    }
+
+    .block {
+      flex: 1;
+      padding: 0 0.5rem;
+      font-size: 0.7rem;
+      color: $color-secondary;
+      @media (max-width: 768.89px) {
+        margin-bottom: 0.7rem;
+        min-width: 40%;
+        text-align: center;
+        font-size: 0.6rem;
+      }
+      .value {
+        font-size: 1.86em;
+        font-weight: bold;
+        .small {
+          margin-left: 0.5em;
+          font-size: 0.54em;
+          font-weight: normal;
+        }
+      }
+      .blue2 {
+        color: #5d64ff;
+      }
+      .pink {
+        color: #df01ff;
+      }
+      .purple {
+        color: $color-purple;
+      }
+      .blue {
+        color: $color-blue;
+      }
+    }
+  }
+  .gift-wrap {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    width: 40%;
+    padding: 0.5rem 2rem;
+    background-color: #fbfdff;
+    border: 0.05rem solid #f4f5f7;
+    border-radius: 0.4rem;
+    @media (max-width: 768.89px) {
+      width: auto;
+      padding: 0.5rem 1rem;
+      border-top-left-radius: 0;
+      border-top-right-radius: 0;
+    }
+    .gift {
+      width: 4rem;
+      @media (max-width: 768.89px) {
+        width: 3rem;
+      }
+    }
+    .text {
+      color: $color-blue;
+      font-size: 0.8rem;
+      @media (max-width: 768.89px) {
+        margin-left: 0.8rem;
+        font-size: 0.6rem;
+      }
+    }
+  }
+}
+.dialog-redeem {
+  z-index: 1001;
+  font-size: 0.85rem;
+  .main {
+    position: relative;
+    padding: 1.3rem 1.5rem 1.8rem;
+    background-color: $color-white;
+    border-radius: 0.5rem;
+    border: 0.05rem solid $color-border;
+    text-align: center;
+    @media (max-width: 768.89px) {
+      max-width: 15rem;
+      padding: 1rem;
+    }
+  }
+  .close {
+    position: absolute;
+    right: 0.8rem;
+    top: 0.8rem;
+    display: inline-block;
+    width: 1rem;
+    height: 1rem;
+    background: url('~@/assets/common/close.png') center center / 70% no-repeat;
+    cursor: pointer;
+    @media (max-width: 768.89px) {
+      right: 0.5rem;
+      top: 0.5rem;
+    }
+  }
+  .content {
+    padding: 0 2.1rem;
+    @media (max-width: 768.89px) {
+      padding: 0 0.8rem;
+    }
+    .title {
+      margin-bottom: 1.8rem;
+    }
+  }
+  .img-warn {
+    width: 1.3rem;
+    margin: 0.8rem 0;
+  }
+  .red {
+    color: #ff6363;
+  }
+  .data-wrap {
+    margin-top: 0.8rem;
+    img {
+      width: 0.8rem;
+      margin-right: 0.42rem;
+    }
+  }
+  .btn-wrap {
+    margin-top: 1.5rem;
+    .fbx-btn {
+      box-sizing: border-box;
+      line-height: 2rem;
+      color: #efb35c;
+      border: 0.05rem solid #efb35c;
+      border-radius: 2rem;
+      @media (max-width: 768.89px) {
+        padding: 0 0.8rem;
+        line-height: 1.6rem;
+        font-size: 0.65rem;
+      }
+    }
+    .confirm-btn {
+      margin-left: 0.6rem;
+      color: $color-white;
+      background-color: #efb35c;
+    }
+  }
+}
+.dialog-redeem-detail {
+  font-size: 0.8rem;
+  .main {
+    position: relative;
+    padding: 1.3rem 1.5rem 1.8rem;
+    background-color: $color-white;
+    border-radius: 0.5rem;
+    border: 0.05rem solid $color-border;
+    @media (max-width: 768.89px) {
+      max-width: 15rem;
+      padding: 1rem;
+    }
+  }
+  .close {
+    position: absolute;
+    right: 0.8rem;
+    top: 0.8rem;
+    display: inline-block;
+    width: 1rem;
+    height: 1rem;
+    background: url('~@/assets/common/close.png') center center / 70% no-repeat;
+    cursor: pointer;
+    @media (max-width: 768.89px) {
+      right: 0.5rem;
+      top: 0.5rem;
+    }
+  }
+  .title {
+    font-size: 0.9rem;
+    text-align: left;
+    padding-bottom: 1rem;
+    @media (max-width: 768.89px) {
+      font-size: 0.7rem;
+      padding-bottom: 0.5rem;
+    }
+  }
+  .content-block {
+    border-radius: 0.35rem;
+    overflow-y: auto;
+  }
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    border-radius: 0.35rem;
+    tr:nth-child(2n + 1) {
+      td {
+        background-color: $color-placeholder;
+      }
+    }
+    th,
+    td {
+      padding: 0.65rem;
+      white-space: nowrap;
+      @media (max-width: 768.89px) {
+        font-size: 0.4rem;
+        padding: 0.4rem;
+      }
+      img {
+        width: 0.7rem;
+        margin-right: 0.2rem;
+        vertical-align: middle;
+      }
+      .redeem-btn {
+        line-height: 1.5rem;
+        font-size: 0.65rem;
+        color: #25262f;
+        background-color: #efb35c;
+        border-radius: 0.8rem;
+        box-sizing: border-box;
+        @media (max-width: 768.89px) {
+          width: 4rem;
+          line-height: 1.2rem;
+          font-size: 0.6rem;
+        }
+      }
+    }
+  }
+}
+</style>
+
