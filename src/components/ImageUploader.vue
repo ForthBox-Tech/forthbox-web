@@ -58,3 +58,60 @@ export default {
     },
   },
 }
+</script>
+
+<style lang="scss">
+@import '@/common/css/variable.scss';
+
+.comp-image-uploader {
+  position: relative;
+  text-align: center;
+  vertical-align: middle;
+  border-radius: 50%;
+  overflow: hidden;
+  cursor: pointer;
+  .uploader-image {
+    max-width: 100%;
+    max-height: 100%;
+    vertical-align: middle;
+  }
+  .uploader-progress,
+  .uploader-cover,
+  .uploader-file {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+  }
+  .uploader-progress {
+    z-index: 8;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 0.8rem;
+    font-weight: bold;
+    color: $color-white;
+    background-color: rgba($color-black, 0.2);
+  }
+  .uploader-cover {
+    display: none;
+    z-index: 9;
+    background: rgba($color-black, 0.2) url('~@/assets/page-settings/page-account/user-update.png')
+      center center / 1.5rem no-repeat;
+  }
+  .uploader-file {
+    z-index: 10;
+    opacity: 0;
+    cursor: pointer;
+  }
+  &:hover {
+    .uploader-placeholder {
+      display: none;
+    }
+    .uploader-cover {
+      display: block;
+    }
+  }
+}
+</style>
