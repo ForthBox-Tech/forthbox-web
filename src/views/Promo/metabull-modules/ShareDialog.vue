@@ -67,3 +67,71 @@ export default {
     hide() {
       this.visible = false
 
+      this._clipboard && this._clipboard.destroy()
+    },
+
+    onHide() {
+      this.hide()
+    },
+  },
+}
+</script>
+
+<style lang="scss" scoped>
+@import '@/common/css/variable.scss';
+
+.dialog-share {
+  .main {
+    width: 30rem;
+    @media (max-width: 768.89px) {
+      width: 15rem;
+    }
+  }
+  .content {
+    margin-top: 1.2em;
+    line-height: 1.5;
+    .strong {
+      font-weight: normal;
+      color: #ffbd33;
+    }
+    .wrap {
+      display: flex;
+      margin: 2rem 0 0.5rem;
+      @media (max-width: 768.89px) {
+        display: block;
+        margin: 1rem 0 0.5rem;
+      }
+    }
+    .copy-value {
+      flex: 1;
+      width: 0;
+      margin: 0;
+      padding: 0 1rem;
+      line-height: 2rem;
+      font-size: inherit;
+      color: $color-white;
+      background-color: #722b94;
+      border: 0 none;
+      border-radius: 0.2rem;
+      outline: none;
+      @media (max-width: 768.89px) {
+        display: block;
+        width: 100%;
+        box-sizing: border-box;
+      }
+    }
+    .btn-copy {
+      @include btn-fill-color();
+      border-radius: 2rem;
+      margin-left: 1rem;
+      width: 6rem;
+      @media (max-width: 768.89px) {
+        display: block;
+        margin: 0.5rem 0 0 0;
+        width: auto;
+      }
+    }
+  }
+}
+</style>
+
