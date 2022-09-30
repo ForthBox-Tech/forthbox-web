@@ -58,3 +58,57 @@ export default {
     },
   },
 }
+</script>
+
+<style lang="scss">
+@import './defi.common.scss';
+
+.page-defi {
+  padding-bottom: 3rem;
+  &.bg-blue {
+    min-height: 100vh;
+    background-color: #f5f9ff;
+  }
+  &::before,
+  &::after {
+    content: '';
+    clear: both;
+    display: table;
+  }
+  .defi-nav {
+    position: fixed;
+    top: var(--nav2-height);
+    z-index: 10;
+    width: 100%;
+    background-color: $color-white;
+    border-bottom: 0.05rem solid rgba($color-black, 0.07);
+    .defi-menu {
+      max-width: 77rem;
+      color: $color-black;
+      border: 0 none;
+    }
+    .menu-item {
+      &.active {
+        .text {
+          border-color: $color-blue;
+        }
+      }
+    }
+  }
+  .defi-nav-placeholder {
+    height: 3.5rem;
+    @media (max-width: 768.89px) {
+      height: 2.7rem;
+    }
+  }
+  .defi-main {
+    margin-top: 1.5rem;
+    margin-bottom: 4rem;
+    @media (max-width: 768.89px) {
+      margin-top: 3%;
+      margin-bottom: 3rem;
+    }
+  }
+}
+</style>
+
