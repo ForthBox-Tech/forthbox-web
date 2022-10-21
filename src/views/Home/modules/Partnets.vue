@@ -61,3 +61,66 @@ export default {
     }
     .main {
       margin-bottom: 3rem !important;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      background: url('~@/assets/home/partnets-bg.png') center center no-repeat;
+      background-size: auto 100%;
+      @media (max-width: 768.89px) {
+        background-size: 100% auto;
+      }
+    }
+    .partner {
+      margin: 0.4rem 0;
+      padding-top: 8%;
+      width: 25%;
+      background-position: center center;
+      background-repeat: no-repeat;
+      background-size: 100%;
+      @media (max-width: 768.89px) {
+        padding-top: 18%;
+        width: 50%;
+      }
+      &.partner-1 {
+        background-image: url('~@/assets/home/partnets-1.png');
+        &:hover {
+          background-image: url('~@/assets/home/partnets-1a.png');
+        }
+      }
+      &.partner-2 {
+        background-image: url('~@/assets/home/partnets-2.png');
+        &:hover {
+          background-image: url('~@/assets/home/partnets-2a.png');
+        }
+      }
+      &.partner-3 {
+        background-image: url('~@/assets/home/partnets-3.png');
+        &:hover {
+          background-image: url('~@/assets/home/partnets-3a.png');
+        }
+      }
+      &.partner-4 {
+        background-image: url('~@/assets/home/partnets-4.png');
+        &:hover {
+          background-image: url('~@/assets/home/partnets-4a.png');
+        }
+      }
+      &.partner-5 {
+        background-image: url('~@/assets/home/partnets-5.png');
+        &:hover {
+          background-image: url('~@/assets/home/partnets-5a.png');
+        }
+      }
+      &.partner-6 {
+        background-image: url('~@/assets/home/partnets-6.png');
+        &:hover {
+          background-image: url('~@/assets/home/partnets-6a.png');
+        }
+      }
+      &.partner-7 {
+        background-image: url('~@/assets/home/partnets-7.png');
+        &:hover {
+          background-image: url('~@/assets/home/partnets-7a.png');
+        }
+      }
+      &.partner-8 {

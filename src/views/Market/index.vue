@@ -182,3 +182,195 @@ export default {
       border: 0.05rem solid #545e91;
     }
 
+    &.new {
+      position: relative;
+      &::before {
+        color: #fff;
+        content: 'New';
+        position: absolute;
+        top: 0.9rem;
+        left: -1.9rem;
+        display: block;
+        width: 7rem;
+        line-height: 1.4rem;
+        font-size: 0.9rem;
+        text-align: center;
+        background-color: #6441d3;
+        transform: rotate(315deg);
+      }
+      @media (max-width: 768.89px) {
+        &::before {
+          color: #fff;
+          top: 0.6rem;
+          left: -1.2rem;
+          width: 4.5rem;
+          line-height: 0.9rem;
+          font-size: 0.6rem;
+        }
+      }
+    }
+
+    .logo-wrap {
+      position: relative;
+      padding-top: 100%;
+      > img {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        max-width: 100%;
+        max-height: 100%;
+        transform: translate(-50%, -50%);
+      }
+    }
+    .name-wrap {
+      display: flex;
+      align-items: center;
+      margin: 1.6rem 0;
+      color: #fff;
+      .place-name {
+        flex: 1;
+        font-size: 1rem;
+        font-weight: bold;
+      }
+      .grade {
+        height: 1.2rem;
+        padding: 0 0.6rem;
+        line-height: 1.2rem;
+        font-size: 0.8rem;
+        color: #262734;
+        background-color: #efb35c;
+        border-radius: 0.6rem;
+      }
+      @media (max-width: 768.89px) {
+        margin: 0.8rem 0;
+        .place-name {
+          font-size: 0.6rem;
+        }
+        .grade {
+          height: 0.8rem;
+          padding: 0 0.3rem;
+          line-height: 0.8rem;
+          font-size: 0.5rem;
+          border-radius: 0.4rem;
+        }
+      }
+    }
+    .price-list {
+      .price-inline {
+        display: flex;
+        color: #fff;
+        &:not(:last-child) {
+          margin-bottom: 1rem;
+        }
+        font-size: 0.8rem;
+        .price-name {
+          flex: 1;
+          margin-right: 0.1rem;
+        }
+        .price {
+          &::before {
+            content: '';
+            display: inline-block;
+            width: 1.25rem;
+            height: 1.25rem;
+            margin-right: 0.55rem;
+            vertical-align: middle;
+            background: url('~@/assets/page-market/drops-price-icon.png') center no-repeat;
+            background-size: 100%;
+          }
+        }
+      }
+      @media (max-width: 768.89px) {
+        .price-inline {
+          &:not(:last-child) {
+            margin-bottom: 0.5rem;
+          }
+          font-size: 0.6rem;
+          .name {
+            margin-right: 0.3rem;
+          }
+          .price {
+            &::before {
+              content: '';
+              width: 0.6rem;
+              height: 0.6rem;
+              margin-right: 0.25rem;
+            }
+          }
+        }
+      }
+    }
+
+    .name {
+      margin: 1rem 0 1.5rem;
+      color: #fff;
+      font-size: 1rem;
+      font-weight: bold;
+      @media (max-width: 768.89px) {
+        margin: 0.7rem 0 1rem;
+        font-size: 0.6rem;
+      }
+    }
+    .date {
+      font-size: 0.7rem;
+      color: #979bc8;
+      margin-top: 1rem;
+      @media (max-width: 768.89px) {
+        font-size: 0.55rem;
+        margin-top: 0.4rem;
+      }
+    }
+    &.ended {
+      position: relative;
+      color: #fff;
+      &::before {
+        content: 'Ended';
+        position: absolute;
+        top: 0.9rem;
+        left: -1.9rem;
+        display: block;
+        width: 7rem;
+        line-height: 1.4rem;
+        font-size: 0.9rem;
+        text-align: center;
+        background-color: #a0a0a0;
+        transform: rotate(315deg);
+      }
+      @media (max-width: 768.89px) {
+        &::before {
+          top: 0.6rem;
+          left: -1.2rem;
+          width: 4.5rem;
+          line-height: 0.9rem;
+          font-size: 0.6rem;
+        }
+      }
+    }
+  }
+  .pagination-wrap {
+    margin: 2rem 0 1.5rem;
+    text-align: right;
+    @media (max-width: 768.89px) {
+      margin: 0.5rem 0;
+      text-align: center;
+    }
+  }
+  .market-wrap {
+    margin: 2rem 0 0 0;
+    padding: 0 4rem 2rem;
+    max-width: none;
+    box-sizing: border-box;
+    text-align: inherit;
+    color: inherit;
+    @media (max-width: 768.89px) {
+      margin-top: 1rem;
+      padding: 0 0.7rem 1rem;
+    }
+  }
+  .market-main {
+    max-width: 55rem;
+    margin: 0 auto;
+  }
+}
+</style>
+

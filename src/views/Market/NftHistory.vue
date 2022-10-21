@@ -145,3 +145,128 @@ export default {
     emitter.off('connect-wallet', this.init)
   },
 }
+</script>
+
+<style lang="scss">
+.nft-history-page {
+  .history-table {
+    width: 100%;
+    margin-top: 1.9rem;
+    border-collapse: collapse;
+    font-size: 0.7rem;
+    thead {
+      height: 2rem;
+      background-color: #48484e;
+      th {
+        padding: 0.5rem;
+      }
+      .share {
+        text-align: center;
+      }
+    }
+    tr {
+      height: 2rem;
+      border-bottom: 0.05rem solid #48484e;
+      td {
+        padding: 0.5rem;
+      }
+      .amount {
+        img {
+          width: 1rem;
+          height: 1rem;
+          margin-right: 0.3rem;
+          vertical-align: middle;
+        }
+        span {
+          vertical-align: middle;
+        }
+      }
+      .share {
+        text-align: center;
+        cursor: pointer;
+        img {
+          width: 0.8rem;
+          height: 0.8rem;
+        }
+      }
+      &.buy {
+        .amount,
+        .directions {
+          color: #41ee5a;
+        }
+      }
+      &.sell {
+        .amount,
+        .directions {
+          color: #ec5152;
+        }
+      }
+    }
+  }
+  .history-list {
+    margin-top: 1.2rem;
+    .history-block {
+      display: flex;
+      margin-bottom: 0.5rem;
+      padding: 0.9rem 1.1rem;
+      font-size: 0.5rem;
+      color: #8e909f;
+      border-radius: 0.4rem;
+      background-color: #343645;
+      .content-left {
+        .text {
+          margin: 0.7rem 0;
+          font-size: 0.6rem;
+          color: #fff;
+        }
+        .text-forthbox {
+          display: flex;
+          align-items: center;
+          .icon {
+            padding: 0 0.35rem;
+            height: 0.6rem;
+            line-height: 0.6rem;
+            font-size: 0.4rem;
+            color: #262734;
+            border-radius: 0.3rem;
+            background-color: #efb35c;
+          }
+        }
+      }
+      .content-right {
+        flex: 1;
+        text-align: right;
+        .price-wrap {
+          display: flex;
+          justify-content: right;
+          margin: 1.4rem 0 0.6rem;
+          font-size: 0.6rem;
+          &.buy {
+            color: #41ee5a;
+          }
+          &.sell {
+            color: #ec5152;
+          }
+          .num {
+            font-size: 0.75rem;
+            img {
+              width: 0.5rem;
+              height: 0.5rem;
+              margin: 0 0.3rem 0 1.5rem;
+              vertical-align: middle;
+            }
+          }
+        }
+        .share {
+          margin-top: 0.6rem;
+          img {
+            width: 0.75rem;
+            height: 0.75rem;
+          }
+        }
+      }
+    }
+  }
+}
+</style>
+
