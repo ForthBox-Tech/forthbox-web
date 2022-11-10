@@ -1,0 +1,37 @@
+@import '@/common/css/variable.scss';
+
+.settings-content {
+  flex: 1;
+  padding: 0 1.4rem 1rem;
+  .settings-col {
+    flex: 1;
+    &:not(:first-child) {
+      margin-left: 3rem;
+    }
+    @media (max-width: 768.89px) {
+      &:not(:first-child) {
+        margin-left: 0;
+        margin-top: 2rem;
+      }
+    }
+  }
+  .btn-input {
+    position: relative;
+    display: block;
+    width: 5.5rem;
+    height: 100%;
+    line-height: 2.1rem;
+    text-align: center;
+    font-size: 0.7rem;
+    cursor: pointer;
+    &::before {
+      content: '';
+      display: inline-block;
+      margin-right: 0.3rem;
+      width: 0.7rem;
+      height: 0.7rem;
+      background: center center / 100% no-repeat;
+      vertical-align: -0.1rem;
+    }
+    &::after {
+      content: '';
