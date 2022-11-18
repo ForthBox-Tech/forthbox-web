@@ -245,3 +245,256 @@ export function formatShowName(result, type) {
     .join(' ')
 }
 
+export function formatMarketNft(data) {
+  const type = data.ContractType
+  const nft = getNftByType(type)
+  let tokenUri = {}
+  try {
+    tokenUri = JSON.parse(data.TokenUri)
+  } catch (err) {
+    console.error(err)
+    return
+  }
+  const totalPrice = Math.floor(data.Price * 1000) / 1000
+  const amount = parseInt(data.Amount) >= 1 ? parseInt(data.Amount) : 1
+  const result = {
+    id: `${type}${tokenUri.id}`,
+    type,
+    amount,
+    name: nft.name, // 使用前端配置的名字
+    price: Math.floor((totalPrice / amount) * 100) / 100,
+    totalPrice,
+    image: tokenUri.image,
+    tokenId: data.TokenId,
+    description: tokenUri.description || '',
+    degree: tokenUri.degree,
+  }
+  switch (Number(type)) {
+    case NFT_TYPE.Fighter:
+      Object.assign(result, {
+        degreeName: tokenUri.degreeName + '-' + data.Level,
+      })
+      break
+    case NFT_TYPE.Ham:
+      const level = getNftLevel(tokenUri.degree)
+      Object.assign(result, {
+        image: LEVEL_IMAGE_MAP[level.lv - 1] || '',
+        degreeName: `${level.lv}-${level.exp}`,
+      })
+      break
+    case NFT_TYPE.GMCN:
+      Object.assign(result, {
+        degreeName: firstLetterUpperCase(tokenUri.degreeName),
+      })
+      break
+    case NFT_TYPE.Tower:
+      Object.assign(result, {
+        degreeName: firstLetterUpperCase(tokenUri.degreeName),
+      })
+      break
+    default:
+      Object.assign(result, {
+        degreeName: tokenUri.degreeName || '',
+      })
+      break
+  }
+  result.showName = formatShowName(result, type)
+  return result
+}
+
+function transformProps(nft, type) {
+  return [
+    {
+      name: vueInstance.$t('Market.Level'),
+      value:
+        type == (NFT_TYPE.GMCN || NFT_TYPE.Tower)
+          ? firstLetterUpperCase(nft.degreeName)
+          : nft.degreeName || '',
+    },
+  ]
+}
+
+function transformHamProps(nft) {
+  const result = [{ name: 'Hashrate', value: nft.hashrate }]
+
+  const PROPS = ['INT', 'GOLD', 'CE', 'AGI', 'CHR']
+  const props = PROPS.map((name, index) => ({
+    name,
+    value: nft.property[index],
+  }))
+
+  return result.concat(props)
+}
+
+function formatDetail(tokenUri, type, address, totalPrice, amount = 1, standard = '') {
+  totalPrice = Math.floor(totalPrice * 1000) / 1000
+  amount = parseInt(amount) >= 1 ? parseInt(amount) : 1
+  const nft = getNftByType(type)
+  const result = {
+    id: `${type}${tokenUri.id}`,
+    type,
+    amount,
+    name: nft.name, // 使用前端配置的名字
+    price: Math.floor((totalPrice / amount) * 100) / 100,
+    totalPrice,
+    image: tokenUri.image,
+    tokenId: tokenUri.id,
+    description: tokenUri.description || '',
+    degree: tokenUri.degree || '',
+    standard,
+    blockChain: 'Binance Smart Chain',
+    address,
+  }
+  if (type == NFT_TYPE.Ham) {
+    const level = getNftLevel(tokenUri.degree)
+    Object.assign(result, {
+      image: LEVEL_IMAGE_MAP[level.lv - 1] || '',
+      degreeName: `${level.lv}-${level.exp}`,
+      properties: transformHamProps(tokenUri),
+    })
+  } else {
+    Object.assign(result, {
+      degreeName:
+        type == (NFT_TYPE.GMCN || NFT_TYPE.Tower)
+          ? firstLetterUpperCase(tokenUri.degreeName)
+          : tokenUri.degreeName || '',
+      properties: transformProps(tokenUri, type),
+    })
+  }
+  result.showName = formatShowName(result, type)
+  return result
+}
+
+export const NFT721Detail = {
+  nftAddr: '',
+  swapAddr: '',
+  type: '',
+
+  init(nftAddr, swapAddr, type) {
+    NFT721Detail.nftAddr = nftAddr
+    NFT721Detail.swapAddr = swapAddr
+    NFT721Detail.type = type
+  },
+  //根据商品地址获取商品信息
+  async getNftDetail(onSale, marketContract, tokenId) {
+    let sellInfo = { prices: [0] }
+    const tokenUri = await marketContract.tokenURI(NFT721Detail.nftAddr, tokenId)
+    if (onSale) {
+      sellInfo = await marketContract.getSellInfos(NFT721Detail.swapAddr, [tokenId])
+    }
+    console.log(tokenUri, sellInfo)
+
+    const nftDetail = formatDetail(
+      tokenUri,
+      NFT721Detail.type,
+      NFT721Detail.nftAddr,
+      sellInfo.prices[0],
+      1,
+      'BEP721'
+    )
+    let isBlack = false
+    let isDamaged = false
+
+    if (NFT721Detail.type == NFT_TYPE.Fighter) {
+      const url = (process.env.VUE_APP_SPACE_WAR_URL || '') + '/market/get_nft_level'
+      const params = {
+        tokenID: tokenId,
+      }
+      try {
+        const res = await _axios.get(url, { params })
+        if (res.code != 200) throw new Error('/market/get_nft_level data error')
+
+        const data = res.data || {}
+        nftDetail.properties.push({ name: 'Game Level', value: data.level || 1 })
+
+        isBlack = data.status == 0 // 是否在黑名单（status：1-正常；0-黑名单）
+        isDamaged = data.repair_ratio > 0 // 耐久度有损，不能上架
+      } catch (err) {
+        nftDetail.properties.push({ name: 'Game Level', value: 1 })
+        console.error(err)
+      }
+    }
+    return { nftDetail, isBlack, isDamaged }
+  },
+  async isApproveSwap(nftContract) {
+    return await nftContract.isApprovedForAll(cWebModel.mAccount, NFT721Detail.swapAddr)
+  },
+  async setSwapApproval(nftContract) {
+    return await nftContract.setApprovalForAll(NFT721Detail.swapAddr, true)
+  },
+  async isInMarket(marketContract, swapTokenId, scene) {
+    return await marketContract.bExistsID(NFT721Detail.swapAddr, swapTokenId)
+  },
+  async sell(swapContract, tokenId, price, num) {
+    return await swapContract.sell(tokenId, price) // 合约接收的价格为总价
+  },
+  async withdraw(swapContract, tokenId) {
+    return swapContract.withdraw(tokenId)
+  },
+  async transfer(nftContract, targetAddress, tokenId, num) {
+    return await nftContract.safeTransferFrom(cWebModel.mAccount, targetAddress, tokenId)
+  },
+}
+
+export const NFT1155Detail = {
+  nftAddr: '',
+  swapAddr: '',
+  type: '',
+
+  init(nftAddr, swapAddr, type) {
+    NFT1155Detail.nftAddr = nftAddr
+    NFT1155Detail.swapAddr = swapAddr
+    NFT1155Detail.type = type
+  },
+  async getNftDetail(onSale, marketContract, tokenId) {
+    let sellInfo = { prices: [0], nums: [0] }
+    const tokenUri = await marketContract.tokenURI(NFT1155Detail.nftAddr, FANTASY_BOX_ID)
+    if (onSale) {
+      sellInfo = await marketContract.getSellInfos(NFT1155Detail.swapAddr, [tokenId])
+    } else {
+      const num = await marketContract.balanceof(
+        NFT1155Detail.nftAddr,
+        cWebModel.mAccount,
+        FANTASY_BOX_ID
+      )
+      sellInfo.nums[0] = num
+    }
+
+    const nftDetail = formatDetail(
+      tokenUri,
+      NFT1155Detail.type,
+      NFT1155Detail.nftAddr,
+      sellInfo.prices[0],
+      sellInfo.nums[0],
+      'BEP1155'
+    )
+    return { nftDetail, isBlack: false, isDamaged: false }
+  },
+  async isApproveSwap(nftContract) {
+    return await nftContract.isApprovedForAll(cWebModel.mAccount, NFT1155Detail.swapAddr)
+  },
+  async setSwapApproval(nftContract) {
+    return await nftContract.setApprovalForAll(NFT1155Detail.swapAddr, true)
+  },
+  async isInMarket(marketContract, swapTokenId, scene) {
+    if (scene == 'collections') return false
+    return await marketContract.bExistsID(NFT1155Detail.swapAddr, swapTokenId)
+  },
+  async sell(swapContract, tokenId, price, num) {
+    return await swapContract.sell(num, price * num) // 合约接收的价格为总价
+  },
+  async withdraw(swapContract, tokenId) {
+    return swapContract.withdraw(tokenId)
+  },
+  async transfer(nftContract, targetAddress, tokenId, num) {
+    return await nftContract.safeTransferFrom(
+      cWebModel.mAccount,
+      targetAddress,
+      FANTASY_BOX_ID,
+      num
+    )
+  },
+}
+
+export const MARKET_PAGE_SIZE = 12
+
