@@ -309,3 +309,211 @@ export default {
     init() {
       this._lpId = this.$route.query.id
 
+      try {
+        const contract = LPFARM[this._lpId]
+        const tokenNet = contract.token
+        const defiNet = contract.defi
+        this.contract = contract
+
+        this.lockUpTime = this.$t(contract.lockUpTime)
+        this.amount = contract.amountNum
+
+        this.tokenContract = new ERC20(tokenNet)
+        this.defiContract = new ERC20DeFi(defiNet)
+
+        this.getApprove()
+        this.getBalance()
+        this.getDetailInfo()
+      } catch (err) {
+        console.warn(err)
+      }
+    },
+  },
+}
+</script>
+
+<style lang="scss" scoped>
+@import '@/common/css/variable.scss';
+
+.lpfarm-detail-page {
+  padding: 2rem 3rem;
+  border-radius: 0.5rem;
+  background-color: $color-white;
+  @media (max-width: 768.89px) {
+    margin: 1rem 0.5rem;
+    padding: 1.2rem 0.7rem;
+  }
+  .dashboard {
+    margin: 1.2rem 0 4rem;
+    display: flex;
+    align-items: center;
+    @media (max-width: 768.89px) {
+      margin: 1rem 0 1.5rem;
+      display: block;
+    }
+    .col {
+      flex: 1;
+    }
+  }
+  .subject {
+    text-align: center;
+    .logo {
+      display: inline-block;
+      width: 4rem;
+      height: 4rem;
+      border-radius: 100%;
+      overflow: hidden;
+      @media (max-width: 768.89px) {
+        width: 3rem;
+        height: 3rem;
+      }
+      &:not(:first-child) {
+        margin-left: -1rem;
+        @media (max-width: 768.89px) {
+          margin-left: -0.5rem;
+        }
+      }
+    }
+    .name {
+      margin-top: 1rem;
+      text-align: center;
+      font-size: 1rem;
+      font-weight: bold;
+      @media (max-width: 768.89px) {
+        margin-top: 0.5rem;
+        font-size: 0.75rem;
+      }
+    }
+    .intro {
+      font-size: 0.9rem;
+      @media (max-width: 768.89px) {
+        font-size: 0.6rem;
+      }
+    }
+  }
+  .info {
+    font-size: 0.8rem;
+    font-weight: bold;
+    color: $color-secondary;
+    @media (max-width: 768.89px) {
+      margin-top: 0.8rem;
+      font-size: 0.65rem;
+    }
+    .table {
+      @media (max-width: 768.89px) {
+        margin: 0 auto;
+      }
+    }
+    td {
+      line-height: 1.7;
+      @media (max-width: 768.89px) {
+        line-height: 1.6;
+      }
+      &.value {
+        padding-left: 5rem;
+        color: $color-primary;
+        @media (max-width: 768.89px) {
+          padding-left: 1rem;
+        }
+      }
+      &.rate {
+        font-size: 1.25em;
+        color: #efb35c;
+      }
+    }
+  }
+  .operate {
+    display: flex;
+    @media (max-width: 768.89px) {
+      display: block;
+    }
+    .col {
+      flex: 1;
+    }
+    .line {
+      margin: 0 2.5rem;
+      width: 0.05rem;
+      background-color: $color-border;
+      @media (max-width: 768.89px) {
+        margin: 1.5rem 0;
+        width: 0;
+        height: 0;
+      }
+    }
+    .overview {
+      display: flex;
+      align-items: center;
+      font-size: 0.8rem;
+      font-weight: bold;
+      @media (max-width: 768.89px) {
+        font-size: 0.7rem;
+      }
+      .data {
+        flex: 1;
+      }
+      .label {
+        color: $color-secondary;
+      }
+      .btn-claim {
+        @include btn-fill-pure($color-blue);
+        width: 7rem;
+        font-size: 0.9em;
+        line-height: 2rem;
+        border-radius: 2rem;
+        @media (max-width: 768.89px) {
+          width: 5rem;
+          line-height: 1.8rem;
+          border-radius: 2rem;
+        }
+      }
+    }
+    .input-wrap {
+      display: flex;
+      align-items: center;
+      margin: 1.2rem 0 1.5rem;
+      font-size: 0.8rem;
+      background-color: $color-placeholder;
+      border: 0.05rem solid $color-border;
+      border-radius: 0.5rem;
+      @media (max-width: 768.89px) {
+        margin: 0.5rem 0 0.8rem;
+        font-size: 0.7rem;
+      }
+      input {
+        flex: 1;
+        padding: 0.5rem 1rem;
+        width: 0.3rem;
+        line-height: 1.6;
+        font-size: 1.125em;
+        background-color: transparent;
+        border: 0 none;
+        outline: none;
+        @media (max-width: 768.89px) {
+          width: 0.3rem;
+        }
+      }
+      .btn-all {
+        padding: 0 1.5rem;
+        line-height: 1.6;
+        color: inherit;
+        font-size: inherit;
+        border-left: 0.05rem solid $color-border;
+        cursor: pointer;
+      }
+    }
+    .btn-stake,
+    .btn-redeem {
+      @include btn-fill-color();
+      width: 100%;
+      line-height: 2.7rem;
+      font-size: 0.8rem;
+      font-weight: bold;
+      box-sizing: border-box;
+      @media (max-width: 768.89px) {
+        line-height: 2.2rem;
+        font-size: 0.7rem;
+      }
+    }
+  }
+}
+</style>
