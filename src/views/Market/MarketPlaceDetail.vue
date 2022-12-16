@@ -86,3 +86,107 @@ export default {
       return address ? address.substr(0, 6) + '...' + address.substr(-6) : ''
     },
 
+    async init({ accounts, chainId } = {}) {
+      if (!accounts || !accounts.length) {
+        return
+      }
+      if (!isSupportedChain(chainId)) {
+        alert('Please change your chain provider to the Binance Smart Chain (or testnet)')
+        return
+      }
+      this.tokenId = this.$route.query.id
+      const type = this.$route.query.type
+      const nftItem = getNftByType(type)
+      this._swapAddr = nftItem.swapAddr
+
+      this._detailManager = nftItem.ercType == 1155 ? NFT1155Detail : NFT721Detail
+      this._detailManager.init(nftItem.nftAddr, this._swapAddr, type)
+      this._fbxContract = getFbxContract()
+      this._marketContract = nftItem.getMarketContract()
+      this._nftSwapContract = nftItem.getSwapContract(this._swapAddr)
+      await this.getNftDetail(true, this._marketContract, this.tokenId)
+      this.getApprovedStatus()
+      this.isInMarket()
+    },
+    async getNftDetail(...args) {
+      const { nftDetail, isDamaged } = await this._detailManager.getNftDetail(...args)
+      this.nftDetail = nftDetail
+      // this.isDamaged = isDamaged
+    },
+    //是否授权
+    async getApprovedStatus() {
+      let result = 0
+      try {
+        result = await this._fbxContract.allowance(cWebModel.mAccount, this._swapAddr)
+      } catch (err) {
+        console.warn(err)
+        alert('Error. Fail to approve.')
+      }
+      const approvedNum = parseInt(result) - this.nftDetail.totalPrice
+      this.isApproved = approvedNum >= 0 && approvedNum < 10
+    },
+    //点击授权
+    async onApprove() {
+      if (this.isApproved) {
+        return
+      }
+      try {
+        await this._fbxContract.approve(this._swapAddr, this.nftDetail.totalPrice + 1)
+        this.isApproved = true
+      } catch (err) {
+        console.log(err)
+        alert('Error. Fail to approve.')
+        this.isApproved = false
+      }
+    },
+    //是否已经被购买
+    async isInMarket() {
+      let result
+      try {
+        result = await this._detailManager.isInMarket(this._marketContract, this.tokenId)
+        if (result == false) {
+          this.isSoldOut = true
+          return true
+        }
+      } catch (err) {
+        console.warn(err)
+      }
+      return false
+    },
+    async isUserOwn() {
+      let result
+      try {
+        result = await this._marketContract.ownerOf(this._swapAddr, this.tokenId)
+        if (cWebModel.mAccount == result) {
+          alert('Cannot pay for the order set by yourself.')
+          return true
+        }
+      } catch (err) {
+        console.log(err)
+      }
+      return false
+    },
+    //点击购买
+    async onBuy() {
+      if (await this.isInMarket()) {
+        return
+      }
+      if (await this.isUserOwn()) {
+        return
+      }
+      try {
+        await this._nftSwapContract.buy(this.tokenId)
+        this.isSoldOut = true
+        alert('Success.')
+      } catch (err) {
+        console.log(err)
+        alert('Error. Fail to buy.')
+      }
+    },
+  },
+  mounted() {
+    if (!this.$route.query.id) {
+      alert('Error. Url parameter requires id.')
+      return
+    }
+
