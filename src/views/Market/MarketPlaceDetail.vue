@@ -190,3 +190,61 @@ export default {
       return
     }
 
+    emitter.on('connect-wallet', this.init)
+    this.$root.connectWallet()
+  },
+  unmounted() {
+    emitter.off('connect-wallet', this.init)
+  },
+}
+</script>
+
+<style lang="scss">
+@import './market.detail.scss';
+
+.market-detail-page.market-place-detail {
+  .forthbox-wrap {
+    .price-logo {
+      width: 1rem;
+      margin: 0 0.5rem 0 0.8rem;
+      @media (max-width: 768.89px) {
+        width: 0.6rem;
+        margin: 0 0.3rem 0 0.4rem;
+      }
+    }
+    .price-middle {
+      position: relative;
+      display: flex;
+      .fixed-price {
+        flex: 1;
+        margin-right: 1.2rem;
+        padding-right: 1.2rem;
+        border-right: 0.05rem solid #5f6175;
+        @media (max-width: 768.89px) {
+          padding-right: 0.6rem;
+        }
+      }
+      .count {
+        min-width: 4rem;
+        .card-num {
+          &::before {
+            display: none;
+          }
+        }
+      }
+      .btn-transfer {
+        position: absolute;
+        top: -0.5rem;
+        right: -0.5rem;
+        padding: 0.5rem;
+        width: 1rem;
+        height: 1rem;
+        background: url('~@/assets/page-market/detail-transfer.png') center center no-repeat;
+        background-size: 1rem;
+        cursor: pointer;
+      }
+    }
+  }
+}
+</style>
+

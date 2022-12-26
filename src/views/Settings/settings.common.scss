@@ -35,3 +35,41 @@
     }
     &::after {
       content: '';
+      position: absolute;
+      display: inline-block;
+      left: 0;
+      top: 15%;
+      width: 0;
+      height: 70%;
+      border-left: 0.05rem solid $color-border;
+    }
+    &:hover {
+      color: $color-blue;
+    }
+    &.disabled {
+      color: #bcbcbc;
+      &::before {
+        display: none;
+      }
+    }
+  }
+  .settings-line {
+    margin: 1.5rem 0;
+    height: 0;
+    border-top: 0.05rem solid $color-border;
+  }
+  .settings-btns {
+    .btn-save {
+      @include btn-fill-color();
+      box-sizing: border-box;
+      width: 5rem;
+      @media (max-width: 768.89px) {
+        width: 100%;
+      }
+    }
+  }
+  .form-mb-1 {
+    margin-bottom: 0.5rem;
+  }
+}
+
