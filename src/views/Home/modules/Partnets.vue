@@ -124,3 +124,67 @@ export default {
         }
       }
       &.partner-8 {
+        background-image: url('~@/assets/home/partnets-8.png');
+        &:hover {
+          background-image: url('~@/assets/home/partnets-8a.png');
+        }
+      }
+      &.partner-9 {
+        background-image: url('~@/assets/home/partnets-9.png');
+        &:hover {
+          background-image: url('~@/assets/home/partnets-9a.png');
+        }
+      }
+      &.partner-10 {
+        background-image: url('~@/assets/home/partnets-10.png');
+        &:hover {
+          background-image: url('~@/assets/home/partnets-10a.png');
+        }
+      }
+      &.partner-11 {
+        background-image: url('~@/assets/home/partnets-11.png');
+        &:hover {
+          background-image: url('~@/assets/home/partnets-11a.png');
+        }
+      }
+      &.partner-12 {
+        background-image: url('~@/assets/home/partnets-12.png');
+        &:hover {
+          background-image: url('~@/assets/home/partnets-12a.png');
+        }
+      }
+      &.partner-13 {
+        background-image: url('~@/assets/home/partnets-13.png');
+        &:hover {
+          background-image: url('~@/assets/home/partnets-13a.png');
+        }
+      }
+      &.partner-14 {
+        background-image: url('~@/assets/home/partnets-14.png');
+        &:hover {
+          background-image: url('~@/assets/home/partnets-14a.png');
+        }
+      }
+      &.partner-15 {
+        background-image: url('~@/assets/home/partnets-15.png');
+        &:hover {
+          background-image: url('~@/assets/home/partnets-15a.png');
+        }
+      }
+      &.partner-16 {
+        background-image: url('~@/assets/home/partnets-16.png');
+        &:hover {
+          background-image: url('~@/assets/home/partnets-16a.png');
+        }
+      }
+      &.partner-17 {
+        background-image: url('~@/assets/home/partnets-17.png');
+        &:hover {
+          background-image: url('~@/assets/home/partnets-17a.png');
+        }
+      }
+    }
+  }
+}
+</style>
+
