@@ -34,3 +34,35 @@ export default {
     return {
       defaultTab: '',
 
+      project: {},
+    }
+  },
+  computed: {
+    query() {
+      return this.$route.query || {}
+    },
+  },
+  methods: {
+    onTabChange() {},
+
+    onInit(project) {
+      this.project = project
+    },
+  },
+  created() {
+    if (this.query.tab === 'comment') {
+      this.defaultTab = 'Comment'
+    }
+  },
+}
+</script>
+
+<style lang="scss" scoped>
+@import '@/common/css/variable.scss';
+
+.game-project {
+  .main {
+    display: flex;
+  }
+}
+</style>

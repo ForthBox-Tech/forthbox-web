@@ -92,3 +92,51 @@ export default {
     width: 0;
     height: 100%;
     vertical-align: middle;
+  }
+  .dialog-bg {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 0;
+    background-color: rgba(0, 0, 0, 0.6);
+    transform: translateZ(0);
+  }
+  .dialog-main {
+    position: relative;
+    display: inline-block;
+    vertical-align: middle;
+    font-size: 0.7rem;
+    &::before,
+    &::after {
+      content: '';
+      display: table;
+      clear: both;
+    }
+  }
+
+  .fadeIn {
+    animation: 300ms linear dialogFadeIn both;
+  }
+  .fadeOut {
+    animation: 300ms linear dialogFadeOut both;
+  }
+  @keyframes dialogFadeIn {
+    0% {
+      opacity: 0;
+    }
+    100% {
+      opacity: 1;
+    }
+  }
+  @keyframes dialogFadeOut {
+    0% {
+      opacity: 1;
+    }
+    100% {
+      opacity: 0;
+    }
+  }
+}
+</style>
