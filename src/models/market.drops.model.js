@@ -123,3 +123,107 @@ class NFTBox extends Box {
       }
     }
 
+    return info
+  }
+}
+
+class TowerBox extends Box {
+  image = 'https://static.forthbox.io/image/drops/ham-fantasy/main-3x.png'
+  imageStyle = 'width: 80%'
+  name = 'Tower Mystery Box'
+  sIcon = require('@/assets/page-market/drops-price-icon.png')
+  desc = '2,000 FBX'
+  date = '03-25-2022'
+  price = 2000
+  isEnd = false
+  visible = true
+  prizes = [
+    'https://static.forthbox.io/image/nft/ham-fantasy/Machine-gun.png',
+    'https://static.forthbox.io/image/nft/ham-fantasy/Frozen.png',
+    'https://static.forthbox.io/image/nft/ham-fantasy/Fire.png',
+    'https://static.forthbox.io/image/nft/ham-fantasy/Laser.png',
+    'https://static.forthbox.io/image/nft/ham-fantasy/Railgun.png',
+    'https://static.forthbox.io/image/nft/ham-fantasy/Missile.png',
+  ]
+  prizesStyle = 'width: 15%'
+  description = [
+    {
+      title: 'The following prizes are included in the mystery box.',
+      content: [
+        '1) 100 Missile Tower NFT',
+        '2) 100 Railgun Tower NFT',
+        '3) 100 Laser Tower NFT',
+        '4) 200 Fire Tower NFT',
+        '5) 200 Frozen Tower NFT',
+        '6) 300 Machine-gun Tower NFT',
+      ],
+    },
+    {
+      title: 'Launch time:',
+      content: ['4:00 PM SGT (8:00 AM UTC), March 25, 2022'],
+    },
+    {
+      title: 'Note:',
+      content: [
+        '1.The quantity of Tower NFT in carnival is 1,000 in total.',
+        '2.Spend 2,000 FBX to buy a mystery box, up to 10 times for each BNB Smart Chain (BSC) address.',
+      ],
+    },
+  ]
+  tokenResult = NFT_TOWER
+  address = BOX_TOWER
+  getContract() {
+    return new FBXTowerMysteryBoxNFT(this.address)
+  }
+  async initSimpleDetail() {
+    const contract = this.getContract()
+    const property = await contract.getParameters()
+    this.isEnd = !!(property && property.totalNFT == property.totalSupply)
+  }
+  async draw(contract) {
+    const result = {
+      showText: '',
+      showImg: '',
+    }
+
+    await contract.buyNFT()
+    let num = await contract.balanceof()
+    let tokenId = await contract.tokenOfOwnerByIndex(num - 1)
+    Object.assign(result, {
+      showText: `You've got Tower Mystery NFT. ID #${tokenId}`,
+      showImg: 'https://static.forthbox.io/image/drops/ham-fantasy/main-3x.png',
+    })
+
+    return result
+  }
+  async getOwnNum(contract) {
+    return await contract.balanceof()
+  }
+  async getInfo(contract) {
+    const info = {
+      addrLastNum: 0,
+      addrMaxNum: 0,
+      allLastNum: 0,
+      ownNum: 0,
+      unAvailable: false,
+    }
+
+    let params = await contract.getParameters()
+    if (params) {
+      Object.assign(info, {
+        addrLastNum: params.addressLastBuyNum,
+        addrMaxNum: 10,
+        allLastNum: params.totalNFT - params.totalSupply,
+        ownNum: 0,
+        unAvailable: false,
+      })
+      if (info.allLastNum == 0 || info.addrLastNum == 0) {
+        info.unAvailable = true
+      }
+      info.ownNum = await contract.balanceof()
+    }
+
+    return info
+  }
+}
+
