@@ -92,3 +92,98 @@ export default {
         overflow: auto;
         img {
           margin: 0 0.35rem;
+        }
+      }
+      .text-wrap {
+        margin-top: 1rem;
+        display: flex;
+        align-items: center;
+        .text {
+          margin-left: 0.75rem;
+          line-height: 1.2;
+          text-align: left;
+        }
+      }
+    }
+    @media (max-width: 768.89px) {
+      .main {
+        margin: 1.4rem;
+        background-image: url('~@/assets/home/why2-bg1-m.png'), url('~@/assets/home/why2-bg2.png');
+        .title {
+          padding: 2.6rem 0 1rem;
+          line-height: 1.2;
+          font-size: 0.7rem;
+          font-weight: normal;
+          text-align: center;
+        }
+        .imgs {
+          display: flex;
+          flex-wrap: wrap;
+          white-space: initial;
+          img {
+            width: 45%;
+            flex: 1;
+            margin: 0 0.17rem;
+          }
+        }
+        .text-wrap {
+          display: block;
+          text-align: center;
+          font-size: 0.7rem;
+          color: #c6c7e3;
+          img {
+            width: 3.3rem;
+          }
+          .text {
+            line-height: 1.2rem;
+            text-align: center;
+          }
+        }
+      }
+    }
+  }
+
+  .why-forthbox-2 {
+    .main {
+      opacity: 0;
+      .title,
+      img,
+      .text-wrap {
+        opacity: 0;
+      }
+      &.main-animation {
+        opacity: 1;
+        animation: blurFadeIn 1s ease-in forwards;
+        .title {
+          animation: blurFadeIn 1.5s ease-in forwards;
+          animation-delay: 1s;
+        }
+        .text-wrap {
+          animation: blurFadeIn 1.5s ease-in forwards;
+          animation-delay: 3s;
+        }
+        img {
+          animation: blurFadeIn 0.8s ease-in forwards;
+          animation-delay: 1s;
+        }
+        .img2 {
+          animation-delay: 1.2s;
+        }
+        .img3 {
+          animation-delay: 1.6s;
+        }
+        .img4 {
+          animation-delay: 2s;
+        }
+        .img5 {
+          animation-delay: 2.4s;
+        }
+        .img6 {
+          animation-delay: 3s;
+        }
+      }
+    }
+  }
+}
+</style>
+
