@@ -61,3 +61,50 @@ export default {
   },
   created() {},
 }
+</script>
+
+<style lang="scss" scoped>
+@import '@/common/css/variable.scss';
+
+.number-input {
+  display: flex;
+  align-items: center;
+
+  .btn-minus,
+  .btn-add {
+    display: block;
+    width: 1.6rem;
+    height: 1.6rem;
+    background: center center / 0.8rem no-repeat;
+    cursor: pointer;
+    @media (max-width: 768.89px) {
+      width: 1.4rem;
+    }
+  }
+  .btn-minus {
+    background-image: url('~@/assets/page-market2/comp-number-input/btn-minus.png');
+    &:hover {
+      background-image: url('~@/assets/page-market2/comp-number-input/btn-minus-a.png');
+    }
+  }
+  .btn-add {
+    background-image: url('~@/assets/page-market2/comp-number-input/btn-add.png');
+    &:hover {
+      background-image: url('~@/assets/page-market2/comp-number-input/btn-add-a.png');
+    }
+  }
+  .input-value {
+    margin: 0 0.3rem;
+    padding: 0 0.5rem;
+    width: 3rem;
+    height: 1.5rem;
+    text-align: center;
+    border: 0.05rem solid $color-border;
+    border-radius: 0.2rem;
+    outline: none;
+    @media (max-width: 768.89px) {
+      margin: 0 0.2rem;
+      padding: 0 0.3rem;
+      width: 2rem;
+    }
+    &:hover {
