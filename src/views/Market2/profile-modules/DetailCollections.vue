@@ -84,3 +84,67 @@ export default {
     return {
       TOKENS,
 
+      unit: TOKENS[0],
+      price: '',
+      amount: '1',
+
+      dTotalPrice: 0,
+
+      isSold: false,
+    }
+  },
+  computed: {
+    totalPrice() {
+      return parseFloat(this.price) * this.amount || 0
+    },
+  },
+  watch: {
+    price(newVal, oldVal) {
+      // 填入值不合法，设置回旧值
+      if (newVal !== '' && !/^\d*($|\.\d*$)/.test(`${newVal}`)) {
+        this.$nextTick(() => {
+          this.price = oldVal
+        })
+        return
+      }
+    },
+    async totalPrice(totalPrice) {
+      const fbxPrice = await getFbxPrice()
+      this.dTotalPrice = (fbxPrice * totalPrice).toFixed(4)
+    },
+  },
+  methods: {
+    async onSell() {
+      if (!this.price) return
+
+      try {
+        await sell(
+          this.contractType,
+          this.contractAddr,
+          this.tokenId,
+          this.unit.contract,
+          this.totalPrice,
+          this.amount
+        )
+      } catch (err) {
+        this.$modal.toast(err.message)
+        return
+      }
+
+      this.isSold = true
+      this.$modal.toast('success')
+    },
+    onTransfer() {
+      this.$refs.TransferDialog.show()
+    },
+  },
+  created() {
+    console.log(this.contractAddr)
+  },
+}
+</script>
+
+<style lang="scss" scoped>
+// @import '@/common/css/variable.scss';
+</style>
+

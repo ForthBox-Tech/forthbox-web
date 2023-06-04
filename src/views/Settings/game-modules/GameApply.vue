@@ -48,3 +48,41 @@ export default {
   methods: {
     onSearch() {},
 
+    _getList() {
+      this.list = [1, 2, 3, 4, 5]
+    },
+  },
+  created() {
+    this._getList()
+  },
+}
+</script>
+
+<style lang="scss" scoped>
+@import '@/common/css/variable.scss';
+
+.settings-game-apply {
+  .row {
+    display: flex;
+    align-items: center;
+    margin-bottom: 1.5rem;
+    .search {
+      flex: 1;
+      margin-right: 4rem;
+    }
+  }
+  .projects {
+    margin-top: -0.75rem;
+    border-top: 0.05rem solid $color-border;
+    padding: 2rem 0;
+    .project-card {
+      margin: 0 2.9% 2.9% 0;
+      width: 31.4%;
+      &:nth-child(3n) {
+        margin-right: 0;
+      }
+    }
+  }
+}
+</style>
+

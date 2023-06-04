@@ -111,3 +111,117 @@ export default {
     }
   }
   .position-wrap {
+    padding: 0 1.6rem;
+    margin-bottom: 4rem;
+    @media (max-width: 768.89px) {
+      padding: 0;
+      margin-bottom: 2.4rem;
+    }
+    .title {
+      margin-bottom: 1.15rem;
+      font-size: 1.5rem;
+      font-weight: 600;
+      color: #fffefe;
+      text-align: left;
+      @media (max-width: 768.89px) {
+        margin-bottom: 0.6rem;
+        font-size: 0.75rem;
+      }
+      &::after {
+        content: '';
+        display: block;
+        margin-top: -1rem;
+        width: 20.85rem;
+        height: 1.1rem;
+        background: url('~@/assets/page-recruit/title-bg.png') center center no-repeat;
+        background-size: 100%;
+        @media (max-width: 768.89px) {
+          width: 10.1rem;
+          margin-top: -0.7rem;
+        }
+      }
+    }
+    .cotent {
+      margin-bottom: 1rem;
+      font-size: 0.9rem;
+      line-height: 1.5rem;
+      color: #d9daf9;
+      text-align: left;
+      @media (max-width: 768.89px) {
+        line-height: 0.9rem;
+        font-size: 0.7rem;
+      }
+      &::before {
+        content: '';
+        display: inline-block;
+        margin-right: 0.25rem;
+        width: 0.45rem;
+        height: 0.45rem;
+        vertical-align: 1px;
+        background-image: linear-gradient(90deg, #c937f6, #1669ff);
+        border-radius: 0.45rem;
+        @media (max-width: 768.89px) {
+          width: 0.4rem;
+          height: 0.4rem;
+          border-radius: 0.4rem;
+        }
+      }
+    }
+  }
+  .join-us {
+    display: flex;
+    align-items: center;
+    padding: 0 1.6rem;
+    .split {
+      flex: 1;
+      height: 0.01rem;
+      background-color: #607d83;
+    }
+    .text {
+      margin: 0 2rem;
+      font-size: 1.2rem;
+      color: #afe0e5;
+      @media (max-width: 768.89px) {
+        font-size: 0.75rem;
+      }
+    }
+  }
+  .email-wrap {
+    margin-top: 2rem;
+    text-align: center;
+    font-size: 0.9rem;
+    color: #afe0e5;
+    @media (max-width: 768.89px) {
+      font-size: 0.7rem;
+    }
+    .copy-wrap {
+      position: relative;
+      cursor: pointer;
+      .copy-input {
+        width: 6rem;
+        margin: 0;
+        padding: 0;
+        text-align: center;
+        font-style: italic;
+        font-size: 0.9rem;
+        color: #afe0e5;
+        background: transparent;
+        border: 0 none;
+        outline: none;
+        @media (max-width: 768.89px) {
+          width: 4rem;
+          font-size: 0.7rem;
+        }
+      }
+      .copy-email {
+        opacity: 0;
+        position: absolute;
+        top: 0;
+        left: 0;
+        bottom: 0;
+        right: 0;
+      }
+    }
+  }
+}
+</style>

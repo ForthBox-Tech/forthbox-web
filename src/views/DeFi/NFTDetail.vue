@@ -124,3 +124,118 @@ export default {
       this.isApproved = result
     },
 
+    // 授权
+    async onApprove() {
+      if (this.isApproved) return
+      try {
+        await this.tokenContract.setApprovalForAll(this.defiContract._contractAddress, true)
+        this.isApproved = true
+      } catch {
+        this.isApproved = false
+      }
+    },
+    // 质押
+    async onStake() {
+      if (this.lastNFTNum == 0) {
+        alert('sold out')
+        return
+      }
+      if (this.nftDefiInfo === null) {
+        return
+      }
+      if (this.nftDefiInfo.stakeNum > 0) {
+        alert('already staked')
+        return
+      }
+
+      try {
+        await this.defiContract.stake()
+        await this.getNftDefiInfo()
+        await this.getBalance()
+      } catch (err) {
+        console.error(err)
+        alert('Failed')
+      }
+    },
+    //获取质押信息
+    async getNftDefiInfo() {
+      try {
+        this.nftDefiInfo = await this.defiContract.getParameters()
+        this.lastNFTNum = this.nftDefiInfo['lastTokenNum' + this.contract.type] || 0
+      } catch (err) {
+        console.warn(err)
+      }
+      this.needShowRewardTime()
+    },
+    //判断是否显示reward倒计时
+    needShowRewardTime() {
+      this._stopTimer()
+      if (this.nftDefiInfo === null) {
+        this.isShowReward = false
+        return
+      }
+      if (this.nftDefiInfo.stakeNum > 0) {
+        this.isShowReward = true
+        const lastTime =
+          parseInt(this.nftDefiInfo.updateTime) +
+          this.contract.duration * 24 * 60 * 60 -
+          Date.now() / 1000
+        if (lastTime <= 0) {
+          this.isShowReward = false
+          this.isShowGetReward = true
+          this._stopTimer()
+        } else {
+          this._timer = createCountdown(lastTime, (time, leftTime) => {
+            if (leftTime < 0) {
+              this.isShowReward = false
+              this.isShowGetReward = true
+              this._stopTimer()
+            } else {
+              const hours = time[0] * 24 + parseInt(time[1])
+              this.rewardText = [
+                this.$t('DeFi.Redeem'),
+                hours != 0 ? hours + ':' + time[2] + ':' + time[3] : time[2] + ':' + time[3],
+              ].join(' ')
+            }
+          })
+        }
+      }
+    },
+    // 初始化
+    init() {
+      try {
+        const contract = NFT[this.$route.query.id]
+        const tokenContractAddress = contract.token
+        const defiContractAddress = contract.defi
+        this.contract = contract || {}
+        this.tokenContract = new ERC1155(tokenContractAddress)
+        this.defiContract = new LockERC1155ExchangeNFT(defiContractAddress)
+
+        this.getApprove()
+        this.getBalance()
+        this.getNftDefiInfo()
+      } catch (err) {
+        console.warn(err)
+      }
+    },
+    _stopTimer() {
+      this._timer && this._timer.stop && this._timer.stop()
+    },
+  },
+  unmounted() {
+    this._stopTimer()
+  },
+}
+</script>
+
+<style lang="scss" scoped>
+@import '@/common/css/variable.scss';
+
+.nft-detail-page {
+  margin-top: 2rem;
+  @media (max-width: 768.89px) {
+    margin-top: 1rem;
+  }
+}
+</style>
+
