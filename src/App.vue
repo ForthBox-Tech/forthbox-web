@@ -140,3 +140,95 @@ export default {
       }
     },
 
+    getUserInfo() {
+      return this.$axios
+        .get(`${process.env.VUE_APP_API_FBOX2}/web/users/get_login_info`)
+        .then((res) => {
+          if (res.code == 200) {
+            const data = res.data || {}
+            this.userWallet = data.UserAddr || ''
+            this.user = {
+              uid: data.UserId || '',
+              name: data.UserName || '',
+              email: data.Email || '',
+              avatar: data.Avatar || AVATAR_DEFAULT,
+              banner: data.BannerUrl || '',
+              introduce: data.Introduce || '',
+              website: data.WebsiteUrl || '',
+              twitter: data.TwitterUrl || '',
+              discord: data.DiscordUrl || '',
+              telegram: data.TelegramUrl || '',
+              instagram: data.InstagramUrl || '',
+              facebook: data.FacebookUrl || '',
+            }
+            return
+          }
+          throw new Error(res.msg)
+        })
+        .catch((err) => {
+          this.user = {}
+          console.error(err)
+        })
+    },
+
+    async _checkLogin() {
+      const oUrl = new URL(window.location.href)
+      const searchParams = oUrl.searchParams
+      const code = searchParams.get('code') || ''
+      const forceWallet = searchParams.get('forceWallet') || ''
+      if (!code) return
+
+      // 清除链接中的 code 和 forceWallet 参数
+      searchParams.delete('code')
+      searchParams.delete('forceWallet')
+      window.history.replaceState(null, '', oUrl.href)
+
+      if (forceWallet == 1) {
+        setTimeout(() => {
+          emitter.emit('wallet-connect')
+        })
+        return
+      }
+
+      // 用中心登录后的 code 换取页面 token
+      // const url = `${process.env.VUE_APP_API_FBOX2}/web/users/code_to_token`
+      // const params = new URLSearchParams()
+      // params.append('authCode', code)
+
+      // const res = await this.$axios.post(url, params)
+      // if (!res || res.code != 200) {
+      //   alert(res.msg)
+      //   return
+      // }
+      // this.setToken(res.data.token)
+
+      // 拉取用户身份信息
+      // await this.getUserInfo()
+    },
+  },
+  created() {
+    wallet.bind(this._onConnect)
+
+    this._checkToken()
+      .then((token) => !token && this._checkLogin())
+      .then(() => emitter.emit('auth-change'))
+
+    emitter.on('user-update', this.getUserInfo)
+  },
+  unmounted() {
+    emitter.off('user-update', this.getUserInfo)
+  },
+}
+</script>
+
+<style lang="scss">
+@import '@/common/css/base.scss';
+
+#app {
+  font-family: Poppins, Avenir, Helvetica, Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-align: center;
+  color: #2c3e50;
+}
+</style>
