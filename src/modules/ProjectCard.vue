@@ -105,3 +105,104 @@ export default {
 <style lang="scss" scoped>
 @import '@/common/css/variable.scss';
 
+.project-card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  box-sizing: border-box;
+  border: 0.1rem solid $color-purple;
+  border-radius: 0.5rem;
+  background-color: lighten($color-purple, 24.5%);
+  overflow: hidden;
+  cursor: pointer;
+  @media (max-width: 768.89px) {
+    border-width: 0.05rem;
+    border-radius: 0.3rem;
+  }
+  .header {
+    display: flex;
+    align-items: center;
+    padding: 0 0.65rem;
+    height: 2.7rem;
+    line-height: 2.7rem;
+    font-size: 0.9rem;
+    @media (max-width: 768.89px) {
+      padding: 0 0.35rem;
+      height: 1.7rem;
+      line-height: 1.7rem;
+      font-size: 0.65rem;
+    }
+    .name {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      height: inherit;
+      .image {
+        position: relative;
+        width: 2em;
+        height: 2em;
+        border-radius: 50%;
+        background: center center / contain no-repeat;
+        @media (max-width: 768.89px) {
+          width: 1.6em;
+          height: 1.6em;
+        }
+      }
+      .text {
+        flex: 1;
+        width: 0;
+        margin: 0 0.5em;
+        @include ellipsis(1);
+      }
+    }
+    .cert {
+      height: 1.39em;
+      @media (max-width: 768.89px) {
+        height: 1.1em;
+      }
+    }
+  }
+  .main {
+    flex: 1;
+    position: relative;
+    padding: 0 0.65rem;
+    @media (max-width: 768.89px) {
+      padding: 0 0.35rem;
+    }
+    .image {
+      position: relative;
+      padding-top: 88%;
+      background: center center / contain no-repeat;
+      overflow: hidden;
+      &.new::before {
+        content: 'NEW';
+        display: block;
+        position: absolute;
+        top: 0;
+        left: 0;
+        padding: 3.6em 1.5em 0;
+        line-height: 1.2;
+        font-size: 0.6rem;
+        font-weight: 500;
+        color: $color-primary;
+        background-color: $color-purple;
+        transform: translate(-50%, -50%) rotate(-45deg);
+      }
+    }
+    .info {
+      position: relative;
+      padding: 0.5em 0 0.68em;
+      line-height: 1.2;
+      font-size: 1rem;
+      @media (max-width: 768.89px) {
+        padding: 0.4em 0 0.54em;
+        font-size: 0.8rem;
+      }
+      .score {
+        display: flex;
+        align-items: center;
+        margin-bottom: 0.6em;
+        font-weight: 500;
+        color: $color-gray;
+        @media (max-width: 768.89px) {
+          margin-bottom: 0.4em;

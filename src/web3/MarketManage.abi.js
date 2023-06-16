@@ -98,3 +98,104 @@ export default [
       },
     ],
     stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [
+      {
+        internalType: 'address',
+        name: 'nftSwapAdress',
+        type: 'address',
+      },
+      {
+        internalType: 'uint256[]',
+        name: 'tokenIdArr',
+        type: 'uint256[]',
+      },
+    ],
+    name: 'getSellInfos',
+    outputs: [
+      {
+        internalType: 'address[]',
+        name: 'addrs',
+        type: 'address[]',
+      },
+      {
+        internalType: 'uint256[]',
+        name: 'prices',
+        type: 'uint256[]',
+      },
+      {
+        internalType: 'uint256[]',
+        name: 'times',
+        type: 'uint256[]',
+      },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [],
+    name: 'name',
+    outputs: [
+      {
+        internalType: 'string',
+        name: '',
+        type: 'string',
+      },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [
+      {
+        internalType: 'address',
+        name: 'nftAdress',
+        type: 'address',
+      },
+      {
+        internalType: 'uint256',
+        name: 'tokenId',
+        type: 'uint256',
+      },
+    ],
+    name: 'ownerOf',
+    outputs: [
+      {
+        internalType: 'address',
+        name: '',
+        type: 'address',
+      },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [],
+    name: 'symbol',
+    outputs: [
+      {
+        internalType: 'string',
+        name: '',
+        type: 'string',
+      },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [
+      {
+        internalType: 'address',
+        name: 'nftAdress',
+        type: 'address',
+      },
+      {
+        internalType: 'uint256',
+        name: 'start',
+        type: 'uint256',
+      },
+      {
+        internalType: 'uint256',
+        name: 'end',
