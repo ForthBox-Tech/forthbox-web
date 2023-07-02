@@ -108,3 +108,59 @@ export default {
       width: 2rem;
     }
     &:hover {
+      border-color: $color-blue;
+    }
+  }
+  .btn-max {
+    margin-left: 0.8rem;
+    padding: 0.3rem 0.5rem;
+    min-width: 3rem;
+    line-height: 0.8rem;
+    text-align: center;
+    font-size: 0.7rem;
+    color: $color-secondary;
+    background-color: #e7e7e7;
+    border-radius: 2rem;
+    cursor: pointer;
+    @media (max-width: 768.89px) {
+      margin-left: 0.4rem;
+      padding: 0.2rem 0.3rem;
+      min-width: 2rem;
+      font-size: 0.6rem;
+    }
+    &:hover {
+      color: $color-white;
+      background-color: $color-blue;
+    }
+  }
+
+  &.disabled {
+    .btn-minus {
+      opacity: 0.5;
+      cursor: initial;
+      &:hover {
+        background-image: url('~@/assets/page-market2/comp-number-input/btn-minus.png');
+      }
+    }
+    .btn-add {
+      opacity: 0.5;
+      cursor: initial;
+      &:hover {
+        background-image: url('~@/assets/page-market2/comp-number-input/btn-add.png');
+      }
+    }
+    .input-value:hover {
+      border-color: $color-border;
+    }
+    .btn-max {
+      opacity: 0.5;
+      cursor: initial;
+      &:hover {
+        color: $color-secondary;
+        background-color: #e7e7e7;
+      }
+    }
+  }
+}
+</style>
+

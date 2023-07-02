@@ -47,3 +47,34 @@
   </Dialog>
 </template>
 
+<script>
+import Dialog from '@/components/Dialog.vue'
+
+export default {
+  name: 'GuideDialog',
+  components: {
+    Dialog,
+  },
+  data() {
+    return {
+      visible: false,
+    }
+  },
+  methods: {
+    hide() {
+      this.visible = false
+    },
+    show() {
+      this.visible = true
+    },
+
+    onHide() {
+      this.hide()
+    },
+  },
+}
+</script>
+
+<style lang="scss" scoped>
+@import '@/common/css/variable.scss';
+
