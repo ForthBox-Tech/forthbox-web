@@ -206,3 +206,108 @@ export default {
         color: $color-gray;
         @media (max-width: 768.89px) {
           margin-bottom: 0.4em;
+        }
+        .stars {
+          margin-top: -0.15rem;
+        }
+        .text {
+          margin: 0 0.5em;
+          line-height: 1;
+          @media (max-width: 768.89px) {
+            margin: 0 0.3em;
+          }
+        }
+        .chain {
+          flex: 1;
+          overflow: hidden;
+          .icon {
+            float: right;
+            width: 1em;
+            height: 1em;
+            border-radius: 50%;
+            background-color: $color-placeholder6;
+            overflow: hidden;
+          }
+        }
+      }
+      .user-info {
+        display: flex;
+        align-items: center;
+        font-size: 0.8em;
+      }
+      .online {
+        .label {
+          display: inline-block;
+          margin-right: 0.5em;
+          @media (max-width: 768.89px) {
+            margin-right: 0.3em;
+            font-size: 0.8em;
+          }
+        }
+        .num {
+          font-weight: 600;
+          vertical-align: middle;
+        }
+      }
+      .like {
+        flex: 1;
+        text-align: right;
+        white-space: nowrap;
+        .icon {
+          display: inline-block;
+          margin: 0 0.3em 0 0;
+          width: 1em;
+          height: 1em;
+          background: url('~@/assets/page-market2/comp-card/icon-like-0.png') left center / contain
+            no-repeat;
+          vertical-align: middle;
+          overflow: hidden;
+          &.self {
+            background-image: url('~@/assets/page-market2/comp-card/icon-like-1.png');
+          }
+        }
+        .count {
+          display: inline-block;
+          vertical-align: middle;
+        }
+      }
+    }
+    .explain {
+      display: none;
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      z-index: 10;
+      line-height: 1.5;
+      font-size: 0.7rem;
+      color: $color-white;
+      background-color: rgba($color-black, 0.5);
+      @media (max-width: 768.89px) {
+        line-height: 1.3;
+        font-size: 0.55rem;
+      }
+      .text {
+        height: 70%;
+        margin: 1rem 0;
+        padding: 0 1.2rem;
+        overflow-y: auto;
+        @media (max-width: 768.89px) {
+          height: 90%;
+          margin: 0.5rem 0;
+          padding: 0 0.5rem;
+        }
+      }
+    }
+  }
+  &:hover {
+    .main {
+      .explain {
+        display: block;
+      }
+    }
+  }
+}
+</style>
+
