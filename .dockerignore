@@ -1,0 +1,9 @@
+Dockerfile
+LICENSE
+README.md
+lastupdate.tmp
+getimg
+.travis.yml
+.dockerignore
+.git
+.gitignore

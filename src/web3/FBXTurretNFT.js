@@ -45,3 +45,63 @@ export default class FBXTurretNFT extends ContractBase {
   async tokenURI(tokenId) {
     if (!cWebModel.mConnected) return {}
 
+    // const result = {
+    //   name: 'ForthBox Turret NFT',
+    //   description: 'FTN',
+    //   image: 'https://static.forthbox.io/image/nft/ham-fantasy/Fire.png',
+    //   base: 'https://www.forthbox.io/',
+    //   id: 3,
+    //   degree: 3,
+    //   degreeName: 'Fire',
+    // }
+    let result = {}
+    try {
+      const URI = await this._contract.methods.tokenURI(tokenId).call()
+      result = JSON.parse(URI)
+    } catch (err) {
+      console.warn(err)
+    }
+    return result
+  }
+
+  //获得等级
+  async getDegreeByTokenId(tokenId) {
+    if (!cWebModel.mConnected) return -1
+    if (!tokenId) return -1
+
+    const balance = await this._contract.methods.getDegreeByTokenId(tokenId).call()
+    return balance || -1
+  }
+  //获得等级名称
+  async getDegreeNameByTokenId(TokenId) {
+    if (!cWebModel.mConnected) return {}
+    const property = await this._contract.methods.getDegreeNameByTokenId(TokenId).call()
+    return property || {}
+  }
+
+  //查询账户的所有tokenID
+  async tokenOfOwner() {
+    if (!cWebModel.mConnected) return []
+    const tokenList = await this._contract.methods.tokenOfOwner(cWebModel.mAccount).call()
+    return tokenList || []
+  }
+
+  //查询账户的每一个tokenID
+  async tokenOfOwnerByIndex(ith) {
+    if (!cWebModel.mConnected) return ''
+    const tokenId = await this._contract.methods.tokenOfOwnerByIndex(cWebModel.mAccount, ith).call()
+    return tokenId
+  }
+  async bExistsID(tokenId) {
+    if (!cWebModel.mConnected) return ''
+    const bExit = await this._contract.methods.bExistsID(tokenId).call()
+    return bExit
+  }
+
+  //
+  async isApprovedForAll(owner, operator) {
+    if (!cWebModel.mConnected) return ''
+    const isOk = await this._contract.methods.isApprovedForAll(owner, operator).call()
+    return isOk
+  }
+
