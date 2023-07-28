@@ -143,3 +143,157 @@ cNFTFun.getParameters = async function (Accountadress) {
   tP.benefitsInvitationUSDC = window.web3.utils.fromWei(numArr[5] || '0', 'ether')
   tP.inviterNum = numArr[6]
 
+  var bChangePriceAuto = await _contract.methods.bChangePriceAuto().call()
+  if (bChangePriceAuto) {
+    tP.fbxPrice = window.web3.utils.fromWei(numArr[7] || '0', 'ether')
+  } else {
+    var feedUsdt = await _contract.methods.usdt_FeedPrice().call()
+    feedUsdt = window.web3.utils.fromWei(feedUsdt, 'ether')
+    const numArr7 = window.web3.utils.fromWei(numArr[7] || '0', 'ether')
+    tP.fbxPrice = (feedUsdt * feedUsdt) / numArr7 / 100.0
+  }
+  return tP
+}
+
+//查询账户的每一个tokenID
+cNFTFun.tokenOfOwnerByIndex = async function (ith) {
+  if (!cWebModel.mConnected) return ''
+  var tokenId = await _contract.methods.tokenOfOwnerByIndex(cWebModel.mAccount, ith).call()
+  return tokenId
+}
+cNFTFun.bExistsID = async function (TokenId) {
+  if (!cWebModel.mConnected) return ''
+  var bExit = await _contract.methods.bExistsID(TokenId).call()
+  return bExit
+}
+
+cNFTFun.isApprovedForAll = async function (owner, operator) {
+  if (!cWebModel.mConnected) return ''
+  var isOk = await _contract.methods.isApprovedForAll(owner, operator).call()
+  return isOk
+}
+//获得喂养比例
+cNFTFun.getFBXFeedingProportion = async function () {
+  if (!cWebModel.mConnected) return ''
+  var bChangePriceAuto = await _contract.methods.bChangePriceAuto().call()
+  var fbxPrice = 0
+  if (bChangePriceAuto) {
+    fbxPrice = await _contract.methods.getUsdtFBXPrice().call()
+  }
+  var num = await _contract.methods.getFBXFeedingProportion(fbxPrice).call()
+  return num
+}
+
+cNFTFun.getUsdtFBXPrice = async function () {
+  let fbxPrice = 0
+  try {
+    const weiPrice = await _contract.methods.getUsdtFBXPrice().call()
+    fbxPrice = window.web3.utils.fromWei(weiPrice || '0', 'ether')
+  } catch (err) {
+    console.warn(err)
+  }
+  return fbxPrice
+}
+
+//recipient 接受
+//tokenId
+cNFTFun.transferFrom = async function (recipient, tokenId) {
+  if (!cWebModel.mConnected) return
+  if (!window.web3) return
+
+  var gas0 = await _contract.methods
+    .transferFrom(cWebModel.mAccount, recipient, tokenId)
+    .estimateGas({ from: cWebModel.mAccount })
+  var gasPrice0 = await window.web3.eth.getGasPrice()
+  const contract = new web3.eth.Contract(HamNFTAbi, NFT_HAM, {
+    from: cWebModel.mAccount,
+    gasPrice: gasPrice0,
+    gas: parseInt(gas0 * gasCoe),
+  })
+
+  return new Promise((resolve, reject) => {
+    contractTransaction(contract, 'transferFrom', cWebModel.mAccount, recipient, tokenId, {
+      onTransactionHash: (hash) => {},
+      onReceipt: (receipt) => {
+        if (receipt['status']) {
+          resolve()
+          console.log('cNFTFun.transferFrom success')
+        }
+      },
+      onError: (err) => {
+        reject(err)
+        console.log('cNFTFun.transferFrom err', err)
+      },
+    })
+  })
+}
+
+cNFTFun.setApprovalForAll = async function (recipient, bTrue) {
+  if (!cWebModel.mConnected) return
+  if (!window.web3) return
+
+  var gas0 = await _contract.methods
+    .setApprovalForAll(recipient, bTrue)
+    .estimateGas({ from: cWebModel.mAccount })
+  var gasPrice0 = await window.web3.eth.getGasPrice()
+  const contract = new web3.eth.Contract(HamNFTAbi, NFT_HAM, {
+    from: cWebModel.mAccount,
+    gasPrice: gasPrice0,
+    gas: parseInt(gas0 * gasCoe),
+  })
+
+  return new Promise((resolve, reject) => {
+    contractTransaction(contract, 'setApprovalForAll', recipient, bTrue, {
+      onTransactionHash: (hash) => {},
+      onReceipt: (receipt) => {
+        if (receipt['status']) {
+          resolve()
+          console.log('cNFTFun.setApprovalForAll success')
+        }
+      },
+      onError: (err) => {
+        reject(err)
+        console.log('cNFTFun.setApprovalForAll err', err)
+      },
+    })
+  })
+}
+
+cNFTFun.feed_Foth_FBX = async function (tokenId) {
+  if (!cWebModel.mConnected) return
+  if (!window.web3) return
+
+  var gas0 = await _contract.methods
+    .feed_Foth_FBX(tokenId)
+    .estimateGas({ from: cWebModel.mAccount })
+
+  var gasPrice0 = await window.web3.eth.getGasPrice()
+  const contract = new web3.eth.Contract(HamNFTAbi, NFT_HAM, {
+    from: cWebModel.mAccount,
+    gasPrice: gasPrice0,
+    gas: parseInt(gas0 * gasCoe),
+  })
+  return new Promise((resolve, reject) => {
+    contractTransaction(contract, 'feed_Foth_FBX', tokenId, {
+      onTransactionHash: (hash) => {
+        console.log('cNFTFun.feed_Foth_FBX onTransactionHash', hash)
+      },
+      onReceipt: (receipt) => {
+        if (receipt['status']) {
+          resolve()
+          console.log('cNFTFun.feed_Foth_FBX success')
+        }
+      },
+      onError: (err) => {
+        reject(err)
+        console.log('cNFTFun.feed_Foth_FBX err', err)
+      },
+    })
+  })
+}
+
+// 铸造NFT 并 增加邀请者
+cNFTFun.mintNFT_AddInviter = async function (recipient) {
+  if (!cWebModel.mConnected) return
+  if (!window.web3) return
+
