@@ -227,3 +227,230 @@ export default {
 }
 </script>
 
+<style lang="scss">
+$nav-bg: #28282e;
+$nav-bg-hover: #3d3d42;
+$nav-height: 4.7rem;
+
+.fb-nav {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 100;
+  padding: 0 2vw;
+  width: 100%;
+  height: $nav-height;
+  box-sizing: border-box;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: #fff;
+  background-color: $nav-bg;
+  user-select: none;
+  &.opacity {
+    transition: background-color 0.3s;
+    background-color: rgba(0, 0, 0, 0);
+  }
+
+  .nav-logo {
+    img {
+      width: 9.5rem;
+    }
+  }
+  .nav-links {
+    margin: 0 1.5625vw;
+    white-space: nowrap;
+    .nav-link {
+      position: relative;
+      display: inline-block;
+      padding: 0 1.5625vw;
+      line-height: $nav-height;
+      text-align: center;
+      color: #fff;
+      &:hover {
+        color: #eee;
+      }
+      &.active {
+        color: #ae00ff;
+      }
+    }
+  }
+  .nav-interact {
+    flex: 1;
+    white-space: nowrap;
+    text-align: right;
+    line-height: $nav-height;
+    .user-avatar {
+      margin-right: 0.8rem;
+      display: inline-block;
+      width: 2.1rem;
+      height: 2.1rem;
+      vertical-align: middle;
+    }
+    .user-name {
+      display: inline-block;
+      font-size: 0.8rem;
+      vertical-align: middle;
+      &::after {
+        content: '';
+        margin-left: 0.5rem;
+        display: inline-block;
+        width: 0.55rem;
+        height: 0.55rem;
+        background: url('~@/assets/comp-nav/nav1-triangle.png') center center no-repeat;
+        background-size: 0.55rem;
+        vertical-align: middle;
+      }
+    }
+    .wallet {
+      cursor: pointer;
+      .icon {
+        vertical-align: middle;
+        margin-right: 0.25rem;
+        width: 1.25rem;
+      }
+      .text {
+        vertical-align: middle;
+        display: inline-block;
+        line-height: 1.2;
+        font-size: 0.8rem;
+        color: #fff;
+      }
+    }
+  }
+  .menu-btn {
+    display: inline-block;
+    padding: 0.5rem;
+    font-size: 0;
+    .line {
+      margin: 0.2rem 0;
+      display: block;
+      width: 1rem;
+      height: 0.1rem;
+      border-radius: 0.05rem;
+      background-color: #fff;
+    }
+  }
+  .nav-btn {
+    margin: 0 0.52vw;
+  }
+  .nav-toggle {
+    position: relative;
+    display: inline-block;
+    cursor: pointer;
+  }
+  .nav-dropdown {
+    display: none;
+    position: absolute;
+    top: $nav-height;
+    right: -1rem;
+    width: 10rem;
+    line-height: 2.5rem;
+    background-color: $nav-bg;
+    text-align: center;
+    &.visible {
+      display: block;
+    }
+    .dropdown-item {
+      display: block;
+      cursor: pointer;
+      color: #fff;
+      &:hover {
+        background-color: $nav-bg-hover;
+      }
+    }
+  }
+}
+.nav-drop-bg {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 99;
+}
+
+@media (max-width: 768.89px) {
+  $nav-height: 3.5rem;
+  .fb-nav {
+    height: $nav-height;
+    .nav-logo {
+      img {
+        width: 6rem;
+      }
+    }
+    .nav-links {
+      display: none;
+      position: fixed;
+      top: $nav-height;
+      left: 0;
+      bottom: 0;
+      width: 60%;
+      margin: 0;
+      background-color: $nav-bg;
+      overflow-y: auto;
+      &.visible {
+        display: block;
+      }
+      .nav-link {
+        display: block;
+        padding: 0 1rem 0 1.2rem;
+        line-height: 3rem;
+        text-align: left;
+        font-size: 0.65rem;
+        &:hover {
+          background-color: $nav-bg-hover;
+        }
+      }
+      .nav-toggle {
+        display: block;
+      }
+    }
+    .nav-interact {
+      line-height: $nav-height;
+
+      .wallet {
+        .text {
+          font-size: 0.65rem;
+        }
+      }
+    }
+    .nav-btn {
+      padding: 0 0.5rem;
+      line-height: 1.8rem;
+      font-size: 0.65rem;
+    }
+    .nav-dropdown {
+      position: static;
+      width: auto;
+      font-size: 0.65rem;
+      text-align: left;
+      &.visible {
+        transition: height 0.2s;
+      }
+      .dropdown-item {
+        margin-left: 1.5rem;
+        padding-left: 1rem;
+      }
+      &.fixed {
+        position: absolute;
+        top: $nav-height;
+        right: 0;
+        width: 100%;
+        text-align: center;
+        .dropdown-item {
+          margin: 0;
+          padding: 0 1rem;
+        }
+      }
+    }
+  }
+}
+.ru {
+  .nav-link {
+    padding: 0 1.5625vw 0 0 !important;
+  }
+}
+</style>

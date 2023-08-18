@@ -36,3 +36,30 @@ export default {
     },
   },
 }
+</script>
+
+<style lang="scss" scoped>
+@import '@/common/css/variable.scss';
+
+.provider-selector {
+  .item {
+    margin-left: 0.4rem;
+    display: inline-block;
+    box-sizing: border-box;
+    padding: 0 0.5rem;
+    min-width: 3.1rem;
+    line-height: 1.4rem;
+    text-align: center;
+    font-size: 0.6rem;
+    color: $color-purple;
+    border: 0.05rem solid $color-purple;
+    border-radius: 3rem;
+    cursor: pointer;
+    &.active {
+      color: $color-white;
+      background-color: $color-purple;
+    }
+  }
+}
+</style>
+
