@@ -59,3 +59,65 @@ export default {
       }
     },
   },
+  methods: {
+    show() {
+      this.visible = true
+    },
+    hide() {
+      this.visible = false
+    },
+    onHide() {
+      this.hide()
+    },
+    async onConfirm() {
+      if (!this.address) {
+        alert('Please enter the address')
+        return
+      }
+      const result = await this.handler(this.address, this.amount)
+      if (result) {
+        this.hide()
+      }
+    },
+  },
+}
+</script>
+
+<style lang="scss">
+@import './market.dialog.scss';
+
+.dialog-market.dialog-transfer {
+  .address-wrap {
+    margin-bottom: 1rem;
+    @media (max-width: 768.89px) {
+      margin-bottom: 0.65rem;
+    }
+
+    .label {
+      line-height: 2;
+    }
+    .value {
+      box-sizing: border-box;
+      width: 100%;
+      padding: 0 1rem;
+      line-height: 2.5rem;
+      background-color: #25262f;
+      border-radius: 0.35rem;
+      color: #fff;
+      border: 0 none;
+      outline: none;
+      box-shadow: none;
+      font-size: 0.8rem;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+      overflow: hidden;
+      @media (max-width: 768.89px) {
+        padding: 0 0.65rem;
+        line-height: 2rem;
+        font-size: 0.65rem;
+      }
+    }
+  }
+}
+</style>
+

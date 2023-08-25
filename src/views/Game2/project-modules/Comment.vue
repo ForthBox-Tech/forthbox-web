@@ -217,3 +217,217 @@ export default {
       this.score = 5
       this.isPraise = true
 
+      this.$modal.toast('success')
+      await this.init()
+    },
+
+    onJump(pageNo) {
+      this.pageNo = pageNo
+      this._getComments()
+    },
+
+    _getHamList() {
+      window.cNFTFun.connectToContract()
+      window.cFBX_NFTFun.connectToContract()
+
+      return Promise.all([
+        window.cNFTFun.tokenOfOwner(),
+        window.cFBX_NFTFun.getOwnerStakeTokenIDs(),
+      ])
+        .then(([hamTokens = [], stakedHamTokens = []]) => {
+          const tokens = [...hamTokens, ...stakedHamTokens]
+          if (!tokens.length) throw new Error('has not ham')
+
+          return Promise.all([
+            initNftList(hamTokens, false),
+            initNftList(stakedHamTokens, true),
+            this._commentContract.bCommentHamIds(tokens),
+          ])
+        })
+        .then(([hams, stakedHams, commentedHams]) => {
+          console.log('_getHamList', hams, stakedHams, commentedHams)
+          this.hamList = [...hams, ...stakedHams]
+            .map((ham, index) => {
+              const token = ham.token
+              const level = ham.level.lv
+
+              return {
+                text: `Level ${level} #${token}`,
+                token,
+                level,
+                selected: commentedHams[index],
+              }
+            })
+            .filter((ham) => !ham.selected)
+
+          this.ham = this.hamList[0]
+        })
+        .catch((err) => {
+          console.error(err)
+          this.hamList = []
+          this.ham = null
+        })
+    },
+    async _getPool() {
+      let info = {}
+      try {
+        info = await this._commentContract.getParameters()
+      } catch (err) {
+        console.error(err)
+      }
+      this.pool = {
+        totalSupply: Math.floor((info.totalSupply || 0) * 1000) / 1000,
+        balances: Math.floor((info.balances || 0) * 1000) / 1000,
+        earned: Math.floor((info.earned || 0) * 1000) / 1000,
+        totalRewardYet: 1000000,
+      }
+    },
+    async _initContract() {
+      const commentContractAddr = this.project.CommentContractAddr
+      if (commentContractAddr) {
+        this._commentContract = new ERC20CommentDefi(commentContractAddr)
+        console.log('_initContract', this._commentContract)
+        await this._getHamList()
+        await this._getPool()
+      }
+    },
+
+    async _getComments() {
+      const url = `${process.env.VUE_APP_API_FBOX2}/web/comment/list/get`
+      const params = {
+        symbol: this.query.code,
+        pageNo: this.pageNo,
+        pageSize: this.pageSize,
+      }
+
+      const res = await this.$axios.get(url, { params })
+      if (res.code != 200) {
+        this.total = 0
+        this.comments = []
+        console.warn(res.msg)
+        return
+      }
+
+      const data = res.data || {}
+
+      const pageInfo = data.page || {}
+      this.total = pageInfo.Total || 0
+
+      this.comments = (data.list || []).map((item) => {
+        item.vUserAddr = transformAddress(item.UserAddr)
+        item.vTime = formatDate('YYYY-MM-DD hh:mm:ss', new Date(item.CommentTime * 1000))
+        return item
+      })
+    },
+    async init() {
+      this.content = ''
+      this.score = 5
+      this.isPraise = true
+
+      this.total = 0
+      this.pageNo = 1
+      await this._getComments()
+
+      this._initContract()
+    },
+  },
+  created() {
+    this._initContract = debounce(this._initContract, 500)
+  },
+}
+</script>
+
+<style lang="scss" scoped>
+@import '@/common/css/variable.scss';
+
+.game-comment {
+  padding: 1.5rem 0;
+  @media (max-width: 768.89px) {
+    padding: 1rem 0;
+  }
+  .pool {
+    padding-right: 0;
+    border: 0 none;
+    @media (max-width: 768.89px) {
+      padding: 0;
+    }
+    .guide {
+      position: absolute;
+      right: 0;
+      bottom: 0;
+      line-height: 3.3rem;
+      color: $color-black;
+      cursor: pointer;
+      @media (max-width: 768.89px) {
+        line-height: 2.7rem;
+        font-size: 0.8rem;
+      }
+      &:hover {
+        color: $color-purple;
+      }
+      &::before {
+        content: '';
+        display: inline-block;
+        margin-right: 0.5em;
+        width: 0.8em;
+        height: 1em;
+        background: url('~@/assets/page-game2/page-project/icon-guide.png') center center / contain
+          no-repeat;
+        vertical-align: -0.15em;
+      }
+    }
+    .board {
+      display: flex;
+      align-items: center;
+      margin-left: -2.5rem;
+      padding: 0.8rem 1rem;
+      background-color: $color-white;
+      border-radius: 0.5rem;
+      box-shadow: 0 0 0.6rem 0.05rem rgba(91, 92, 97, 0.16);
+      @media (max-width: 768.89px) {
+        flex-wrap: wrap;
+        margin-left: 0;
+        padding: 0.4rem 0.5rem;
+      }
+    }
+    .item {
+      flex: 1;
+      box-sizing: border-box;
+      padding: 0.6rem 1rem 1rem;
+      @media (max-width: 768.89px) {
+        flex: none;
+        width: 50%;
+        padding: 0.5rem;
+        text-align: center;
+      }
+    }
+    .label {
+      margin-bottom: 0.3rem;
+      line-height: 1.5;
+      font-size: 1rem;
+      color: $color-secondary;
+      @media (max-width: 768.89px) {
+        font-size: 0.7rem;
+      }
+    }
+    .value {
+      font-size: 0;
+      .icon {
+        margin-right: 1rem;
+        height: 2rem;
+        vertical-align: middle;
+        @media (max-width: 768.89px) {
+          margin-right: 0.5rem;
+          height: 1rem;
+        }
+      }
+      .text {
+        font-size: 1.3rem;
+        vertical-align: middle;
+        @media (max-width: 768.89px) {
+          font-size: 1rem;
+        }
+      }
+    }
+    .btn-wrap {
+      padding: 0 1rem 0 0;
