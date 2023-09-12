@@ -53,3 +53,70 @@
                 </div>
                 <div>
                   <img style="width: 0.725rem" src="@/assets/home/dialog-feed-power.png" />
+                  <span> = HASHRATE</span>
+                </div>
+              </div>
+              <img
+                class="pc-v-hide"
+                style="width: 104%; margin-left: -1rem"
+                src="@/assets/home/dialog-feed-table-m.png"
+              />
+            </div>
+          </div>
+        </li>
+        <li class="item">
+          <i class="order">7</i>
+          <p class="text">
+            {{ $t('Home.FeedInstructions.ProportionOfFeeding') }}
+          </p>
+        </li>
+        <li class="item">
+          <i class="order">8</i>
+          <div class="text one-line">
+            <p>{{ $t('Home.FeedInstructions.MiningModelFormula') }}</p>
+            <ul class="sub-list">
+              <li class="sub-item">{{ $t('Home.FeedInstructions.MiningModelFormula1') }}</li>
+              <li class="sub-item">{{ $t('Home.FeedInstructions.MiningModelFormula2') }}</li>
+              <li class="sub-item">{{ $t('Home.FeedInstructions.MiningModelFormula3') }}</li>
+              <li class="sub-item">{{ $t('Home.FeedInstructions.MiningModelFormula4') }}</li>
+              <li class="sub-item">{{ $t('Home.FeedInstructions.MiningModelFormula5') }}</li>
+              <li class="sub-item">{{ $t('Home.FeedInstructions.MiningModelFormula6') }}</li>
+            </ul>
+          </div>
+        </li>
+        <!-- <li class="item">
+          <i class="order">9</i>
+          <p class="text">
+            {{ $t('Home.FeedInstructions.FirstToReach') }}
+          </p>
+        </li> -->
+      </ul>
+    </main>
+  </Dialog>
+</template>
+
+<script>
+import Dialog from '@/components/Dialog.vue'
+
+export default {
+  name: 'FeedIntroDialog',
+  components: {
+    Dialog,
+  },
+  data() {
+    return {
+      visible: false,
+    }
+  },
+  methods: {
+    show() {
+      this.visible = true
+    },
+    hide() {
+      this.visible = false
+    },
+    onHide() {
+      this.hide()
+    },
+  },
+}

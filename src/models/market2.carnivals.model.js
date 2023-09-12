@@ -242,3 +242,219 @@ class TowerBox extends Box {
     const contract = this.getContract()
     const property = await contract.getParameters()
 
+    // this.count = property.totalNFT || 0
+    // this.soldCount = this.count - (property.totalNFT - property.totalSupply) || 0
+    this.buyCount = property.addressBuyNum || 0
+
+    this.isEnd = this.soldCount == this.count
+    this.isPurchasable = !(this.isEnd || property.addressLastBuyNum == 0)
+
+    this.ownCount = await contract.balanceof()
+  }
+  buy() {
+    // 已售完，不可点击，此处功能不实现
+  }
+  async open() {
+    if (this.ownCount <= 0) return
+
+    try {
+      const contract = this.getContract()
+      const tokenId = await contract.tokenOfOwnerByIndex(0)
+      await contract.randGift(tokenId)
+
+      const towerContract = new FBXTurretNFT(this.nftAddr)
+      const amount = await towerContract.balanceof()
+      const towerTokenId = await towerContract.tokenOfOwnerByIndex(amount - 1)
+      const towerTokenURI = await towerContract.tokenURI(towerTokenId)
+
+      const result = {
+        text: `You've got ${towerTokenURI.degreeName} Tower NFT. ID #${towerTokenId}`,
+        image: towerTokenURI.image,
+        status: 'success',
+      }
+      return result
+    } catch (err) {
+      console.warn(err)
+      _modal.toast(err?.message || 'Failed!')
+    }
+  }
+}
+
+class MetaBullBox extends Box {
+  promo = require('@/assets/page-market2/page-carnivals/metabull/promo.png')
+  image = require('@/assets/page-market2/page-carnivals/metabull/box.png')
+  name = 'MetaBull - MetaBull Mystery Box'
+  creator = {
+    name: 'ForthBox',
+    avatar: require('@/assets/common/token-fbx.png'),
+  }
+  count = 500
+  soldCount = 0
+  limit = 10
+  ownCount = 0
+  buyCount = 0
+  price = 77
+  token = 'USDC'
+  chain = 'BNB'
+  startTime = 'TBA'
+  isCert = false
+  category = 'RTT'
+  provider = 'official'
+  isEnd = false
+  isNew = true
+  prizes = [
+    {
+      image: require('@/assets/page-market2/page-carnivals/metabull/prize-planet.png'),
+      name: 'Planet series',
+      epic: 'Planet',
+      rate: '30%',
+    },
+    {
+      image: require('@/assets/page-market2/page-carnivals/metabull/prize-stellar.png'),
+      name: 'Stellar series',
+      epic: 'Stellar',
+      rate: '30%',
+    },
+    {
+      image: require('@/assets/page-market2/page-carnivals/metabull/prize-comet.png'),
+      name: 'Comet series',
+      epic: 'Comet',
+      rate: '20%',
+    },
+    {
+      image: require('@/assets/page-market2/page-carnivals/metabull/prize-galaxy.png'),
+      name: 'Galaxy series',
+      epic: 'Galaxy',
+      rate: '20%',
+    },
+  ]
+  description = [
+    {
+      title:
+        'The following prizes are included in the Mystery Box, all come with a set of 4 MetaBull NFTs:',
+      text: [
+        '(1) 150 Planet series',
+        '(2) 150 Stellar series',
+        '(3) 100 Comet series',
+        '(4) 100 Galaxy series',
+      ],
+    },
+    {
+      title: 'MetaBull Mystery Box Launch time:',
+      text: 'TBA',
+    },
+    {
+      title: 'Note:',
+      text: [
+        '1. The total supply of MetaBull NFT in the Carnival is 500.',
+        '2. Spend 77 USDC to buy a Mystery Box, up to 10 purchases for each BNB Smart Chain (BSC) address.',
+      ],
+    },
+  ]
+  nftAddr = NFT_METABULL
+  boxAddr = BOX_METABULL
+  getContract() {
+    return new FBXTowerMysteryBoxNFT(this.boxAddr)
+  }
+  async init() {
+    const contract = this.getContract()
+    const property = await contract.getParameters()
+
+    // this.count = property.totalNFT || 0
+    this.soldCount = this.count - property.totalNFT || 0
+    this.buyCount = property.addressBuyNum || 0
+
+    this.isEnd = this.soldCount == this.count
+    this.isPurchasable = !(this.isEnd || property.addressLastBuyNum == 0)
+
+    this.ownCount = await contract.balanceof()
+  }
+  async buy() {
+    try {
+      await this.checkTokenEnough()
+      await this.checkTokenApproved()
+
+      const contract = this.getContract()
+      const result = await contract.buyNFT()
+
+      const txhash = result && result.transactionHash
+      if (txhash) {
+        report(txhash, 0)
+      }
+
+      const amount = await contract.balanceof()
+      const tokenId = await contract.tokenOfOwnerByIndex(amount - 1)
+
+      return {
+        text: `You've got Metabull Mystery NFT. ID #${tokenId}`,
+        image: this.image,
+        status: 'success',
+      }
+    } catch (err) {
+      console.warn(err)
+      _modal.toast(err?.message || 'Failed!')
+    }
+  }
+  async open() {
+    if (this.ownCount <= 0) return
+
+    try {
+      const contract = this.getContract()
+      const tokenId = await contract.tokenOfOwnerByIndex(0)
+      const result = await contract.randGift(tokenId)
+
+      const txhash = result && result.transactionHash
+      if (txhash) {
+        report(txhash, 0)
+      }
+
+      const name = await contract.getAddrLastGiftBullName()
+      const prize = this.prizes.find((item) => item.name == name)
+
+      return {
+        text: `You've got ${name} Bull NFT.`,
+        image: prize?.image || '',
+        status: 'success',
+      }
+    } catch (err) {
+      console.warn(err)
+      _modal.toast(err?.message || 'Failed!')
+    }
+  }
+}
+
+export const activities = [
+  new MetaBullBox(),
+  new TowerBox(),
+  new TowerBox({
+    startTime: '08:00:00 UTC, 2022-3-25',
+    description: [
+      {
+        title: 'The following prizes are included in the mystery box.',
+        text: [
+          '1) 100 Missile Tower NFT',
+          '2) 100 Railgun Tower NFT',
+          '3) 100 Laser Tower NFT',
+          '4) 200 Fire Tower NFT',
+          '5) 200 Frozen Tower NFT',
+          '6) 300 Machine-gun Tower NFT',
+        ],
+      },
+      {
+        title: 'Launch time:',
+        text: '4:00 PM SGT (8:00 AM UTC), March 25, 2022',
+      },
+      {
+        title: 'Note:',
+        text: [
+          '1.The quantity of Tower NFT in carnival is 1,000 in total.',
+          '2.Spend 2,000 FBX to buy a mystery box, up to 10 times for each BNB Smart Chain (BSC) address.',
+        ],
+      },
+    ],
+  }),
+  new FighterBox(),
+].map((item, index) => {
+  item.id = index + 666
+  return item
+})

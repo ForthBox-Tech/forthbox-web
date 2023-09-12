@@ -80,3 +80,75 @@ export default {
     return {
       TOKENS,
 
+      iUnitPrice: '0',
+      dTotalPrice: '0',
+      iAmount: '1',
+
+      isCanceled: false,
+    }
+  },
+  computed: {
+    iUnit() {
+      const token = TOKENS.find((item) => item.text === this.erc20Type)
+      return token || TOKENS[0]
+    },
+    iTotalPrice() {
+      const unitPrice = this.iUnitPrice || 0
+      const amount = this.iAmount || 1
+      return parseInt(unitPrice * amount * 100) / 100
+    },
+  },
+  watch: {
+    unitPrice(val) {
+      this.iUnitPrice = `${val}`
+    },
+    amount(val) {
+      this.iAmount = `${val}`
+    },
+    async iTotalPrice(val) {
+      const fbxPrice = await getFbxPrice()
+      this.dTotalPrice = (fbxPrice * val).toFixed(4)
+    },
+    isOnSale() {
+      this.isCanceled = !this.isOnSale
+    },
+  },
+  methods: {
+    async onEditPrice() {
+      if (!this.swapId) return
+      if (!(this.iUnitPrice < this.unitPrice)) {
+        this.$modal.toast('The new price must be less than the original price')
+        return
+      }
+
+      try {
+        await editPrice(this.swapId, this.iTotalPrice)
+      } catch (err) {
+        this.$modal.toast(err.message)
+        return
+      }
+
+      this.$modal.toast('success')
+    },
+    async onCancel() {
+      if (!this.swapId) return
+
+      try {
+        await cancel(this.swapId)
+      } catch (err) {
+        this.$modal.toast(err.message)
+        return
+      }
+
+      this.isCanceled = true
+      this.$modal.toast('success')
+    },
+  },
+  created() {},
+}
+</script>
+
+<style lang="scss" scoped>
+// @import '@/common/css/variable.scss';
+</style>
+

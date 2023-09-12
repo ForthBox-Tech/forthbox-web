@@ -155,3 +155,152 @@ export async function buyMulti(orders) {
     }
   })
 
+  const approvePromise = []
+  Object.keys(erc20Map).forEach((type) => {
+    const erc20 = erc20Map[type]
+    approvePromise.push(approveForErc20(erc20.contract, erc20.quantity))
+  })
+  const isApproved = await Promise.all(approvePromise).then((results) => {
+    return !results.find((iResult) => !iResult)
+  })
+  if (!isApproved) return
+
+  const key = Date.now()
+  const marketContract = new ForthBoxMarketSwap(MARKET)
+  const result = await marketContract.buys(swapIds, key)
+
+  const txhash = result && result.transactionHash
+  if (!txhash) return
+
+  report(txhash, key)
+  return txhash
+}
+
+/**
+ * 修改价格
+ * @param {String} swapId 订单ID
+ * @param {Number} price 价格
+ */
+export async function editPrice(swapId, price) {
+  if (!swapId || !price) return
+
+  const key = Date.now()
+  const marketContract = new ForthBoxMarketSwap(MARKET)
+  const result = await marketContract.fix(swapId, price, key)
+
+  const txhash = result && result.transactionHash
+  if (!txhash) return
+
+  report(txhash, key)
+  return txhash
+}
+
+/**
+ * 取消订单
+ * @param {String} swapId 订单ID
+ */
+export async function cancel(swapId) {
+  if (!swapId) return
+
+  const key = Date.now()
+  const marketContract = new ForthBoxMarketSwap(MARKET)
+  const result = await marketContract.cancel(swapId, key)
+
+  const txhash = result && result.transactionHash
+  if (!txhash) return
+
+  report(txhash, key)
+  return txhash
+}
+
+export async function getSellInfo(nftContractAddr, tokenId) {
+  const marketContract = new ForthBoxMarketSwap(MARKET)
+  const result = await marketContract.tokenPlanSellInfo(
+    cWebModel.mAccount,
+    nftContractAddr,
+    tokenId
+  )
+  return result
+}
+
+/**
+ * 上报交易hash
+ * @param {String} txhash
+ * @param {String} swapKey
+ */
+export async function report(txhash, swapKey) {
+  const url = `${process.env.VUE_APP_API_FBOX2}/web/market_place/swap_activity/txhash/report`
+  const params = new URLSearchParams()
+  params.append('txhash', txhash)
+  params.append('swapKey', swapKey)
+  params.append('startAddr', cWebModel.mAccount)
+
+  let result
+  try {
+    result = await _axios.post(url, params)
+  } catch (err) {
+    console.error(err)
+  }
+  return result
+}
+
+/**
+ * 项目收藏
+ * @param {String} projectId 项目Id
+ */
+export async function favProject(projectId) {
+  const url = `${process.env.VUE_APP_API_FBOX2}/web/users/add_collection_fav`
+  const params = new URLSearchParams()
+  params.append('collection_id', projectId)
+
+  return await _axios.post(url, params)
+}
+
+/**
+ * 取消项目收藏
+ * @param {String} projectId 项目Id
+ */
+export async function unfavProject(projectId) {
+  const url = `${process.env.VUE_APP_API_FBOX2}/web/users/remove_collection_fav`
+  const params = new URLSearchParams()
+  params.append('collection_id', projectId)
+
+  return await _axios.post(url, params)
+}
+
+/**
+ * 加车
+ * @param {String} swapId 交易单Id
+ */
+export async function addCart(swapId) {
+  const url = `${process.env.VUE_APP_API_FBOX2}/web/shopping_cart/add_shopping_cart`
+  const params = new URLSearchParams()
+  params.append('swapId', swapId)
+
+  return await _axios.post(url, params)
+}
+
+/**
+ * 取消加车
+ * @param {String[]} swapIds 交易单Id列表
+ */
+export async function rmCart(swapIds) {
+  const url = `${process.env.VUE_APP_API_FBOX2}/web/shopping_cart/upgrade_shopping_cart`
+  const params = new URLSearchParams()
+  params.append('swapId', swapIds.join(','))
+
+  return await _axios.post(url, params)
+}
+
+/**
+ * 获取购物车列表
+ */
+export async function getCart() {
+  const url = `${process.env.VUE_APP_API_FBOX2}/web/shopping_cart/get_detail`
+  const params = {}
+
+  return await _axios.get(url, { params })
+}
+
+export const MARKET2_PAGE_SIZE = 16
+
