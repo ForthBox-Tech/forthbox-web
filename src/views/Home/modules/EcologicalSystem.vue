@@ -491,3 +491,250 @@ export default {
         background-size: 100% 100%;
       }
       .img {
+        display: block;
+        margin: 0.5rem auto 0;
+        max-width: 21rem;
+        width: 100%;
+      }
+    }
+    @media (max-width: 768.89px) {
+      .panel-team {
+        font-size: 0.65rem;
+        .text {
+          padding: 0.8rem 1rem 1.2rem;
+          background-image: url('~@/assets/home/ecosystem-team-border-m.png');
+        }
+      }
+    }
+    .panel-token {
+      .token-title {
+        margin-bottom: 1rem;
+        font-size: 0.9rem;
+        img {
+          margin-left: 0.3rem;
+          vertical-align: middle;
+        }
+      }
+      .token-text {
+        margin-bottom: 1.6rem;
+        line-height: 1.2;
+        font-size: 0.8rem;
+        color: #bfbfbf;
+        &.with-circular {
+          position: relative;
+          padding-left: 1rem;
+          &::before {
+            content: '';
+            position: absolute;
+            top: 0.22rem;
+            left: 0;
+            display: inline-block;
+            width: 0.45rem;
+            height: 0.45rem;
+            border-radius: 0.45rem;
+            background-color: #ae00ff;
+          }
+        }
+      }
+      .token-block {
+        margin-bottom: 1.7rem;
+        background-color: #1e1a33;
+        border-radius: 1.3rem;
+      }
+      .token-table {
+        position: relative;
+        margin: 0 3.35rem 1.7rem 1.1rem;
+        padding: 2.5rem;
+        .token-table-bg {
+          position: absolute;
+          top: 0;
+          right: -3.35rem;
+        }
+      }
+      .table-title {
+        font-size: 0.8rem;
+        font-weight: 600;
+        &::before {
+          content: '';
+          margin-left: -1.1rem;
+          margin-right: 0.6rem;
+          display: inline-block;
+          width: 0.5rem;
+          height: 0.5rem;
+          background-color: #ae00ff;
+          border-radius: 50%;
+        }
+      }
+      .table-info {
+        margin: 0.2rem 0 0;
+        width: 100%;
+        font-size: 0.8rem;
+        tr {
+          line-height: 2.5rem;
+        }
+        th:last-child,
+        td:last-child {
+          text-align: right;
+        }
+      }
+      .table-notes {
+        padding-top: 1.3rem;
+        border-top: 0.05rem solid #323a4b;
+      }
+      .token-fbx-1 {
+        display: flex;
+        justify-content: space-around;
+        margin-top: 1rem;
+        .item {
+          max-width: 8rem;
+          font-size: 0.7rem;
+          text-align: center;
+          p {
+            margin: 0.8rem 0.5rem;
+            text-align: left;
+          }
+        }
+      }
+      .token-fbx-2 {
+        margin-top: 0.8rem;
+        text-align: center;
+      }
+    }
+    @media (max-width: 768.89px) {
+      .panel-token {
+        .token-title {
+          margin-bottom: 0.5rem;
+          font-size: 0.7rem;
+          img {
+            width: 0.7rem;
+          }
+        }
+        .token-text {
+          margin-bottom: 0.7rem;
+          line-height: 1.5;
+          font-size: 0.65rem;
+        }
+        .token-block {
+          margin-bottom: 0.85rem;
+          border-radius: 0.65rem;
+        }
+        .token-table {
+          margin: 0 0 0.8rem;
+          padding: 0.65rem 0.8rem;
+        }
+        .table-title {
+          font-size: 0.7rem;
+          &::before {
+            margin-left: 0;
+          }
+        }
+        .table-info {
+          font-size: 0.65rem;
+          tr {
+            line-height: 1.25rem;
+          }
+        }
+        .table-notes {
+          padding-top: 0.65rem;
+          font-size: 0.65rem;
+        }
+        .token-fbx-1 {
+          flex-wrap: wrap;
+          margin-top: 0.8rem;
+          .item {
+            width: 40%;
+            font-size: 0.6rem;
+            p {
+              margin: 0.4rem 0.5rem 0.6rem;
+            }
+          }
+        }
+      }
+    }
+    .panel-map {
+      .map-block {
+        margin-bottom: 1rem;
+        padding: 1rem 1.2rem 1rem 2.7rem;
+        background-color: #1e1a33;
+        border-radius: 1.1rem;
+      }
+      .map-title {
+        position: relative;
+        line-height: 2.5rem;
+        border-bottom: 0.05rem solid #5e5e5e;
+        &::before {
+          content: '';
+          display: inline-block;
+          width: 0;
+          height: 0;
+          margin-left: -0.25rem;
+          margin-right: 0.1rem;
+          vertical-align: middle;
+          border-left: 0.4rem solid #ae00ff;
+          border-right: 0.4rem solid transparent;
+          border-top: 0.25rem solid transparent;
+          border-bottom: 0.25rem solid transparent;
+        }
+      }
+      .map-list {
+        padding: 0.7rem 0;
+      }
+      .map-item {
+        display: flex;
+        padding: 0.3rem 0;
+        align-items: center;
+        .text {
+          flex: 1;
+          font-size: 0.7rem;
+          line-height: 1.5rem;
+        }
+        .line {
+          margin: 0 1.2rem;
+          width: 20%;
+          height: 0;
+          border-bottom: 0.1rem dashed #5e5e5e;
+        }
+        .switch {
+          width: 3.15rem;
+          height: 1.5rem;
+          background: url('~@/assets/home/ecosystem-switch-off.png') 0 0 no-repeat;
+          background-size: 100%;
+          &.on {
+            background-image: url('~@/assets/home/ecosystem-switch-on.png');
+          }
+        }
+      }
+    }
+    @media (max-width: 768.89px) {
+      .panel-map {
+        font-size: 0.65rem;
+        .map-block {
+          margin-bottom: 0.5rem;
+          padding: 0.5rem 0.6rem 0.5rem 0.75rem;
+          border-radius: 0.65rem;
+          background-color: initial;
+        }
+        .map-title {
+          line-height: 2rem;
+        }
+        .map-item {
+          padding: 0;
+          .text {
+            font-size: 0.65rem;
+          }
+          .line {
+            margin: 0 0.6rem;
+            width: 15%;
+            border-bottom: 0.05rem dashed #5e5e5e;
+          }
+          .switch {
+            width: 2.175rem;
+            height: 1.04rem;
+          }
+        }
+      }
+    }
+  }
+}
+</style>
+

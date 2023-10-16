@@ -36,3 +36,23 @@ export default {
   },
   mounted() {},
 }
+</script>
+
+<style lang="scss" scoped>
+@import '@/common/css/variable.scss';
+
+.admin-home {
+  .main-wrap2 {
+    margin-top: 2.5%;
+    margin-bottom: 2.5%;
+  }
+  .title {
+    text-align: left;
+    font-size: 1.5em;
+    color: $color-primary;
+  }
+  .content {
+    margin: 2% 0;
+  }
+}
+</style>

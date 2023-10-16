@@ -41,3 +41,49 @@ export default {
     value: {
       get() {
         return this.modelValue
+      },
+      set(val) {
+        this.$emit('update:modelValue', val)
+      },
+    },
+  },
+  watch: {
+    reset() {
+      this.resetData()
+    },
+  },
+  methods: {
+    onVerify() {
+      if (this.disabled) return
+
+      if (typeof this._gVerify != 'undefined') {
+        window.grecaptcha.reset(this._gVerify)
+        return
+      }
+
+      this._gVerify = window.grecaptcha.render('g-verify', {
+        sitekey: '6LfgvHMeAAAAAMAFcPH4P9DyeXYHsuHSLdJeGenY',
+        callback: (gToken = '') => {
+          this.$emit('get-verify', {
+            gToken,
+            next: () => {
+              this.disabled = true
+              this.execTimer(TIMER)
+            },
+          })
+        },
+      })
+    },
+
+    resetData() {
+      this.disabled = false
+      this.timer = 0
+    },
+    execTimer(timer) {
+      if (timer <= 0) {
+        this.disabled = false
+        return
+      }
+
+      this.timer = timer - 1
+
