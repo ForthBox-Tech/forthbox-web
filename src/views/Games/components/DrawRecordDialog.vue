@@ -77,3 +77,43 @@ export default {
   }
   .close {
     position: absolute;
+    top: -1.5rem;
+    right: -2rem;
+    z-index: 10;
+    display: block;
+    width: 2rem;
+    height: 2rem;
+    background: url('~@/assets/page-games/common/close.png') center center / 1.2rem no-repeat;
+    cursor: pointer;
+    @media (max-width: 768.89px) {
+      right: -1.5rem;
+    }
+  }
+  .title {
+    font-size: 1.3em;
+  }
+  .table {
+    margin-top: 0.7em;
+    width: 100%;
+    line-height: 2.2;
+    background-color: #6300c2;
+    border-collapse: collapse;
+    border: 0.05rem solid #5605a4;
+    border-radius: 0.5em;
+    overflow: hidden;
+    .head {
+      font-size: 1em;
+      background-color: #821991;
+    }
+    .row {
+      font-size: 0.9em;
+    }
+    th,
+    td {
+      padding: 0 0.5em;
+      border: 0.05rem solid #5605a4;
+    }
+  }
+}
+</style>
+
