@@ -72,3 +72,56 @@
   </div>
 </template>
 
+<script>
+import FormItem from '@/components/FormItem.vue'
+import Input from '@/components/Input.vue'
+import Button from '@/components/Button.vue'
+import Textarea from '@/components/Textarea.vue'
+
+export default {
+  components: {
+    FormItem,
+    Input,
+    Button,
+    Textarea,
+  },
+  props: {},
+  data() {
+    return {
+      name: '',
+      introduce: '',
+    }
+  },
+  methods: {},
+  created() {
+    console.log('8888888888')
+  },
+}
+</script>
+
+<style lang="scss" scoped>
+@import '@/common/css/variable.scss';
+
+.settings-manage-baseinfo {
+  display: flex;
+  .video-update {
+    margin-bottom: 1rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 15rem;
+    border: 0.1rem dashed $color-border;
+    border-radius: 0.4rem;
+    cursor: pointer;
+    .cover {
+      text-align: center;
+      font-size: 0.7rem;
+      color: #b4b9be;
+      &::before {
+        content: '';
+        margin: 0 auto 1.6rem;
+        display: block;
+        width: 6rem;
+        height: 4.5rem;
+        background: url('~@/assets/page-settings/page-game/video-update.png') center center /
+          contain no-repeat;
