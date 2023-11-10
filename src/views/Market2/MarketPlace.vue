@@ -82,3 +82,94 @@ export default {
       gameType: '',
       provider: '',
 
+      total: 0,
+      pageSize: 12,
+      pageNo: 1,
+
+      list: [],
+    }
+  },
+  mixins: [initTriggerMixin()],
+  methods: {
+    formatDigits,
+
+    onChangeFilter() {
+      this.pageNo = 1
+      this._getList()
+    },
+    onJump(pageNo) {
+      this.pageNo = pageNo
+      this._getList()
+    },
+
+    onProject(project) {
+      this.$router.push({
+        path: '/market2/marketplace/project',
+        query: {
+          id: project.ID,
+        },
+      })
+    },
+
+    async _getSummary() {
+      const url = `${process.env.VUE_APP_API_FBOX2}/web/market_place/swap_order/summary_data/query`
+      const params = {}
+
+      const res = await this.$axios.get(url, { params })
+      if (res.code != 200) {
+        this.summary = {}
+        return
+      }
+
+      this.summary = res.data || {}
+    },
+    async _getList() {
+      const url = `${process.env.VUE_APP_API_FBOX2}/web/collections/get_list`
+      const params = {
+        category: this.gameType || '',
+        type: this.provider || '',
+        // isGame: '',
+        pageNo: this.pageNo,
+        pageSize: this.pageSize,
+      }
+      const res = await this.$axios.get(url, { params })
+      if (res.code != 200) {
+        this.total = 0
+        this.list = []
+        console.warn(res.msg)
+        return
+      }
+
+      const data = res.data || {}
+      this.total = data.Total || 0
+      this.list = data.List || []
+    },
+    async init() {
+      this.gameType = ''
+      this.provider = ''
+
+      this.total = 0
+      this.pageNo = 1
+      await this._getList()
+
+      await this._getSummary()
+    },
+  },
+}
+</script>
+
+<style lang="scss" scoped>
+@import '@/common/css/variable.scss';
+
+.market-marketplace {
+  .graphs {
+    --template-column-gutters: 4;
+    margin: 2.7rem 0 0;
+    display: grid;
+    grid-template-columns: repeat(var(--template-column-gutters), 1fr);
+    gap: 1vw;
+    @media (max-width: 768.89px) {
+      margin: 1.2rem 0 1rem;
+      --template-column-gutters: 2;
+    }
+

@@ -41,3 +41,27 @@ export default {
       this.visible ? this.hide() : this.show()
     },
 
+    onHide() {
+      this.hide()
+    },
+    onLanguage(language) {
+      this.$root.$i18n.locale = language || 'en'
+    },
+  },
+  created() {
+    this._hide = (evt) => {
+      if (!isInElem(evt, this.$refs.UserModal)) {
+        this.hide()
+      }
+    }
+    document.addEventListener('click', this._hide)
+  },
+  unmounted() {
+    document.removeEventListener('click', this._hide)
+  },
+}
+</script>
+
+<style lang="scss" scoped>
+@import '@/common/css/variable.scss';
+
