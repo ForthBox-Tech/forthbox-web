@@ -69,3 +69,36 @@ export default class NFT extends ContractBase {
     return isOk
   }
 
+  //查询账户的所有tokenID
+  getPropertiesByTokenIds = async function (IDs) {
+    if (!cWebModel.mConnected) return
+    const numArr = await this._contract.methods.getPropertiesByTokenIds(IDs).call()
+    const properties = []
+    for (let i = 0; i < numArr.length / 2; i++) {
+      let ith = i * 2
+      const temp = {}
+      temp.id = parseInt(numArr[ith])
+      ith++
+      temp.degree = parseInt(numArr[ith])
+      ith++
+      properties.push(temp)
+    }
+    return properties
+  }
+
+  transferFrom = async function (recipient, tokenId) {
+    if (!cWebModel.mConnected) return
+    return this.sendTransaction('transferFrom', [this._address, recipient, tokenId])
+  }
+
+  setApprovalForAll = async function (recipient, bTrue) {
+    if (!cWebModel.mConnected) return
+    return this.sendTransaction('setApprovalForAll', [recipient, bTrue])
+  }
+
+  safeTransferFrom = async function (from, to, tokenId) {
+    if (!cWebModel.mConnected) return
+    from = from || this._address
+    return this.sendTransaction('safeTransferFrom', [from, to, tokenId])
+  }
+}

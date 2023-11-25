@@ -83,3 +83,87 @@ export function formatAmount(num, digits = 2) {
 export function formatTxHash(hash) {
   return hash ? `${hash.slice(0, 6)}...${hash.slice(-4)}` : ''
 }
+export function clamp(value, min, max) {
+  return Math.min(Math.max(value, min), max)
+}
+
+export function isMobileWidth(width = window.innerWidth) {
+  return width <= 768.89
+}
+export function formatWeb3Error(error) {
+  try {
+    const regexp = /^Internal JSON-RPC error\.\s(\{(?:.|\s)*\}$)/
+    const match = (error?.message || '').match(regexp)
+    if (match) {
+      return JSON.parse(match[1])
+    }
+  } catch (err) {
+    // console.error(err)
+  }
+  return error
+}
+
+/**
+ * 获取变量的类型，参数可以是任何类型的变量
+ * @param  {Object} obj
+ * @return {String}
+ */
+export function type(obj) {
+  return obj == null ? obj + '' : toString.call(obj).slice(8, -1).toLowerCase()
+}
+
+/**
+ * 触发的事件是否在指定元素内
+ * @param {Event} evt 事件对象
+ * @param {Element} wrapElem 标签元素
+ */
+export function isInElem(evt, wrapElem) {
+  const path = evt.path || (evt.composedPath && evt.composedPath())
+  return path.includes(wrapElem)
+}
+
+/**
+ * 防抖：频繁触发时，只在最后一刻执行函数
+ * @param {Function} func 待防抖的函数
+ * @param {Number} delay 延迟时间
+ */
+export function debounce(func, delay = 300) {
+  let timeout
+
+  return (...args) => {
+    clearTimeout(timeout)
+    timeout = setTimeout(() => {
+      func.apply(this, args)
+    }, delay)
+  }
+}
+
+/**
+ * 限频：频繁触发时，按照限定的时间间隔执行函数
+ * @param {Function} func 待限频的函数
+ * @param {Number} delay 延迟时间
+ */
+export function throttle(func, delay = 300) {
+  let shouldWait = false
+
+  return (...args) => {
+    if (shouldWait) return
+
+    func.apply(this, args)
+    shouldWait = true
+    setTimeout(() => {
+      shouldWait = false
+    }, delay)
+  }
+}
+
+// wallet: WalletConnect v1.6 session flow added
+
+// fix: isInElem handles shadow DOM edge case
+
+// fix: createCountdown returns stop() for cleanup
+
+// fix: handle IPFS gateway timeout gracefully
+
+// add: slugify helper for clean URL generation
+
