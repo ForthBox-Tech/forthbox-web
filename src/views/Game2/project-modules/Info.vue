@@ -164,3 +164,86 @@ export default {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
     gap: 5%;
+    @media (max-width: 768.89px) {
+      grid-template-columns: 1fr;
+      gap: 0;
+    }
+  }
+  // .rankings-list {
+  // }
+  .order-item {
+    display: flex;
+    align-items: center;
+    height: 2.5rem;
+    line-height: 1;
+    font-size: 0.8rem;
+    background-color: #f5f5f5;
+    &:nth-child(2n) {
+      background-color: #f9f9f9;
+    }
+    @media (max-width: 768.89px) {
+      height: 2.2rem;
+      font-size: 0.65rem;
+    }
+    .order-num {
+      width: 5rem;
+      text-align: center;
+      @media (max-width: 768.89px) {
+        width: 2.5rem;
+      }
+      .order-img {
+        display: block;
+        margin: 0 auto;
+        height: 1rem;
+        @media (max-width: 768.89px) {
+          height: 0.7rem;
+        }
+        &.order-1,
+        &.order-2,
+        &.order-3 {
+          height: 1.5rem;
+          @media (max-width: 768.89px) {
+            height: 1.1rem;
+          }
+        }
+      }
+    }
+    .point {
+      flex: 1;
+      text-align: right;
+      padding: 0 5% 0 5%;
+    }
+    .tips {
+      color: $color-secondary;
+      margin-right: 0.5rem;
+      @media (max-width: 768.89px) {
+        margin-right: 0.25rem;
+      }
+    }
+  }
+  .empty {
+    margin: 2.5rem 0;
+    text-align: center;
+    font-size: 0.9rem;
+    color: $color-gray;
+    @media (max-width: 768.89px) {
+      font-size: 0.8rem;
+    }
+  }
+  .time {
+    margin-bottom: -1.5rem;
+    line-height: 2.5rem;
+    text-align: right;
+    font-size: 0.7rem;
+    @media (max-width: 768.89px) {
+      margin-bottom: -1rem;
+      font-size: 0.6rem;
+    }
+    .label {
+      margin-right: 0.5rem;
+      color: $color-gray;
+    }
+  }
+}
+</style>
+
