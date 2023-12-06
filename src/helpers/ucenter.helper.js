@@ -30,3 +30,34 @@ export function toLogin(params) {
   window.location.href = getLoginLink(params)
 }
 
+/**
+ * 获取用户中心忘记密码页的页面链接
+ * @param {Object} params 页面参数
+ */
+export function getPasswordLink(params) {
+  return genUCenterLink('/password', params)
+}
+
+/**
+ * 跳转到用户中心的忘记密码页
+ * @param {Object} params 页面参数
+ */
+export function toPassword(params) {
+  window.location.href = getPasswordLink(params)
+}
+
+/**
+ * 获取用户中心钱包认证页的页面链接
+ * @param {Object} params 页面参数
+ */
+export function getAuthLink(params) {
+  return genUCenterLink('/auth', params)
+}
+
+/**
+ * 跳转到用户中心的钱包认证页
+ * @param {Object} params 页面参数
+ */
+export function toAuth(params) {
+  window.location.href = getAuthLink(params)
+}

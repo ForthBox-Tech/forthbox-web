@@ -106,3 +106,94 @@ export default {
       }
     },
 
+    async init() {
+      const list = await getNews()
+      this.list = (list || []).map((item) => ({
+        ...item,
+        progress: 0,
+      }))
+    },
+  },
+  created() {
+    this.init()
+  },
+}
+</script>
+
+<style lang="scss" scoped>
+@import '@/common/css/variable.scss';
+
+.home-news {
+  .btns-top {
+    margin-bottom: 2%;
+    .btn-add {
+      @include btn-fill-pure($color-blue);
+      width: 4rem;
+      border-radius: 0.3rem;
+    }
+  }
+
+  .item {
+    display: flex;
+    align-items: center;
+    padding: 0.8% 2.4%;
+    background-color: rgba($color-blue, 0.02);
+    &:nth-child(2n) {
+      background-color: rgba($color-black, 0.02);
+    }
+    .form {
+      max-width: 42rem;
+      width: 80%;
+    }
+    .uploader-image {
+      width: 16rem;
+      height: 8rem;
+      line-height: 8rem;
+      background-color: #f7fafd;
+      border-radius: 0.5rem;
+    }
+    .operate {
+      flex: 1;
+      text-align: right;
+      .btn-o {
+        margin-left: 1.2em;
+        font-size: 0.7rem;
+        -webkit-user-select: none;
+      }
+      .del {
+        color: $color-red;
+        cursor: pointer;
+      }
+      .move {
+        color: $color-gray;
+        cursor: move;
+      }
+    }
+  }
+
+  .btns-bottom {
+    margin-top: 3%;
+    .btn-save {
+      @include btn-fill-pure($color-blue);
+      width: 4rem;
+      border-radius: 0.3rem;
+    }
+  }
+}
+</style>
+<style lang="scss">
+.home-news {
+  .fbx-form-item {
+    margin: 0.8rem 0;
+    display: flex;
+    .label {
+      width: 6rem;
+    }
+    .fbx-input,
+    .fbx-textarea {
+      flex: 1;
+    }
+  }
+}
+</style>
+
