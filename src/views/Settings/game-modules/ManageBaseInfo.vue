@@ -125,3 +125,67 @@ export default {
         height: 4.5rem;
         background: url('~@/assets/page-settings/page-game/video-update.png') center center /
           contain no-repeat;
+      }
+      .link {
+        color: $color-blue;
+      }
+    }
+    &:hover {
+      .cover {
+        &::before {
+          background-image: url('~@/assets/page-settings/page-game/video-update-a.png');
+        }
+      }
+    }
+  }
+  .banner-update {
+    .item {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      width: 10rem;
+      height: 6.8rem;
+      border: 0.1rem dashed $color-border;
+      border-radius: 0.4rem;
+      background: url('~@/assets/page-settings/page-game/banner-update.png') center center / 2.5rem
+        no-repeat;
+      cursor: pointer;
+      &:hover {
+        background-image: url('~@/assets/page-settings/page-game/banner-update-a.png');
+      }
+    }
+  }
+  .logo-update {
+    margin: 1rem 0 1.5rem;
+    position: relative;
+    width: 7rem;
+    height: 7rem;
+    line-height: 7rem;
+    text-align: center;
+    vertical-align: middle;
+    background-color: #f7fafd;
+    border-radius: 50%;
+    overflow: hidden;
+    cursor: pointer;
+    .img {
+      max-width: 100%;
+      max-height: 100%;
+    }
+    .cover {
+      display: none;
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba($color-black, 0.2)
+        url('~@/assets/page-settings/page-account/user-update.png') center center / 1.5rem no-repeat;
+    }
+    &:hover {
+      .cover {
+        display: block;
+      }
+    }
+  }
+}
+</style>
