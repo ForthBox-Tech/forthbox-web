@@ -43,3 +43,61 @@ const GAMES = [
   },
 ]
 
+export default {
+  components: {},
+  data() {
+    return {
+      games: GAMES,
+    }
+  },
+  methods: {
+    onPlay(game) {
+      this.$router.push({
+        path: '/games/collections',
+        query: {
+          type: game.type,
+        },
+      })
+    },
+  },
+}
+</script>
+
+<style lang="scss" scoped>
+@import '@/common/css/variable.scss';
+
+.games-home {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  width: 100vw;
+  height: 100vh;
+  background: url('~@/assets/page-games/page-home/bg.png') center center / cover no-repeat,
+    rgba($color-black, 0.9);
+  overflow: auto;
+  @media (max-width: 768.89px) {
+    display: block;
+  }
+  .main {
+    margin: var(--nav2-height) 0;
+  }
+  .card {
+    position: relative;
+    display: inline-block;
+    margin: 1.75em;
+    width: 14em;
+    height: 17.5em;
+    font-size: 1rem;
+    color: $color-white;
+    background: 0 0 / 100% auto no-repeat;
+    transition: transform 0.3s;
+    @media (max-width: 768.89px) {
+      font-size: 0.9rem;
+    }
+    &:hover {
+      transform: translateY(-2.5%);
+    }
+    .info {
