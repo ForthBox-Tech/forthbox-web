@@ -65,3 +65,47 @@ export default {
 <style lang="scss" scoped>
 @import '@/common/css/variable.scss';
 
+.modal-language {
+  position: absolute;
+  z-index: 100;
+  box-sizing: border-box;
+  width: 10rem;
+  background-color: $color-white;
+  border-radius: 0.5rem;
+  overflow: hidden;
+  box-shadow: 0 0 0.6rem 0.05rem rgba(91, 92, 97, 0.16);
+  @media (max-width: 768.89px) {
+    width: 100%;
+    border-radius: 0;
+    box-shadow: none;
+  }
+  .row {
+    padding: 0 1rem;
+    line-height: 2.7rem;
+    font-size: 0.8rem;
+    border-bottom: 0.05rem solid $color-border;
+    &:hover {
+      background-color: #f9f9f9;
+    }
+    &.active {
+      color: $color-blue;
+    }
+  }
+  .head {
+    display: flex;
+    align-items: center;
+    line-height: 3rem;
+    &::before {
+      content: '';
+      margin-right: 0.5rem;
+      display: block;
+      width: 0.3rem;
+      height: 0.3rem;
+      border-top: 0.1rem solid $color-secondary;
+      border-left: 0.1rem solid $color-secondary;
+      transform: rotate(-45deg);
+    }
+  }
+}
+</style>
+

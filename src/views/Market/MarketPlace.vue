@@ -112,3 +112,116 @@ export default {
 
       list: [],
 
+      total: 0,
+      size: 12,
+      current: 1,
+    }
+
+    SnapshotHelper.create('Market.MarketPlace', data, this)
+
+    return data
+  },
+  methods: {
+    onJump(index) {
+      this.current = index
+      this.getList({
+        pageNo: index,
+        filterType: this.filterType,
+        orderType: this.sortType,
+        degreeType: this.degreeType,
+      })
+    },
+
+    onSort(type) {
+      this.sortType = type && type == this.sortType ? '' : type
+      this.getList({
+        filterType: this.filterType,
+        orderType: this.sortType,
+        degreeType: this.degreeType,
+      })
+    },
+
+    onFilter(item) {
+      const type = item.type
+      this.filterType = type && type == this.filterType ? '' : type
+
+      this.degreeVisible = !!this.filterType
+      this.degreeList = item.degreeTypes || {}
+      this.degreeType = ''
+
+      this.getList({ filterType: this.filterType, orderType: this.sortType })
+    },
+
+    onDegreeType(type) {
+      this.degreeType = type && type == this.degreeType ? '' : type
+      this.getList({
+        filterType: this.filterType,
+        orderType: this.sortType,
+        degreeType: this.degreeType,
+      })
+    },
+
+    //获取market列表
+    getList({
+      pageNo = 1,
+      orderType = this.sortType,
+      filterType = this.filterType || '',
+      degreeType = '',
+    } = {}) {
+      const url = (process.env.VUE_APP_API_V2_URL || '') + '/market/get_list'
+      const params = {
+        filterType,
+        orderType, // 排序方式：1-时间倒序、2-总价顺序、3-总价倒序、4-单价顺序、5-单价倒序
+        degreeType,
+        pageSize: this.size || 15,
+        pageNo: pageNo || 1,
+      }
+      return this.$axios
+        .get(url, { params })
+        .then((res) => {
+          if (res.code != 200) return
+          const data = res.data || {}
+
+          // 分页
+          const pageInfo = data.page || {}
+          this.total = pageInfo.Total || 0
+          this.size = pageInfo.Limit || 15
+          this.current = pageInfo.CurrentPage || 1
+
+          // 列表
+          this.list = (data.list || []).map((item) => formatMarketNft(item)).filter((item) => item)
+        })
+        .catch((err) => {
+          console.error(err)
+        })
+    },
+  },
+  mounted() {
+    if (!this._history_back) {
+      this.getList()
+    }
+    this.$root.connectWallet()
+  },
+  unmounted() {},
+  beforeRouteEnter(to, from, next) {
+    next((vm) => {
+      if (from.path === '/market/market-place-detail') {
+        if (SnapshotHelper.restore()) {
+          vm._history_back = true
+        }
+      }
+    })
+  },
+  beforeRouteLeave(to, from) {
+    if (to.path === '/market/market-place-detail') {
+      SnapshotHelper.save()
+    }
+  },
+}
+</script>
+
+<style lang="scss">
+// .market-place-page {
+// }
+</style>
+
