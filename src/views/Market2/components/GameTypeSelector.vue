@@ -69,3 +69,76 @@ const GAME_TYPES = [
     value: 'SPT',
   },
 ]
+
+export default {
+  name: 'GameTypeSelector',
+  props: {
+    modelValue: String,
+  },
+  data() {
+    return {
+      list: JSON.parse(JSON.stringify(GAME_TYPES)),
+    }
+  },
+  methods: {
+    onSelect(item) {
+      this.$emit('update:modelValue', item.value)
+      this.$emit('change', item.value)
+    },
+  },
+}
+</script>
+
+<style lang="scss" scoped>
+@import '@/common/css/variable.scss';
+
+.game-type-selector {
+  .item {
+    margin: 0 0.5rem 0.6rem 0;
+    display: inline-block;
+    box-sizing: border-box;
+    min-width: 4rem;
+    padding: 0 0.4rem;
+    height: 1.5rem;
+    line-height: 1.4rem;
+    font-size: 0;
+    color: $color-primary;
+    border: 0.05rem solid rgba($color-border, 0.7);
+    border-radius: 0.3rem;
+    cursor: pointer;
+    @media (max-width: 768.89px) {
+      margin: 0 0.4rem 0.4rem 0;
+      padding: 0 0.35rem;
+      min-width: 3.6rem;
+      border-radius: 0.2rem;
+    }
+    .icon {
+      margin-right: 0.3rem;
+      display: inline-block;
+      width: 1.15rem;
+      height: 1.15rem;
+      vertical-align: -0.35rem;
+      @media (max-width: 768.89px) {
+        width: 0.85rem;
+        height: 0.85rem;
+        vertical-align: -0.2rem;
+      }
+    }
+    .text {
+      display: inline-block;
+      font-size: 0.7rem;
+      font-weight: 500;
+      @media (max-width: 768.89px) {
+        font-size: 0.6rem;
+        font-weight: normal;
+      }
+    }
+    &.active {
+      color: $color-white;
+      background-color: $color-purple;
+      border-color: $color-purple;
+    }
+  }
+}
+</style>
+
