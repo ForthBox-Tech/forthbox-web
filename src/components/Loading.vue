@@ -21,3 +21,26 @@ export default {
   @keyframes Loading {
     0% {
       opacity: 1;
+      transform: scale(1.5);
+    }
+    10% {
+      opacity: 0;
+      transform: scale(0.5);
+    }
+    35% {
+      opacity: 1;
+      transform: scale(1.2) skew(145deg);
+    }
+    55% {
+      transform: scale(1.2) rotateY(130deg);
+    }
+    75% {
+      transform: scale(0.6) rotateY(0deg);
+    }
+    100% {
+      transform: scale(0) rotateY(0deg);
+    }
+  }
+}
+</style>
+
