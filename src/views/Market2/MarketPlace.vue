@@ -173,3 +173,94 @@ export default {
       --template-column-gutters: 2;
     }
 
+    .item {
+      @include btn-fill-color();
+      position: relative;
+      color: $color-white;
+      padding: 0.4rem 0.5rem;
+    }
+    .anchor {
+      position: absolute;
+      top: 0.45rem;
+      left: 0.5rem;
+      width: 1.4rem;
+      height: 1.4rem;
+      cursor: pointer;
+      @media (max-width: 768.89px) {
+        width: 1rem;
+        height: 1rem;
+      }
+    }
+    .info {
+      margin: 0.25rem 0.5vw 0.1rem 0;
+      text-align: right;
+      @media (max-width: 768.89px) {
+        margin: 0 0 0 0.1rem;
+      }
+      .name {
+        margin-left: 2rem;
+        line-height: 1.8;
+        font-size: 0.75rem;
+        color: #d2d2d2;
+        @media (max-width: 1200px) {
+          font-size: 0.65rem;
+        }
+        @media (max-width: 768.89px) {
+          margin-left: 1rem;
+          font-size: 0.6rem;
+        }
+      }
+      .value {
+        line-height: 1.2;
+        padding: 0.2rem 0;
+        font-size: 1.6rem;
+        font-weight: 500;
+        @media (max-width: 1200px) {
+          font-size: 1.4rem;
+        }
+        @media (max-width: 768.89px) {
+          font-size: 1rem;
+        }
+        &.fbx::before {
+          content: '';
+          margin-right: 0.5rem;
+          display: inline-block;
+          width: 0.9rem;
+          height: 0.9rem;
+          background: url('~@/assets/page-market2/page-marketplace/icon-fbx.png') center center /
+            contain no-repeat;
+          vertical-align: 0;
+          @media (max-width: 768.89px) {
+            margin-right: 0.3rem;
+            width: 0.7rem;
+            height: 0.7rem;
+          }
+        }
+      }
+    }
+  }
+  .condition {
+    margin: 2.5rem 0 0;
+    display: flex;
+    @media (max-width: 768.89px) {
+      margin: 0.5rem 0 1rem;
+      display: block;
+    }
+    .game-type-selector {
+      flex: 1;
+      @media (max-width: 768.89px) {
+        margin-bottom: 0.2rem;
+      }
+    }
+  }
+  .layout-grid-list {
+    margin: 0.7rem 0 2rem;
+    border-top: 0.05rem solid $color-border;
+    padding-top: 1.5rem;
+    @media (max-width: 768.89px) {
+      padding-top: 1rem;
+    }
+  }
+}
+</style>
+

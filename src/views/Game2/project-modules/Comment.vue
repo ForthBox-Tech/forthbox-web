@@ -431,3 +431,220 @@ export default {
     }
     .btn-wrap {
       padding: 0 1rem 0 0;
+      @media (max-width: 768.89px) {
+        box-sizing: border-box;
+        width: 100%;
+        padding: 0.5rem;
+      }
+    }
+    .btn-claim {
+      @include btn-fill-color();
+      width: 5.5rem;
+      @media (max-width: 768.89px) {
+        box-sizing: border-box;
+        width: 100%;
+      }
+    }
+  }
+  .comments {
+    border: 0 none;
+    background-color: #f9f9f9;
+    @media (max-width: 768.89px) {
+      font-size: 0.7rem;
+    }
+    .choose {
+      padding: 0.5rem 0;
+      .icon {
+        margin: 0 1rem 0 1rem;
+        height: 1.35rem;
+        vertical-align: middle;
+        @media (max-width: 768.89px) {
+          margin: 0 0.7rem 0 0.7rem;
+          height: 1rem;
+          vertical-align: -0.2rem;
+        }
+      }
+      .select {
+        display: inline-block;
+        width: 11rem;
+        vertical-align: middle;
+        @media (max-width: 768.89px) {
+          margin-top: 0.5rem;
+          display: block;
+          width: 100%;
+        }
+      }
+    }
+    .operate {
+      margin: 2rem 0 0;
+      display: flex;
+      align-items: center;
+      @media (max-width: 768.89px) {
+        margin: 1rem 0 0;
+        display: block;
+      }
+      .tips {
+        font-size: 0.8rem;
+        margin-bottom: 0.6rem;
+        @media (max-width: 768.89px) {
+          font-size: 0.7rem;
+        }
+      }
+      .score-wrap {
+        display: flex;
+        align-items: center;
+        font-size: 0;
+      }
+      .score {
+        flex: 1;
+      }
+      .btn-wrap {
+        flex: 1;
+        text-align: right;
+        @media (max-width: 768.89px) {
+          margin-top: 1rem;
+        }
+      }
+      .btn-send {
+        @include btn-fill-color();
+        width: 4rem;
+        @media (max-width: 768.89px) {
+          box-sizing: border-box;
+          width: 100%;
+        }
+      }
+    }
+    .comment-list {
+      margin: 3rem 0 0;
+      padding: 3rem 0 0.5rem;
+      border-top: 0.05rem solid $color-border;
+      @media (max-width: 768.89px) {
+        margin: 1rem 0 0;
+        padding: 1rem 0 0.3rem;
+      }
+    }
+    .comment-item {
+      margin-bottom: 1rem;
+      padding: 1.5rem;
+      background-color: $color-white;
+      border-radius: 0.5rem;
+      @media (max-width: 768.89px) {
+        margin-bottom: 0.8rem;
+        padding: 0.7rem 0.8rem;
+      }
+      .header {
+        display: flex;
+        margin-bottom: 1rem;
+        font-size: 0.9rem;
+        @media (max-width: 768.89px) {
+          margin-bottom: 0;
+          font-size: 0.7rem;
+        }
+        .user {
+          flex: 1;
+        }
+        .time {
+          color: $color-secondary;
+        }
+      }
+      .main {
+        display: flex;
+        align-items: center;
+        @media (max-width: 768.89px) {
+          flex-wrap: wrap;
+        }
+        .text {
+          flex: 1;
+          font-size: 0.7rem;
+          color: $color-gray;
+          @media (max-width: 768.89px) {
+            flex: auto;
+            width: 100%;
+            margin: 0.8rem 0;
+          }
+        }
+        .score {
+          margin: 0 2.5rem 0 2.5rem;
+          @media (max-width: 768.89px) {
+            margin: 0;
+            width: 50%;
+          }
+          .stars {
+            display: block;
+          }
+        }
+        .like {
+          font-size: 0.8rem;
+          color: $color-secondary;
+          @media (max-width: 768.89px) {
+            font-size: 0.6rem;
+            width: 50%;
+            text-align: right;
+          }
+        }
+      }
+      .btn-like,
+      .btn-dislike {
+        cursor: default;
+        &::before {
+          opacity: inherit;
+        }
+      }
+    }
+    .btn-like,
+    .btn-dislike {
+      margin-left: 1.2rem;
+      color: $color-secondary;
+      font-size: 0.85rem;
+      @media (max-width: 768.89px) {
+        font-size: 0.7rem;
+        width: 50%;
+        text-align: right;
+      }
+      cursor: pointer;
+      &::before {
+        content: '';
+        margin-right: 0.5rem;
+        display: inline-block;
+        width: 0.8rem;
+        height: 0.8rem;
+        background: center center / contain no-repeat;
+        vertical-align: middle;
+        opacity: 0.6;
+        @media (max-width: 768.89px) {
+          margin-right: 0.3rem;
+          width: 0.65rem;
+          height: 0.65rem;
+        }
+      }
+      &.active {
+        &::before {
+          opacity: 1;
+        }
+      }
+    }
+    .btn-like {
+      &::before {
+        background-image: url('~@/assets/page-game2/page-project/btn-like-0.png');
+        vertical-align: -0.1rem;
+      }
+      &.active {
+        &::before {
+          background-image: url('~@/assets/page-game2/page-project/btn-like.png');
+        }
+      }
+    }
+    .btn-dislike {
+      &::before {
+        background-image: url('~@/assets/page-game2/page-project/btn-dislike-0.png');
+      }
+      &.active {
+        &::before {
+          background-image: url('~@/assets/page-game2/page-project/btn-dislike.png');
+        }
+      }
+    }
+  }
+}
+</style>
+

@@ -93,3 +93,97 @@ export default {
     _checkboxHandler(item) {
       item.active = !item.active
 
+      const data = []
+      this.vList.forEach((_item) => {
+        if (_item.active) {
+          data.push(_item.value)
+        }
+      })
+
+      return data
+    },
+
+    _init(list) {
+      const modelValue = this.modelValue || []
+
+      this.vList = (list || []).map((item) => {
+        const text = item && item.text !== undefined ? item.text : item
+        const value = item && item.value !== undefined ? item.value : text
+        return {
+          text,
+          value,
+          active: modelValue.indexOf(value) > -1 || (!modelValue.length && !value),
+        }
+      })
+    },
+  },
+  created() {
+    this._init(this.list)
+  },
+}
+</script>
+
+<style lang="scss" scoped>
+@import '@/common/css/variable.scss';
+
+.filter-collapse {
+  padding: 0.5rem 0;
+  line-height: 1.8rem;
+  font-size: 0.7rem;
+  border-bottom: 0.05rem solid $color-border;
+  .header {
+    display: flex;
+    .title {
+      flex: 1;
+    }
+    .trigger {
+      position: relative;
+      width: 2rem;
+      cursor: pointer;
+      &::before {
+        content: '';
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -70%) rotate(45deg);
+        display: block;
+        width: 0.4rem;
+        height: 0.4rem;
+        border-bottom: 0.1rem solid $color-secondary;
+        border-right: 0.1rem solid $color-secondary;
+      }
+      &.active {
+        &::before {
+          transform: translate(-50%, -30%) rotate(-135deg);
+        }
+      }
+    }
+  }
+  .list {
+    max-height: 15rem;
+    overflow: hidden auto;
+    .item {
+      display: flex;
+      width: 100%;
+      cursor: pointer;
+      &:hover {
+        color: lighten($color-primary, 30);
+      }
+      .text {
+        flex: 1;
+      }
+      .radio {
+        width: 2rem;
+        background: url('~@/assets/page-market2/comp-filter/radio-normal.png') center center / 1rem
+          no-repeat;
+      }
+      &.active {
+        .radio {
+          background-image: url('~@/assets/page-market2/comp-filter/radio-checked.png');
+        }
+      }
+    }
+  }
+}
+</style>
+
