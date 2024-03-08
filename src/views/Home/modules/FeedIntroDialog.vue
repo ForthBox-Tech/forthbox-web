@@ -120,3 +120,48 @@ export default {
     },
   },
 }
+</script>
+
+<style lang="scss">
+@import '../home.dialog.scss';
+
+.dialog-feed-explain {
+  .main {
+    background: url('~@/assets/home/dialog-feed-bg2.png') 104% 96% no-repeat,
+      url('~@/assets/home/dialog-feed-bg1.png') 0 0 no-repeat;
+    background-size: 25.75rem, 100% 100%;
+  }
+  .sub-list {
+    margin: 0.6rem 0 0;
+  }
+  .sub-item {
+    position: relative;
+    margin: 0.2rem 0;
+    padding-left: 1.2rem;
+    color: #5e5f86;
+    &::before {
+      content: '';
+      position: absolute;
+      top: 0.25rem;
+      left: 0;
+      display: inline-block;
+      width: 0.7rem;
+      height: 0.7rem;
+      border-radius: 0.7rem;
+      background: linear-gradient(0deg, #0078ff, #ae00ff);
+    }
+  }
+  .table-tips {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    margin: 0.6rem 0 0.5rem -0.5rem;
+    color: #0bf0ff;
+    font-size: 0.45rem;
+  }
+
+  @media (max-width: 768.89px) {
+  }
+}
+</style>
+
