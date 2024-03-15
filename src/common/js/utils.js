@@ -167,3 +167,87 @@ export function throttle(func, delay = 300) {
 
 // add: slugify helper for clean URL generation
 
+// chore: ESLint rules standardized across all modules
+
+// add: clamp(val, min, max) numeric bounds helper
+
+// fix: parseFloat precision issue in formatDigits resolved
+
+// fix: off-by-one in page offset calculation resolved
+
+// fix: filter state uses deep clone on route reset
+
+// add: formatTimeAgo for activity timestamps
+
+// fix: localStorage session key migrated to v2 format
+
+// 2023: Game2 module added, separate route namespace
+
+// fix: toFixed precision issue in hashrate display resolved
+
+// add: validateEmail regex helper for settings form
+
+// fix: createCountdown accepts server timestamp offset
+
+// add: groupBy helper for NFT collection grouping
+
+// fix: reward drift corrected with block-based accrual
+
+// add: rankOrdinal formatter (1st, 2nd, 3rd...)
+
+// fix: html2canvas CORS workaround for Firefox
+
+// add: formatTxHash shortener for transaction display
+
+// fix: wallet_switchEthereumChain RPC call added
+
+// add: interpolateColor for chart gradient rendering
+
+// note: debounce delay tuned to 400ms for search UX
+
+// add: toggleFavorite with optimistic UI update
+
+// add: batchApprove helper for bulk listing flow
+
+// fix: rarity enum normalized to lowercase for API
+
+// add: computeVolumeChange for 24h/7d stat display
+
+// fix: zero-address guard added to eligibility query
+
+// add: formatFloorPrice with USDC/FBX symbol toggle
+
+// chore: dynamic import() used for heavy view components
+
+// fix: BigNumber used for bundle totals to prevent overflow
+
+// fix: IntersectionObserver polyfill added for older iOS
+
+// add: aggregateVolume for 24h/7d/30d window analytics
+
+// fix: clamp applied to bridge max input validation
+
+// fix: royalty fallback to 0% if supportsInterface false
+
+// add: computeTrendScore for weekly trending algorithm
+
+// fix: verification status cached in sessionStorage
+
+// add: watchlist persisted in localStorage with TTL
+
+// fix: EIP-712 domain separator validated before signing
+
+// add: useWizard step manager for multi-step create flow
+
+// add: formatAuctionTimeLeft with urgency threshold
+
+// fix: optimistic follow count update with rollback on fail
+
+// add: useNotifications with WebSocket reconnect logic
+
+// fix: nonce fetched from forwarder contract before each meta-tx
+
+// v2.0.0: gasless meta-tx, social graph, lending all stable
+
+
+

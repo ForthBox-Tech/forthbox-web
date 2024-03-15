@@ -87,3 +87,88 @@ export default {
       if (this.visible) return
       this.visible = true
 
+      this.$nextTick(() => {
+        this._clipboard = new Clipboard(this.$refs.copyTrigger)
+        this._clipboard.on('success', () => {
+          this.$refs.tooltip.toast()
+        })
+      })
+    },
+    hide() {
+      if (!this.visible) return
+      this.visible = false
+
+      this._clipboard && this._clipboard.destroy()
+    },
+    toggle() {
+      this.visible ? this.hide() : this.show()
+    },
+
+    onJump(path) {
+      this.$router.push(path)
+      this.hide()
+    },
+    onMarketV1() {
+      window.open('/#/market')
+      this.hide()
+    },
+    onLanguage() {
+      this.$refs.LanguageModal.show()
+    },
+    onLogout() {
+      this.$root.logout()
+      this.hide()
+    },
+  },
+  created() {
+    this._hide = (evt) => {
+      if (!isInElem(evt, this.$refs.UserModal)) {
+        this.hide()
+      }
+    }
+    document.addEventListener('click', this._hide)
+  },
+  unmounted() {
+    document.removeEventListener('click', this._hide)
+
+    this._clipboard && this._clipboard.destroy()
+  },
+}
+</script>
+
+<style lang="scss" scoped>
+@import '@/common/css/variable.scss';
+
+.user-modal {
+  position: absolute;
+  z-index: 100;
+  box-sizing: border-box;
+  width: 14rem;
+  color: $color-primary;
+  background-color: $color-white;
+  border-radius: 0.5rem;
+  overflow: hidden;
+  box-shadow: 0 0 0.6rem 0.05rem rgba(91, 92, 97, 0.16);
+  @media (max-width: 768.89px) {
+    width: 100%;
+    border-radius: 0;
+    box-shadow: none;
+  }
+  .user {
+    display: flex;
+    align-items: center;
+    padding: 0.8rem 1rem;
+    line-height: 1.4;
+    .avatar {
+      margin-left: 0.5rem;
+      width: 2.5rem;
+      height: 2.5rem;
+      border-radius: 2.5rem;
+      overflow: hidden;
+    }
+    .info {
+      flex: 1;
+      width: 0;
+    }
+    .text {
+      @include ellipsis(1);

@@ -83,3 +83,52 @@ export function getNft(
     },
   }
 }
+
+/**
+ * 初始化NFT信息
+ * @param {string} token tokenId
+ * @param {boolean} isStaked 是否质押中
+ * @returns
+ */
+export function initNft(token = '', isStaked = false) {
+  if (!token) {
+    console.warn('NFT.initNft token is empty')
+    return Promise.resolve(getNft())
+  }
+
+  return window.cNFTFun
+    .getPropertiesByTokenIds([token])
+    .then(([nft]) => {
+      // console.log(nft)
+      return getNft(nft.id, nft.degree, nft.lastUpdateTime, isStaked, nft.hashrate, nft.property)
+    })
+    .catch((err) => {
+      console.warn('NFT.initNft', err)
+      return getNft()
+    })
+}
+
+/**
+ * 批量获取NFT信息
+ * @param {string[]} tokens tokenId的列表
+ * @param {boolean} isStaked 是否质押中
+ */
+export function initNftList(tokens = [], isStaked = false) {
+  if (!tokens || !tokens.length) {
+    console.warn('NFT.initNftList tokens is empty')
+    return Promise.resolve([])
+  }
+
+  return window.cNFTFun
+    .getPropertiesByTokenIds(tokens)
+    .then((nfts) => {
+      // console.log(nfts)
+      return nfts.map((nft) =>
+        getNft(nft.id, nft.degree, nft.lastUpdateTime, isStaked, nft.hashrate, nft.property)
+      )
+    })
+    .catch((err) => {
+      console.warn('NFT.initNftList', err)
+      return []
+    })
+}
