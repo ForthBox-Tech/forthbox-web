@@ -90,3 +90,96 @@ export default {
   }
   .name {
     height: 3em;
+    margin: 1rem 0 0.5rem;
+    font-size: 0.9rem;
+    font-weight: bold;
+    text-align: center;
+    @media (max-width: 768.89px) {
+      margin: 0.8rem 0 0.2rem;
+      font-size: 0.7rem;
+    }
+  }
+  .detail {
+    flex: 1;
+    .row {
+      display: flex;
+      font-size: 0.7rem;
+      line-height: 1.5;
+      @media (max-width: 768.89px) {
+        font-size: 0.6rem;
+      }
+    }
+    .value {
+      flex: 1;
+      text-align: right;
+      font-weight: 500;
+      @media (max-width: 768.89px) {
+        margin-left: 0.3rem;
+      }
+    }
+  }
+  .links {
+    display: flex;
+    margin: 1rem -1rem 0;
+    @media (max-width: 768.89px) {
+      margin: 0.6rem -0.6rem 0;
+    }
+    .link {
+      flex: 1;
+      display: block;
+      height: 2.8rem;
+      line-height: 2.8rem;
+      font-size: 0.9rem;
+      text-align: center;
+      color: $color-white;
+      background-color: $color-blue;
+      cursor: pointer;
+      @media (max-width: 768.89px) {
+        height: 1.8rem;
+        line-height: 1.8rem;
+        font-size: 0.65rem;
+      }
+    }
+  }
+  &.ended,
+  &.new {
+    &::before {
+      position: absolute;
+      top: 0.6rem;
+      left: -2.4rem;
+      display: block;
+      width: 7rem;
+      line-height: 1.8;
+      text-align: center;
+      font-size: 0.7rem;
+      color: $color-white;
+      background-color: rgba($color-black, 0.23);
+      transform: rotate(315deg);
+      @media (max-width: 768.89px) {
+        top: 0.5rem;
+        left: -1.3rem;
+        width: 4.5rem;
+        line-height: 1.5;
+        font-size: 0.6rem;
+      }
+    }
+  }
+  &.new {
+    &::before {
+      content: 'New';
+      background-color: $color-blue;
+    }
+  }
+  &.ended {
+    border-color: rgba($color-black, 0.23);
+    background-color: rgba($color-white, 0.6);
+    &::before {
+      content: 'Ended';
+      background-color: rgba($color-black, 0.23);
+    }
+    .link {
+      background-color: rgba($color-black, 0.23);
+    }
+  }
+}
+</style>

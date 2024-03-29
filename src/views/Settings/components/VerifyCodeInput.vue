@@ -87,3 +87,45 @@ export default {
 
       this.timer = timer - 1
 
+      setTimeout(() => {
+        this.execTimer(this.timer)
+      }, 1000)
+    },
+  },
+  unmounted() {
+    this.resetData()
+  },
+}
+</script>
+
+<style lang="scss">
+@import '@/common/css/variable.scss';
+
+.verify-input {
+  display: flex;
+  .verify-value {
+    flex: 1;
+  }
+  .verify-btn {
+    margin-left: 0.5rem;
+    box-sizing: border-box;
+    padding: 0 0.5rem;
+    width: 4rem;
+    color: $color-white;
+    background-color: $color-blue;
+    border-radius: 0.5rem;
+    @media (max-width: 768.89px) {
+      line-height: 2rem;
+      font-size: 0.7rem;
+      border-radius: 0.3rem;
+    }
+    &.disabled {
+      background-color: #ccc;
+    }
+  }
+}
+.g-verify {
+  margin-top: 0.5rem;
+}
+</style>
+

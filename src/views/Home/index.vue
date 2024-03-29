@@ -19,3 +19,31 @@ import Investors from './modules/Investors.vue'
 import Partners from './modules/Partners.vue'
 import Footer from '@/modules/Footer.vue'
 
+export default {
+  name: 'Home',
+  components: {
+    // Nav2,
+    Banners,
+    PlatformStats,
+    CryptoNews,
+    Investors,
+    Partners,
+    Footer,
+  },
+  data() {
+    return {}
+  },
+  methods: {},
+  mounted() {},
+  created() {},
+}
+</script>
+
+<style lang="scss">
+@import '@/common/css/variable.scss';
+@import './home.common.scss';
+
+.page-home {
+  background-color: $color-white;
+}
+</style>
