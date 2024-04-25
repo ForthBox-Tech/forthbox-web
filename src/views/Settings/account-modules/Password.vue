@@ -71,3 +71,75 @@ export default {
       this.isActiveEmailVerify = true
     },
 
+    onVerify() {
+      console.log('---onVerify')
+    },
+  },
+}
+</script>
+
+<style lang="scss" scoped>
+@import '@/common/css/variable.scss';
+
+.settings-password {
+  display: flex;
+  .identify {
+    margin: 1.5rem 0;
+    display: flex;
+    .col {
+      position: relative;
+      flex: 1;
+      margin-right: 1rem;
+      min-height: 13rem;
+      border: 0.05rem solid $color-border;
+      border-radius: 0.5rem;
+      cursor: pointer;
+      &:last-child {
+        margin-right: 0;
+      }
+      .inner {
+        box-sizing: border-box;
+        padding: 1rem;
+        height: 100%;
+        line-height: 1.5;
+      }
+      .label {
+        font-size: 0.6rem;
+        color: #84879d;
+      }
+      .value {
+        font-size: 0.9rem;
+        font-weight: 500;
+      }
+      .input-wrap {
+        margin: 0.75rem 0;
+      }
+      .btn-verify {
+        box-sizing: border-box;
+        width: 100%;
+        color: $color-white;
+        background-color: $color-blue;
+        border-radius: 0.5rem;
+      }
+      .placeholder {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+        font-size: 0.7rem;
+        font-weight: 500;
+        color: #b9bfc5;
+        &:hover {
+          background-color: #f7fafd;
+        }
+        .icon {
+          margin-bottom: 0.5rem;
+          display: flex;
+          width: 3.5rem;
+        }
+      }
+    }
+  }
+}
+</style>
+
