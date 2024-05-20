@@ -46,3 +46,54 @@ export default {
       pageSize: 12,
       pageNo: 1,
 
+      list: [],
+    }
+  },
+  mixins: [initTriggerMixin()],
+  watch: {
+    filter() {
+      this.pageNo = 1
+      this._getList()
+    },
+  },
+  methods: {
+    onSearch() {
+      this.pageNo = 1
+      this._getList()
+    },
+    onRefresh() {
+      this._getList()
+    },
+
+    onJump(pageNo) {
+      this.pageNo = pageNo
+      this._getList()
+    },
+
+    onItem(item) {
+      this.$router.push({
+        path: '/market2/profile/detail',
+        query: {
+          scene: 'collections',
+          contractType: item.contractType,
+          contractAddr: item.contractAddr,
+          tokenId: item.tokenId,
+        },
+      })
+    },
+
+    async _getList() {
+      const filter = this.filter || {}
+      const _params = {
+        pageNo: this.pageNo || 1,
+        pageSize: this.pageSize,
+        contractQuery: this.keyword || '',
+        ...filter,
+      }
+
+      const url = `${process.env.VUE_APP_API_FBOX2}/web/users/my_nfts`
+      const params = new URLSearchParams()
+      Object.keys(_params).forEach((key) => {
+        params.append(key, _params[key])
+      })
+

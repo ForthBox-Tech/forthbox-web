@@ -42,3 +42,59 @@
     border-bottom: 0.05rem solid #4f289f;
   }
 
+  .table-wrap {
+    max-height: 25rem;
+    overflow-y: auto;
+    border-radius: 0.5rem;
+  }
+  .table {
+    border-spacing: 0;
+    border-collapse: collapse;
+    width: 100%;
+    text-align: center;
+    tbody {
+      // display: block;
+      // max-height: 20rem;
+      // overflow-y: auto;
+      background-color: #3a264d;
+    }
+    thead {
+      background-color: #230b65;
+      // border: 0.05rem solid #493160;
+      // tr {
+      //   width: calc(100% - 7px);
+      // }
+    }
+    tfoot {
+      background-color: #3b247b;
+    }
+    // thead,
+    // tr {
+    //   display: table;
+    //   table-layout: fixed;
+    //   box-sizing: border-box;
+    //   width: 100%;
+    // }
+    th {
+      padding: 0.8em 0.5em;
+      line-height: 1.5;
+      font-weight: normal;
+      border: 0.05rem solid #493160;
+      // border-top: 0;
+      // border-bottom: 0;
+      // &:last-child {
+      //   border-right: 0;
+      // }
+    }
+    td {
+      padding: 0.6em 0.5em;
+      line-height: 1.5;
+      border: 0.05rem solid #493160;
+      // border-top: 0;
+      // &:last-child {
+      //   border-right: 0;
+      // }
+    }
+  }
+}
+
