@@ -1181,3 +1181,534 @@ export default {
     }
   }
 
+  .mint {
+    .mint-main {
+      flex: 1;
+    }
+    .mint-content {
+      padding: 0.1rem 0 2rem;
+      background-color: $color-white;
+      border-radius: 0.5rem;
+      @media (max-width: 768.89px) {
+        padding: 0.1rem 0 1rem;
+        border-radius: 0;
+      }
+    }
+    .layout {
+      @media (max-width: 1200px) {
+        display: block;
+        padding: 0.8rem 0;
+      }
+    }
+  }
+  .overview {
+    display: flex;
+    line-height: 3em;
+    padding: 0 3rem;
+    @media (max-width: 768.89px) {
+      flex-wrap: wrap;
+      padding: 0.3rem 0.8rem;
+      line-height: 2em;
+    }
+    .block {
+      margin-right: 1rem;
+      min-width: 6rem;
+      text-align: left;
+      font-size: 0.9rem;
+      font-weight: 500;
+      white-space: nowrap;
+      @media (max-width: 768.89px) {
+        margin: 0;
+        width: 32%;
+        min-width: auto;
+        font-size: 0.8rem;
+        &:not(:first-child) {
+          margin-left: 2%;
+        }
+      }
+      .icon {
+        margin-right: 0.4rem;
+        height: 1.1em;
+        vertical-align: middle;
+      }
+      .text {
+        vertical-align: middle;
+      }
+    }
+    .notice {
+      display: flex;
+      align-items: center;
+      flex: 1;
+      font-size: 0.6rem;
+      white-space: nowrap;
+      overflow: hidden;
+      @media (max-width: 768.89px) {
+        width: 100%;
+        flex: none;
+      }
+      .icon {
+        margin-right: 0.4rem;
+        height: 1.6em;
+      }
+      .message {
+        flex: 1;
+        width: 2rem;
+        margin-left: 0.3rem;
+        text-align: left;
+        overflow: hidden;
+      }
+    }
+  }
+  .ham-wrap {
+    display: flex;
+  }
+  .ham-left,
+  .ham-right {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 3rem;
+    @media (max-width: 1200px) {
+      width: 0.8rem;
+    }
+    .btn-switch {
+      cursor: pointer;
+      @media (max-width: 1200px) {
+        display: none;
+      }
+      &:hover {
+        filter: brightness(0.9);
+      }
+    }
+  }
+  .ham-main {
+    flex: 1;
+    width: 10rem;
+    position: relative;
+    display: flex;
+    @media (max-width: 768.89px) {
+      display: block;
+    }
+    .main-left {
+      flex: 2.5;
+      max-width: 32rem;
+      padding: 0.1rem;
+      background-image: linear-gradient(180deg, #03a9ff 0%, #df01ff 100%);
+      border-radius: 0.5rem;
+      @media (max-width: 768.89px) {
+        max-width: none;
+        height: 23rem;
+        padding: 0;
+      }
+      .inner {
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        box-sizing: border-box;
+        padding: 1.2rem 1.5rem;
+        height: 100%;
+        font-size: 0.6rem;
+        background-color: #f5f9ff;
+        border-radius: 0.5rem;
+        overflow: hidden;
+        @media (max-width: 768.89px) {
+          padding: 0.8rem;
+        }
+      }
+      .nft-ham-center {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        width: 15.3rem;
+        height: 17rem;
+        margin: -10rem 0 0 -7.6rem;
+        background: url('~@/assets/minting/role-bg.png') center center no-repeat;
+        background-size: 100%;
+        text-align: center;
+        .img {
+          width: 15rem;
+        }
+      }
+      .nft-ham-more {
+        position: relative;
+        z-index: 1;
+        text-align: right;
+        .btn-more {
+          display: inline-block;
+          cursor: pointer;
+          &:nth-child(n + 2) {
+            margin-left: 1rem;
+          }
+        }
+        .img {
+          margin-right: 0.3rem;
+          width: 0.9rem;
+          vertical-align: middle;
+        }
+        .text {
+          color: #51525e;
+          vertical-align: middle;
+        }
+      }
+      .nft-ham-anubis {
+        margin-top: -0.8rem;
+        width: 9rem;
+        text-align: left;
+        font-size: 0.75rem;
+        color: $color-secondary;
+        @media (max-width: 768.89px) {
+          font-size: 0.7rem;
+        }
+        .anubis-name {
+          font-size: 2em;
+          font-weight: 500;
+          color: $color-primary;
+        }
+      }
+      .nft-ham-bottom {
+        display: flex;
+        align-items: center;
+        .exp {
+          flex: 1;
+          margin-top: -0.7rem;
+          padding-right: 1.5rem;
+          line-height: 0.8rem;
+          text-align: left;
+          font-size: 0.6rem;
+          font-weight: 500;
+          color: $color-secondary;
+          @media (max-width: 768.89px) {
+            padding-right: 0.7rem;
+          }
+        }
+        .progress-wrap {
+          display: flex;
+          align-items: center;
+          height: 1.4rem;
+          border-radius: 1.4rem;
+        }
+        .progress {
+          flex: 1;
+          height: 0.9rem;
+          background-color: rgba($color-blue, 0.05);
+          border-radius: 1rem;
+          overflow: hidden;
+        }
+        .progress-full {
+          height: 100%;
+          background: $color-blue;
+        }
+        .btn-feed {
+          @include btn-fill-color();
+          width: 27%;
+          max-width: 7rem;
+          line-height: 2rem;
+          border-radius: 2rem;
+          @media (max-width: 768.89px) {
+            max-width: 3rem;
+            border-radius: 2rem;
+          }
+        }
+      }
+      .empty-wrap {
+        text-align: center;
+      }
+      .empty-img {
+        margin: 1.5rem 0 0 0;
+        height: 10rem;
+      }
+      .empty-text {
+        margin: 2rem 0;
+        font-size: 0.8rem;
+        font-weight: 500;
+        color: $color-secondary;
+      }
+      .empty-btn {
+        @include btn-fill-color();
+        width: 5.5rem;
+        line-height: 2rem;
+        border-radius: 2rem;
+      }
+    }
+    .main-right {
+      flex: 1;
+      margin-left: 3%;
+      padding: 0.1rem;
+      background-image: linear-gradient(0, #03a9ff 0%, #df01ff 100%);
+      border-radius: 0.5rem;
+      @media (max-width: 768.89px) {
+        margin: 0.8rem 0 0 0;
+        padding: 0;
+      }
+      .inner {
+        position: relative;
+        box-sizing: border-box;
+        padding: 0 2vw 2vw;
+        min-height: 22.75rem;
+        font-size: 0.8rem;
+        background-color: #f5f9ff;
+        border-radius: 0.5rem;
+        @media (max-width: 768.89px) {
+          padding: 0 0.8rem 0.2rem;
+          min-height: 14.5rem;
+        }
+      }
+      .btn-prize {
+        position: absolute;
+        top: 1rem;
+        right: 0;
+        padding: 0.6rem 0.4rem 0.6rem 2.2rem;
+        width: 10em;
+        line-height: 1.4;
+        font-size: 0.7rem;
+        background-image: linear-gradient(90deg, #0078ff, #ae00ff);
+        border-radius: 0;
+        border-top-left-radius: 2rem;
+        border-bottom-left-radius: 2rem;
+        @media (max-width: 768.89px) {
+          top: 0.5rem;
+          font-size: 0.65rem;
+        }
+        &::before {
+          content: '';
+          position: absolute;
+          bottom: 0;
+          left: -0.2rem;
+          display: inline-block;
+          width: 2.6rem;
+          height: 2.8rem;
+          background: url(~@/assets/minting/prize-icon-color.png) 0 0 no-repeat;
+          background-size: 100%;
+        }
+        &.disabled {
+          background-image: none;
+          background-color: #9898a0;
+          cursor: pointer;
+          &::before {
+            background-image: url(~@/assets/minting/prize-icon-gray.png);
+          }
+        }
+      }
+      .level {
+        padding: 0.5rem 0;
+        line-height: 2.5;
+        font-size: 1.2rem;
+        text-align: left;
+        border-bottom: 1px solid $color-border;
+        @media (max-width: 768.89px) {
+          padding: 0.4rem 0;
+          font-size: 1rem;
+        }
+      }
+      .attr-list {
+        padding: 1.2rem 0;
+        @media (max-width: 768.89px) {
+          padding: 0.3rem 0 0.6rem;
+          margin: 0.5rem -0.5rem;
+          display: flex;
+          flex-wrap: wrap;
+        }
+      }
+      .attr-item {
+        display: flex;
+        align-items: center;
+        padding: 0.5rem 0;
+        line-height: 1rem;
+        font-size: 1rem;
+        @media (max-width: 768.89px) {
+          box-sizing: border-box;
+          width: 50%;
+          padding: 0.5rem;
+          font-size: 0.8rem;
+        }
+      }
+      .attr-icon {
+        width: 1.1em;
+        height: 1.1em;
+      }
+      .attr-name {
+        display: block;
+        margin: 0 0.3rem;
+      }
+      .attr-value {
+        flex: 1;
+        display: block;
+        text-align: right;
+      }
+      .btn-stake,
+      .btn-redeem {
+        @include btn-fill-color();
+        display: block;
+        border-radius: 2rem;
+      }
+      .empty {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        width: 50%;
+        transform: translate(-50%, -50%);
+      }
+    }
+  }
+  .ham-list {
+    display: flex;
+    align-items: center;
+    margin: 1.2rem 0 0;
+    @media (max-width: 768.89px) {
+      display: block;
+      margin-top: 0.8rem;
+    }
+    .list {
+      flex: 1;
+      width: 0;
+      margin-right: 0.8rem;
+      padding: 0.9rem;
+      background-color: #ecf0f6;
+      border-radius: 0.5rem;
+      text-align: left;
+      overflow-x: auto;
+      white-space: nowrap;
+      @media (max-width: 768.89px) {
+        width: auto;
+        margin-right: 0;
+        padding: 0.6rem 0.5rem;
+      }
+    }
+    .item {
+      vertical-align: middle;
+      display: inline-flex;
+      align-items: center;
+      margin-right: 0.7rem;
+      padding: 0.05rem 0.5rem 0.15rem 0.5rem;
+      background-color: #e2e9f3;
+      border: 0.05rem solid #e2e9f3;
+      border-radius: 0.5rem;
+      box-sizing: border-box;
+      cursor: pointer;
+      @media (max-width: 768.89px) {
+        margin-right: 0.4rem;
+        padding: 0.05rem 0.4rem 0.15rem 0.4rem;
+      }
+      &.active {
+        border-color: $color-blue;
+        background-color: darken(#e2e9f3, 3);
+      }
+      &.empty {
+        width: 9.5rem;
+        height: 5.3rem;
+        justify-content: center;
+        .img {
+          width: 35%;
+        }
+      }
+      &:last-child {
+        margin-right: 0;
+      }
+    }
+    .cover {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 4.4rem;
+      height: 5rem;
+      background: url('~@/assets/minting/list-bg.png') center center no-repeat;
+      background-size: 100%;
+      @media (max-width: 768.89px) {
+        width: 4rem;
+        height: 4.6rem;
+      }
+      .img {
+        width: 3.7rem;
+        height: 3.7rem;
+        @media (max-width: 768.89px) {
+          width: 3.3rem;
+          height: 3.3rem;
+        }
+      }
+    }
+    .info {
+      width: 4.15rem;
+      line-height: 1.5;
+      font-size: 0.8rem;
+      @media (max-width: 768.89px) {
+        width: 3.6rem;
+        font-size: 0.75rem;
+      }
+      .id {
+        font-size: 0.9em;
+      }
+      .time {
+        margin-top: 0.2rem;
+        font-size: 0.9em;
+      }
+    }
+    .create {
+      .btn-create {
+        @include btn-fill-color();
+        box-sizing: border-box;
+        width: 11.4rem;
+        padding: 1.5rem 1rem;
+        line-height: 2rem;
+        border-radius: 0.5rem;
+        font-size: 0.9rem;
+        @media (max-width: 768.89px) {
+          display: block;
+          margin: 1rem 0.8rem 2rem;
+          padding: 0 1rem;
+          width: auto;
+          line-height: 2.5rem;
+        }
+        .img {
+          width: 2rem;
+          margin-right: 0.8rem;
+          vertical-align: middle;
+          @media (max-width: 768.89px) {
+            width: 1.2rem;
+            margin-right: 0.4rem;
+          }
+        }
+        .text {
+          vertical-align: middle;
+        }
+      }
+    }
+  }
+
+  .data-panel {
+    margin-top: -12.9rem;
+    @media (max-width: 1200px) {
+      margin: 0.3rem 0 1rem;
+      padding: 0;
+      display: flex;
+      flex-wrap: wrap;
+      width: auto;
+    }
+    .btn-receive {
+      @include btn-fill-pure();
+      display: block;
+      margin: 1.6rem 0 0.8rem;
+      box-sizing: border-box;
+      height: 2rem;
+      line-height: 2rem;
+      border-radius: 2rem;
+      @media (max-width: 1200px) {
+        margin: 0.4rem 0 0;
+        width: 50%;
+        max-width: 8.4rem;
+        border-radius: 2rem;
+      }
+      .icon {
+        margin-left: 0.4rem;
+        display: inline-block;
+        width: 0.8rem;
+        height: 0.8rem;
+        vertical-align: -0.1rem;
+        @media (max-width: 768.89px) {
+          margin-left: 0.2rem;
+        }
+      }
+    }
+  }
+}
+</style>
+
