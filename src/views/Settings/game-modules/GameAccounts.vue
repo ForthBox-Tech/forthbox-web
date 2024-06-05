@@ -248,3 +248,255 @@ export default {
         return false
       }
 
+      if (item.scholarRatio > 0 && !item.scholarAddr) {
+        this.$modal.toast('scholar address is required')
+        return false
+      }
+
+      return true
+    },
+    async _addAccount(item) {
+      const _params = {
+        userName: item.userName,
+        passwd: item.password,
+        ownerAddr: item.ownerAddr,
+        splitAddr: item.scholarAddr,
+        splitRadio: item.scholarRatio / 100,
+        symbol: this.game?.Symbol || '',
+      }
+
+      const url = `${process.env.VUE_APP_API_FBOX2}/web/game_sub_user/create`
+      const params = new URLSearchParams()
+      Object.keys(_params).forEach((key) => {
+        params.append(key, _params[key])
+      })
+
+      const res = await this.$axios.post(url, params)
+      if (res.code != 200) {
+        this.$modal.toast(res.msg)
+        return false
+      }
+
+      this.$modal.toast('success')
+      return true
+    },
+    async _editAccount(item) {
+      const _params = {
+        subUserId: item.userId,
+        userName: item.userName,
+        passwd: item.password,
+        ownerAddr: item.ownerAddr,
+        splitAddr: item.scholarAddr,
+        splitRadio: item.scholarRatio / 100,
+        symbol: this.game?.Symbol || '',
+      }
+
+      const url = `${process.env.VUE_APP_API_FBOX2}/web/game_sub_user/edit`
+      const params = new URLSearchParams()
+      Object.keys(_params).forEach((key) => {
+        params.append(key, _params[key])
+      })
+
+      const res = await this.$axios.post(url, params)
+      if (res.code != 200) {
+        this.$modal.toast(res.msg)
+        return false
+      }
+
+      this.$modal.toast('success')
+      return true
+    },
+    async _delAccount(item) {
+      const _params = {
+        subUserId: item.userId,
+        symbol: this.game?.Symbol || '',
+      }
+
+      const url = `${process.env.VUE_APP_API_FBOX2}/web/game_sub_user/del`
+      const params = new URLSearchParams()
+      Object.keys(_params).forEach((key) => {
+        params.append(key, _params[key])
+      })
+
+      const res = await this.$axios.post(url, params)
+      if (res.code != 200) {
+        this.$modal.toast(res.msg)
+        return false
+      }
+
+      this.$modal.toast('success')
+      return true
+    },
+    async _getList() {
+      const symbol = this.game?.Symbol || ''
+      if (!symbol) {
+        this.total = 0
+        this.list = []
+        return
+      }
+
+      const url = `${process.env.VUE_APP_API_FBOX2}/web/game_sub_user/list/get`
+      const params = {
+        symbol,
+      }
+
+      const res = await this.$axios.get(url, { params })
+      if (res.code != 200) {
+        this.total = 0
+        this.list = []
+        console.warn(res.msg)
+        return
+      }
+
+      const data = res.data || {}
+      this.list = Object.keys(data).map((key) => {
+        const item = data[key]
+        const result = {
+          userId: item.SubUserId,
+          userName: item.UserName,
+          password: item.Passwd,
+          ownerAddr: item.OwnerAddr,
+          ownerRatio: item.OwnerRadio * 100,
+          scholarAddr: item.SplitAddr,
+          scholarRatio: item.SplitRadio * 100,
+          status: item.Status,
+          verifyCode: item.VerifyCode,
+          authLink: '',
+          isEdit: false,
+          loading: false,
+        }
+
+        result.authLink = getAuthLink({
+          verifyCode: result.verifyCode,
+          username: result.userName,
+          walletAddr: result.ownerAddr,
+          scholarAddr: result.scholarAddr,
+          scholarRatio: result.scholarRatio,
+        })
+
+        return result
+      })
+    },
+
+    async init() {
+      this.total = 0
+      this.pageNo = 1
+      await this._getList()
+    },
+  },
+}
+</script>
+
+<style lang="scss" scoped>
+@import '@/common/css/variable.scss';
+
+.settings-game-accounts {
+  @media (max-width: 768.89px) {
+    display: block;
+    padding: 0;
+  }
+  .fbx-btn {
+    margin-right: 1.5rem;
+    min-width: 4rem;
+    font-size: 0.8rem;
+    border-radius: 0.4rem;
+    @media (max-width: 768.89px) {
+      margin: 0 0.4rem 0.4rem 0;
+      line-height: 1.6rem;
+      font-size: 0.65rem;
+      min-width: 2.5rem;
+    }
+    .icon {
+      margin-right: 0.5rem;
+      width: 0.8rem;
+      vertical-align: -0.1rem;
+      @media (max-width: 768.89px) {
+        margin-right: 0.3rem;
+        width: 0.6rem;
+        vertical-align: -0.1rem;
+      }
+    }
+
+    &.btn-add {
+      @include btn-fill-pure($color-blue);
+      @media (max-width: 768.89px) {
+        padding: 0 0.5rem;
+      }
+    }
+    &.btn-import {
+      @include btn-fill-pure(lighten($color-blue, 10));
+      @media (max-width: 768.89px) {
+        padding: 0 0.5rem;
+      }
+    }
+    &.btn-excel {
+      @include btn-fill-pure($color-purple);
+      @media (max-width: 768.89px) {
+        padding: 0 0.5rem;
+      }
+    }
+    &.btn-export {
+      @include btn-fill-pure(#18d607);
+      @media (max-width: 768.89px) {
+        padding: 0 0.5rem;
+      }
+    }
+  }
+  .table-wrap {
+    margin-top: 1.5rem;
+    overflow: auto;
+    @media (max-width: 768.89px) {
+      margin-top: 0.5rem;
+    }
+  }
+  .table {
+    text-align: center;
+    th {
+      padding: 0.75rem 0.5rem;
+      border: 0.05rem solid $color-border;
+    }
+    td {
+      padding: 0.15rem 0;
+      border: 0.05rem solid $color-border;
+    }
+    .table-input {
+      margin: 0 0.5rem;
+      width: auto;
+      text-align: center;
+      border-top: 0;
+      border-left: 0;
+      border-right: 0;
+      border-radius: 0;
+      &.disabled {
+        border: 0 none;
+      }
+      &.ratio {
+        display: inline-flex;
+        width: 4rem;
+      }
+    }
+    .done {
+      color: $color-gray;
+    }
+    .verify {
+      color: $color-blue;
+      cursor: pointer;
+      &:hover {
+        text-decoration: underline;
+      }
+    }
+    .btn-text {
+      padding: 0.2rem 0.3rem;
+      white-space: nowrap;
+      color: $color-blue;
+      cursor: pointer;
+    }
+    .btn-cancel {
+      color: $color-gray;
+    }
+    .btn-delete {
+      color: $color-red;
+    }
+  }
+}
+</style>

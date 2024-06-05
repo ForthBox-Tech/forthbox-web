@@ -67,3 +67,38 @@ export default class FBXMetaBullOnLineHelp extends ContractBase {
   }
   /**
    * 获得助力奖励
+   * @param {Number} ith 奖励序号，从1开始
+   */
+  async calHelpReward(ith) {
+    if (!cWebModel.mConnected) return
+    return this.sendTransaction('calHelpReward', [ith])
+  }
+  /**
+   * 获得最终助力奖励
+   */
+  async calLastReward() {
+    if (!cWebModel.mConnected) return
+    return this.sendTransaction('calLastReward', [])
+  }
+  /**
+   * 邀请记录
+   * @param {String} userWalletAddress
+   */
+  async getInvitersAndHelpNum(userWalletAddress) {
+    if (!cWebModel.mConnected) return ''
+    userWalletAddress = userWalletAddress || this._address
+
+    const data = await this._contract.methods.getInvitersAndHelpNum(userWalletAddress).call()
+    const result = (data.helpNums || [])
+      .map((item, index) => {
+        return {
+          friend: data.addrInviters[index] || '',
+          votes: data.helpNums[index] || '',
+          hashrate: data.helpRecords[index] || '',
+        }
+      })
+      .slice(0, 10)
+    console.log(data, result)
+    return result
+  }
+}
