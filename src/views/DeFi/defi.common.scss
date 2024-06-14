@@ -63,3 +63,68 @@
         margin: 0.8rem 0;
         padding: 0 0.6rem;
         border-radius: 0.15rem;
+      }
+    }
+    .lock-time {
+      line-height: 1.8;
+    }
+    .num {
+      color: #efb35c;
+      font-weight: bold;
+    }
+    .btn-wrap {
+      margin-top: 1.4rem;
+      display: flex;
+      @media (max-width: 768.89px) {
+        margin-top: 0.7rem;
+      }
+      .fbx-btn {
+        @include btn-fill-color();
+        flex: 1;
+        line-height: 2.7rem;
+        font-size: 0.8rem;
+        font-weight: bold;
+        box-sizing: border-box;
+        @media (max-width: 768.89px) {
+          line-height: 2.2rem;
+          font-size: 0.7rem;
+        }
+        &:not(:last-child) {
+          margin-right: 1.5rem;
+          @media (max-width: 768.89px) {
+            margin-right: 0.75rem;
+          }
+        }
+      }
+    }
+  }
+  .detail-note {
+    margin-top: 2.5rem;
+    padding: 1rem 1.6rem;
+    line-height: 1.8;
+    background-color: #fbfdff;
+    border: 0.05rem solid #f4f5f7;
+    border-radius: 0.5rem;
+    @media (max-width: 768.89px) {
+      margin-top: 1rem;
+      padding: 0.6rem 0.8rem 0.4rem;
+    }
+
+    .title {
+      font-size: 1rem;
+      font-weight: bold;
+      @media (max-width: 768.89px) {
+        font-size: 0.7rem;
+      }
+    }
+    .content {
+      padding: 0.5rem 0;
+      font-size: 0.8rem;
+      @media (max-width: 768.89px) {
+        padding: 0.4rem 0 0.5rem;
+        font-size: 0.6rem;
+      }
+    }
+  }
+}
+
