@@ -89,3 +89,76 @@ export default {
     },
   },
 }
+</script>
+
+<style lang="scss">
+.fbx-pagination {
+  display: inline-block;
+  white-space: nowrap;
+  .item {
+    display: inline-block;
+    margin: 0 0.3rem;
+    box-sizing: border-box;
+    padding: 0 0.4rem;
+    min-width: 1.5rem;
+    height: 1.5rem;
+    line-height: 1.4rem;
+    text-align: center;
+    border: 0.05rem solid #5a5c66;
+    border-radius: 0.1rem;
+    font-size: 0.8rem;
+    color: #fff;
+    user-select: none;
+    cursor: pointer;
+    &:hover {
+      opacity: 0.8;
+    }
+    &.active {
+      opacity: 1;
+      background-color: #efb35c;
+      border-color: #efb35c;
+      color: #000;
+    }
+  }
+  .item-prev::before,
+  .item-next::before {
+    content: '';
+    display: inline-block;
+    width: 0.35rem;
+    height: 0.35rem;
+    vertical-align: 0.05rem;
+  }
+  .item-prev::before {
+    border-top: 0.05rem solid #5a5c66;
+    border-left: 0.05rem solid #5a5c66;
+    transform: rotate(-45deg);
+    margin-right: -0.1rem;
+  }
+  .item-next::before {
+    border-top: 0.05rem solid #5a5c66;
+    border-right: 0.05rem solid #5a5c66;
+    transform: rotate(45deg);
+    margin-left: -0.1rem;
+  }
+  .more {
+    border: 0 none;
+  }
+
+  @media (max-width: 768.89px) {
+    .item {
+      margin: 0 0.2rem;
+      padding: 0 0.15rem;
+      min-width: 1.1rem;
+      height: 1.1rem;
+      line-height: 1rem;
+      font-size: 0.6rem;
+    }
+    .item-prev::before,
+    .item-next::before {
+      width: 0.25rem;
+      height: 0.25rem;
+    }
+  }
+}
+</style>
+

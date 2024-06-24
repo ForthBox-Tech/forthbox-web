@@ -279,3 +279,146 @@ export const STAKING = {
   },
 }
 
+export const LPFARM = {
+  fbxusdt: {
+    type: ['fbx', 'usdt'],
+    images: [require('@/assets/page-defi/forthbox.png'), require('@/assets/page-defi/usdt.png')],
+    pair: 'FBX-USDT',
+    name: 'DeFi.PancakeFBXUSDTLPs',
+    earn: 'FBX',
+    lockUpTime: 'DeFi.Flexible',
+    time: lastTime(180, 1639454186000), // 有效期：180天；开始时间：Dec-14-2021 11:56:26 AM +UTC
+    isEnd: lastTime(180, 1639454186000) <= 0,
+    amount: '5400,000',
+    amountNum: 900000,
+    token: '0x9f07679ea7011da476ed03968558742e518bca38',
+    defi: '0x75523248d4119204af918075fbb03c6F0fa6054b',
+  },
+  forthusdt: {
+    type: ['forth', 'usdt'],
+    images: [require('@/assets/page-defi/forth.png'), require('@/assets/page-defi/usdt.png')],
+    pair: 'FORTH-USDT',
+    name: 'DeFi.PancakeFORTHUSDTLPs',
+    earn: 'FBX',
+    lockUpTime: 'DeFi.Flexible',
+    time: 0,
+    isEnd: true,
+    amount: '3600,000',
+    amountNum: 600000,
+    token: '0x32fe33c9A503937464473c537f8adafa5708d1D6',
+    defi: '0x3cCcCA2Dd94896Df49d7EC0082F1525edb6c84C5',
+  },
+}
+
+function lastTime(duration, startTime) {
+  const lastDay = duration - (Date.now() - startTime) / 24 / 60 / 60 / 1000
+  return lastDay > 0 ? Math.floor(lastDay) : 0
+}
+
+export const NFT = {
+  bull_stellar_s: {
+    name: 'Fantasy Box',
+    coin: 'Fantasy Box',
+    earn: 'Planet MetaBull <S> NFT',
+    type: 1,
+    icon: require('@/assets/bull/bull-planet-head-s.png'),
+    image: require('@/assets/bull/bull-planet-body-s.png'),
+    imageStyle: 'max-width: 170%; max-height: 170%; transform: translate(-18%, -25%);',
+    duration: 60,
+    amount: '15',
+    totalNFTNum: 1000,
+    token: NFT_FANTASYBOX,
+    visible: true,
+    defi: '0xBc8069B90A86fD74ae1036E5f40A410e14C460dC',
+    texts: ['DeFi.BULL_Text1', 'DeFi.BULL_Text2', 'DeFi.BULL_Text3', 'DeFi.BULL_Text4'],
+  },
+  bull_stellar_m: {
+    name: 'Fantasy Box',
+    coin: 'Fantasy Box',
+    earn: 'Planet MetaBull <M> NFT',
+    type: 2,
+    icon: require('@/assets/bull/bull-planet-head-m.png'),
+    image: require('@/assets/bull/bull-planet-body-m.png'),
+    imageStyle: 'max-width: 145%; max-height: 145%; transform: translate(-14%, -18%);',
+    duration: 60,
+    amount: '20',
+    totalNFTNum: 600,
+    token: NFT_FANTASYBOX,
+    visible: true,
+    defi: '0x9fe7F284CeE6451CB4C49f37010E06CFB346767a',
+    texts: ['DeFi.BULL_Text1', 'DeFi.BULL_Text2', 'DeFi.BULL_Text3', 'DeFi.BULL_Text4'],
+  },
+  bull_stellar_l: {
+    name: 'Fantasy Box',
+    coin: 'Fantasy Box',
+    earn: 'Planet MetaBull <L> NFT',
+    type: 3,
+    icon: require('@/assets/bull/bull-planet-head-l.png'),
+    image: require('@/assets/bull/bull-planet-body-l.png'),
+    imageStyle: 'max-width: 125%; max-height: 125%; transform: translate(-5%, -13%);',
+    duration: 60,
+    amount: '30',
+    totalNFTNum: 400,
+    token: NFT_FANTASYBOX,
+    visible: true,
+    defi: '0x2b2f10Fd6A93021B8b883fD0fD3B676b8739057a',
+    texts: ['DeFi.BULL_Text1', 'DeFi.BULL_Text2', 'DeFi.BULL_Text3', 'DeFi.BULL_Text4'],
+  },
+  bull_stellar_xl: {
+    name: 'Fantasy Box',
+    coin: 'Fantasy Box',
+    earn: 'Planet MetaBull <XL> NFT',
+    type: 4,
+    icon: require('@/assets/bull/bull-planet-head-xl.png'),
+    image: require('@/assets/bull/bull-planet-body-xl.png'),
+    duration: 60,
+    amount: '45',
+    totalNFTNum: 200,
+    token: NFT_FANTASYBOX,
+    visible: true,
+    defi: '0x99e2cd3271BA65B2Ff28eA742235061E5Acbe764',
+    texts: ['DeFi.BULL_Text1', 'DeFi.BULL_Text2', 'DeFi.BULL_Text3', 'DeFi.BULL_Text4'],
+  },
+  bull_stellar_all: {
+    name: 'Fantasy Box',
+    coin: 'Fantasy Box',
+    earn: 'Planet MetaBull NFT',
+    type: 5,
+    icon: require('@/assets/bull/bull-planet-body-all.png'),
+    image: require('@/assets/bull/bull-planet-body-all.png'),
+    duration: 60,
+    amount: '100',
+    totalNFTNum: 100,
+    token: NFT_FANTASYBOX,
+    visible: true,
+    defi: '0x78c396a6D96B888bCCb1b184b9fbAfa12398260D',
+    texts: ['DeFi.BULL_Text1', 'DeFi.BULL_Text2', 'DeFi.BULL_Text3', 'DeFi.BULL_Text4'],
+  },
+}
+
+// Bull-彗星系列
+// https://static.forthbox.io/image/nft/metabull/bull-full/comet/comet-s.png
+// https://static.forthbox.io/image/nft/metabull/bull-full/comet/comet-m.png
+// https://static.forthbox.io/image/nft/metabull/bull-full/comet/comet-l.png
+// https://static.forthbox.io/image/nft/metabull/bull-full/comet/comet-xl.png
+
+// Bull-行星系列
+// https://static.forthbox.io/image/nft/metabull/bull-full/planet/planet-s.png
+// https://static.forthbox.io/image/nft/metabull/bull-full/planet/planet-m.png
+// https://static.forthbox.io/image/nft/metabull/bull-full/planet/planet-l.png
+// https://static.forthbox.io/image/nft/metabull/bull-full/planet/planet-xl.png
+
+// Bull-恒星系列
+// https://static.forthbox.io/image/nft/metabull/bull-full/stellar/stellar-s.png
+// https://static.forthbox.io/image/nft/metabull/bull-full/stellar/stellar-m.png
+// https://static.forthbox.io/image/nft/metabull/bull-full/stellar/stellar-l.png
+// https://static.forthbox.io/image/nft/metabull/bull-full/stellar/stellar-xl.png
+
+// Bull-星系系列
+// https://static.forthbox.io/image/nft/metabull/bull-full/galaxy/galaxy-s.png
+// https://static.forthbox.io/image/nft/metabull/bull-full/galaxy/galaxy-m.png
+// https://static.forthbox.io/image/nft/metabull/bull-full/galaxy/galaxy-l.png
+// https://static.forthbox.io/image/nft/metabull/bull-full/galaxy/galaxy-xl.png
+
+export const DEFI_CARD_REFRESH_INTERVAL = 30000
+

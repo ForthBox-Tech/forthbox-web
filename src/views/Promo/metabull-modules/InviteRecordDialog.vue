@@ -40,3 +40,42 @@ export default {
     return {
       visible: false,
 
+      data: [],
+    }
+  },
+  methods: {
+    show() {
+      this.visible = true
+
+      this._getData()
+    },
+    hide() {
+      this.visible = false
+    },
+
+    onHide() {
+      this.hide()
+    },
+
+    async _getData() {
+      const contract = new FBXMetaBullOnLineHelp(PROMO_METABULL)
+      this.data = await contract.getInvitersAndHelpNum()
+    },
+  },
+}
+</script>
+
+<style lang="scss" scoped>
+.dialog-invite-record {
+  .main {
+    padding: 0;
+    width: 40rem;
+    text-align: center;
+    border: 0.05rem solid #ec68ff;
+    @media (max-width: 768.89px) {
+      width: 15rem;
+    }
+  }
+}
+</style>
+
