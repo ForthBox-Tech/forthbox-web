@@ -156,3 +156,141 @@ async function onChange(accounts, chainId, callback) {
   }
   _chainId = (_account && parseInt(chainId)) || ''
 
+  typeof callback === 'function' && callback({ accounts, chainId })
+}
+
+/**
+ * 绑定事件：每个事件仅绑定一个回调，重复绑定仅最后一个生效
+ *
+ * 主要用于全局单例事件绑定：
+ * 1. ethereum：MetaMask提供的全局对象
+ * 2. walletConnectProvider：WalletConnectProvider实例，这里实现为单例
+ * 3. clover：Clover提供的全局对象
+ *
+ * @param {Object} target 目标对象
+ * @param {String} eventName 待监听的事件名
+ * @param {Function} callback 事件回调
+ */
+function uniqueOn(target, eventName, callback) {
+  const callbackName = 'unique' + eventName.slice(0, 1).toUpperCase() + eventName.slice(1)
+  if (target[callbackName]) {
+    target.removeListener(eventName, target[callbackName])
+  }
+  target[callbackName] = callback
+  target.on(eventName, target[callbackName])
+}
+
+export function bind(callback) {
+  const handler = {
+    /** 帐号切换 */
+    accountsChanged: (accounts) => {
+      if (!cWebModel.mConnected) return
+      console.log('accountsChanged', accounts)
+      return onChange(accounts, _chainId, callback)
+    },
+    /** 区块链切换 */
+    chainChanged: (chainId) => {
+      if (!cWebModel.mConnected) return
+      console.log('chainChanged', chainId)
+      return onChange([_account], chainId, callback)
+    },
+    /** 断开连接 */
+    disconnect: (code, reason) => {
+      if (!cWebModel.mConnected) return
+      console.log('disconnect', code, reason)
+      return onChange(null, null, callback)
+    },
+  }
+
+  WALLET.forEach((wallet) => {
+    const provider = getWalletProvider(wallet.name)
+    if (!provider) return
+
+    const events = ['accountsChanged', 'chainChanged']
+    if (wallet.name == 'WalletConnect') {
+      events.push('disconnect')
+    }
+
+    events.forEach((eventName) => {
+      uniqueOn(provider, eventName, handler[eventName])
+    })
+  })
+}
+
+export async function connect(walletName, callback) {
+  cWebModel.mWallet = walletName
+
+  const provider = getWalletProvider(walletName)
+  if (typeof provider === 'undefined') {
+    alert(`Please install ${walletName}!`)
+    return
+  }
+
+  _web3 = new Web3(provider)
+  // 释放到window.web3，用于兼容旧代码
+  window.web3 = _web3
+
+  if (walletName == 'WalletConnect') {
+    await provider.enable()
+  } else {
+    if (cWebModel.mConnected) {
+      await onChange([_account], _chainId, callback)
+      return
+    }
+
+    const accounts = await provider.request({ method: 'eth_requestAccounts' })
+    if (Number(_account) != Number(accounts[0])) {
+      console.log('----wallet.connect manual trigger onChange')
+      await onChange(accounts, null, callback)
+    }
+  }
+}
+
+export function disconnectWallet() {
+  if (cWebModel.mWallet == 'WalletConnect') {
+    iWalletConnectProvider.disconnect()
+  }
+  _account = ''
+  _chainId = ''
+}
+
+/**
+ * 钱包签名（调用前确保钱包已连接）
+ * @param {String} address
+ * @returns
+ */
+export async function signWallet(address) {
+  const nonce = `login_${Date.now()}_${String(Math.random()).slice(-8)}`
+  const sign = await _web3.eth.personal.sign(nonce, address)
+  return { nonce, sign }
+}
+
+export async function sign(address) {
+  if (!address) {
+    throw new Error('address is required!')
+  }
+
+  const { nonce, sign } = await signWallet(address)
+  const path = `${process.env.VUE_APP_API_FBOX2}/web/users/sign_auth`
+
+  const params = new URLSearchParams()
+  params.append('user_addr', address)
+  params.append('nonce', nonce)
+  params.append('sign', sign)
+
+  return await _axios.post(path, params)
+}
+
+/**
+ * 获取用户钱包地址
+ */
+export function getAccount() {
+  return _account
+}
+
+/**
+ * 获取 web3 实例
+ */
+export function getWeb3Instance() {
+  return _web3
+}
