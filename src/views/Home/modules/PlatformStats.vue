@@ -46,3 +46,46 @@ export default {
           _value: 20,
         },
       ],
+    }
+  },
+  methods: {
+    _execAnimation(item, count = 1) {
+      if (count < COUNT) {
+        item.value = formatDigits(parseInt((item._value * count) / COUNT))
+        setTimeout(() => {
+          this._execAnimation(item, count + 1)
+        }, Math.ceil(1000 / COUNT))
+        return
+      }
+      item.value = formatDigits(item._value)
+    },
+    digitsAnimation() {
+      this.stats.forEach((item) => {
+        this._execAnimation(item)
+      })
+    },
+  },
+  mounted() {
+    const options = {
+      threshold: 0.4,
+    }
+    const callback = (entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting && entry.intersectionRatio > 0) {
+          this.digitsAnimation()
+          observer.disconnect()
+        }
+      })
+    }
+    const observer = new IntersectionObserver(callback, options)
+    observer.observe(this.$refs.statsData)
+  },
+}
+</script>
+
+<style lang="scss" scoped>
+@import '@/common/css/variable.scss';
+
+.home-stats {
+  background: url('~@/assets/page-home/bg1.png') center center / 100% 100% no-repeat;
+
