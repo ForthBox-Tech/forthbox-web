@@ -78,3 +78,45 @@ export default {
 <style lang="scss" scoped>
 @import '@/common/css/variable.scss';
 
+.dialog-guide {
+  .guide-main {
+    width: 32rem;
+    padding: 0 1.5rem 0.5rem;
+    text-align: left;
+    background-color: $color-white;
+    border-radius: 1rem;
+  }
+  .guide-header {
+    display: flex;
+    padding-top: 0.5rem;
+    line-height: 3rem;
+    font-size: 0.8rem;
+    border-bottom: 0.05rem solid $color-border;
+    .title {
+      flex: 1;
+      font-weight: 500;
+    }
+    .close {
+      margin-right: -1rem;
+      width: 3rem;
+      height: 3rem;
+      background: url('~@/assets/common/close.png') center center / 0.8rem no-repeat;
+      cursor: pointer;
+    }
+  }
+  .guide-block {
+    margin: 1rem 0;
+    line-height: 1.4;
+  }
+  .table {
+    margin: 1.5rem 0;
+    border-collapse: collapse;
+    th,
+    td {
+      padding: 0.5rem 1rem;
+      border: 0.05rem solid $color-border;
+    }
+  }
+}
+</style>
+

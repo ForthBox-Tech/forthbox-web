@@ -18,3 +18,29 @@ export default {
 }
 </script>
 
+<style lang="scss">
+@import '@/common/css/variable.scss';
+
+.fbx-form-item {
+  margin-bottom: 0.5rem;
+  font-size: 0.7rem;
+  .label {
+    line-height: 2rem;
+    font-size: inherit;
+    font-weight: 500;
+  }
+  .tips {
+    margin-top: -0.2rem;
+    line-height: 1.2;
+    font-size: 0.86em;
+    color: $color-secondary;
+    margin-bottom: 0.5rem;
+  }
+  .error {
+    margin-top: 0.2rem;
+    font-size: 0.86em;
+    color: #f88387;
+  }
+}
+</style>
+
