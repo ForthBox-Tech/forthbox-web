@@ -96,3 +96,93 @@ export default {
   mounted() {
     this.$bannerSlider = this.$refs.bannerSlider
 
+    // this.getBanners()
+  },
+}
+</script>
+
+<style lang="scss" scoped>
+.home-banners {
+  position: relative;
+  &:hover {
+    .banner-left,
+    .banner-right {
+      opacity: 1;
+    }
+  }
+  .banner-slider {
+    width: 100%;
+    height: 35.65rem;
+    @media (max-width: 768.89px) {
+      width: 100%;
+      height: 63vw;
+    }
+  }
+  .banner {
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    @media (max-width: 768.89px) {
+      width: 100%;
+    }
+  }
+  .banner-left,
+  .banner-right {
+    transition: opacity 0.3s;
+    opacity: 0;
+    position: absolute;
+    top: 50%;
+    z-index: 3;
+    margin-top: -1.5rem;
+    width: 2rem;
+    height: 3rem;
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-size: 1.1rem;
+    cursor: pointer;
+  }
+  .banner-left {
+    left: 2rem;
+    background-image: url('~@/assets/home/banner-left.png');
+  }
+  .banner-right {
+    right: 2rem;
+    background-image: url('~@/assets/home/banner-right.png');
+  }
+  .dots {
+    position: absolute;
+    z-index: 5;
+    bottom: 2rem;
+    left: 50%;
+    transform: translateX(-50%);
+    white-space: nowrap;
+    @media (max-width: 768.89px) {
+      bottom: 1rem;
+    }
+    .dot {
+      display: inline-block;
+      margin: 0 0.25rem;
+      width: 0.5rem;
+      height: 0.5rem;
+      border-radius: 0.5rem;
+      background-color: #fff;
+      transition: width 0.1s;
+      @media (max-width: 768.89px) {
+        margin: 0 0.125rem;
+        width: 0.25rem;
+        height: 0.25rem;
+        border-radius: 0.25rem;
+      }
+      &.active {
+        width: 3rem;
+        background: linear-gradient(90deg, #0078ff, #ae00ff);
+        @media (max-width: 768.89px) {
+          width: 1.5rem;
+        }
+      }
+    }
+  }
+}
+</style>
+

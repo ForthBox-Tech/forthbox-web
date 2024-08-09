@@ -244,3 +244,181 @@ export default {
     }
   }
 
+  .btns {
+    display: flex;
+    align-items: center;
+    font-size: 0.9rem;
+    .btn {
+      position: relative;
+      display: block;
+      margin-left: 1.5rem;
+      cursor: pointer;
+      @media (max-width: 768.89px) {
+        margin-left: 0.5rem;
+      }
+      .trigger {
+        display: block;
+        height: 1.5rem;
+        width: 1.5rem;
+        background: center center / 100% no-repeat;
+        @media (max-width: 768.89px) {
+          height: 1.2rem;
+          width: 1.2rem;
+        }
+      }
+    }
+    .btn-sign-in,
+    .btn-sign-up {
+      font-size: 0.75rem;
+      font-weight: 500;
+      &:hover {
+        opacity: 0.9;
+      }
+      @media (max-width: 768.89px) {
+        font-size: 0.6rem;
+      }
+    }
+    .btn-sign-up {
+      padding: 0 0.6rem;
+      line-height: 1.7rem;
+      color: $color-white;
+      background-color: $color-blue;
+      border-radius: 0.3rem;
+      @media (max-width: 768.89px) {
+        padding: 0 0.3rem;
+        line-height: 1.5rem;
+      }
+    }
+    .btn-prize {
+      .trigger {
+        margin: 0.2rem 0 -0.15rem 0;
+        height: 1.8rem;
+        width: 1.7rem;
+        background-image: url('~@/assets/page-games/comp-games-nav/icon-prize.png');
+        @media (max-width: 768.89px) {
+          height: 1.4rem;
+          width: 1.3rem;
+        }
+      }
+      .bubble {
+        position: absolute;
+        top: -10%;
+        right: -30%;
+        display: inline-block;
+        box-sizing: border-box;
+        padding: 0 0.2rem;
+        min-width: 0.8rem;
+        height: 0.8rem;
+        line-height: 0.8rem;
+        text-align: center;
+        font-size: 0.6rem;
+        color: $color-white;
+        background-color: $color-red;
+        border-radius: 1rem;
+        @media (max-width: 768.89px) {
+          min-width: 0.65rem;
+          height: 0.65rem;
+          line-height: 0.65rem;
+          font-size: 0.5rem;
+        }
+      }
+    }
+    .btn-profile {
+      .inner {
+        display: block;
+        padding: 0.15rem 0.3rem 0.15rem 0.1rem;
+        line-height: 1;
+        // border: 0.05rem solid $color-blue;
+        border-radius: 2rem;
+        white-space: nowrap;
+        @media (max-width: 768.89px) {
+          padding: 0.1rem 0.15rem 0.1rem 0.1rem;
+        }
+      }
+      .name {
+        margin: 0 0.5rem;
+        font-size: 0.8rem;
+        color: $color-blue;
+        vertical-align: middle;
+        @media (max-width: 768.89px) {
+          margin: 0 0.3rem;
+          font-size: 0.6rem;
+        }
+      }
+      .avatar {
+        width: 1.5rem;
+        height: 1.5rem;
+        border-radius: 1.5rem;
+        overflow: hidden;
+        vertical-align: middle;
+        @media (max-width: 768.89px) {
+          width: 1.2rem;
+          height: 1.2rem;
+        }
+      }
+      .trigger {
+        background-image: url('~@/assets/comp-nav/icon-profile.png');
+        &:hover {
+          background-image: url('~@/assets/comp-nav/icon-profile-active.png');
+        }
+      }
+    }
+    .btn-menu {
+      padding: 0.2rem;
+      font-size: 0;
+      width: 0.9rem;
+      @media (max-width: 768.89px) {
+        margin-left: 0.35rem;
+      }
+      .line {
+        margin: 0.22rem 0;
+        display: block;
+        width: inherit;
+        height: 0.1rem;
+        border-radius: 0.05rem;
+        background-color: $color-black;
+        transition: transform 0.5s, width 0.4s, opacity 0.4s;
+        &.line-1 {
+          transform-origin: top left;
+        }
+        &.line-3 {
+          transform-origin: bottom left;
+        }
+      }
+      &.close {
+        .line {
+          width: 0.97rem;
+        }
+        .line-1 {
+          transform: rotate(45deg);
+        }
+        .line-2 {
+          width: 0;
+          opacity: 0;
+        }
+        .line-3 {
+          transform: rotate(-45deg);
+        }
+      }
+    }
+  }
+
+  .user-modal,
+  .wallet-modal {
+    top: 130%;
+    right: -1rem;
+    @media (max-width: 768.89px) {
+      position: fixed;
+      top: var(--nav2-height);
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background-color: darken($color-white, 1);
+    }
+  }
+}
+.comp-games-nav-placeholder {
+  height: var(--nav2-height);
+}
+</style>
+
