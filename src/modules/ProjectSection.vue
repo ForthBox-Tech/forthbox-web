@@ -183,3 +183,186 @@ export default {
     },
   },
 }
+</script>
+
+<style lang="scss" scoped>
+@import '@/common/css/variable.scss';
+
+.comp-project {
+  display: flex;
+  align-items: center;
+  border: 0.05rem solid $color-border;
+  border-radius: 0.5rem;
+  overflow: hidden;
+  color: $color-primary;
+  text-align: left;
+  @media (max-width: 768.89px) {
+    display: block;
+    border: 0 none;
+    border-radius: 0;
+  }
+  .preview {
+    width: 56%;
+    min-width: 37.6rem;
+    @media (max-width: 768.89px) {
+      width: 100%;
+      min-width: auto;
+    }
+  }
+  .info {
+    flex: 1;
+    margin: 0 auto;
+    max-width: 25rem;
+    padding: 1.5rem 2.5%;
+    @media (max-width: 768.89px) {
+      max-width: none;
+      padding: 1rem 0;
+    }
+  }
+  .profile {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    .basic {
+      flex: 1;
+      width: 5rem;
+      &.align-center {
+        text-align: center;
+        .cover {
+          margin: 0 auto;
+        }
+      }
+    }
+    .cover {
+      display: block;
+      max-width: 10rem;
+      height: 4.5rem;
+    }
+    .text {
+      @include ellipsis(1);
+      @include text-with-cert(0.2rem, 0.7rem, 0.7rem);
+      line-height: 1.5;
+      font-size: inherit;
+      font-weight: inherit;
+      vertical-align: middle;
+    }
+    .name {
+      margin: 0.5rem 0 0.1rem 0;
+      font-size: 1.2rem;
+      font-weight: 500;
+      @media (max-width: 768.89px) {
+        margin: 0.2rem 0 0.1rem 0;
+        font-size: 1rem;
+      }
+    }
+    .provider {
+      font-size: 0.8rem;
+      @media (max-width: 768.89px) {
+        font-size: 0.6rem;
+      }
+      .text {
+        max-width: 90%;
+      }
+    }
+    .more {
+    }
+    .score {
+      display: flex;
+      padding: 0 0.2rem;
+      border-bottom: 0.05rem solid $color-blue;
+      .num {
+        font-size: 2.5rem;
+        font-weight: 500;
+        color: $color-blue;
+      }
+      .aside {
+        flex: 1;
+        margin-left: 0.45rem;
+        text-align: right;
+      }
+      .rater {
+        margin-top: 0.3rem;
+        text-align: right;
+        font-size: 0.8rem;
+        color: $color-black;
+        @media (max-width: 768.89px) {
+          font-size: 0.7rem;
+        }
+      }
+    }
+    .player {
+      display: flex;
+      line-height: 1.5;
+      font-size: 1.5rem;
+      @media (max-width: 768.89px) {
+        font-size: 1rem;
+      }
+      .col {
+        flex: 1;
+        padding: 0.5rem 0.2rem 0 0.2rem;
+        text-align: center;
+      }
+      .label {
+        white-space: nowrap;
+        font-size: 0.7rem;
+      }
+      .value {
+        white-space: nowrap;
+      }
+    }
+  }
+  .btns-wrap {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    margin-top: 12%;
+    padding: 12% 0 8%;
+    border-top: 0.05rem solid $color-border;
+    @media (max-width: 768.89px) {
+      margin-top: 4.5%;
+      padding: 4.5% 0;
+    }
+    .btn-pure {
+      @include btn-fill-pure();
+      box-sizing: border-box;
+      padding: 0.8rem 0.3rem;
+      width: 48%;
+      line-height: 1rem;
+      @media (max-width: 768.89px) {
+        padding: 0.65rem 0.3rem;
+        width: 48.5%;
+      }
+      &.color-gray {
+        background-color: $color-gray;
+      }
+      &.width-full {
+        width: 100%;
+      }
+    }
+    .btn-color {
+      @include btn-fill-color();
+      margin-top: 1rem;
+      box-sizing: border-box;
+      width: 100%;
+      line-height: 2.7rem;
+      @media (max-width: 768.89px) {
+        margin-top: 0.5rem;
+        line-height: 2.5rem;
+      }
+    }
+    .icon {
+      display: inline-block;
+      margin-right: 0.5rem;
+      width: 0.9rem;
+      vertical-align: -0.1rem;
+      @media (max-width: 768.89px) {
+        margin-right: 0.3rem;
+      }
+    }
+  }
+  .social-wrap {
+    text-align: center;
+  }
+}
+</style>
+

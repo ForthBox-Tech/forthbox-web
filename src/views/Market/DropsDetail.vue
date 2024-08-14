@@ -214,3 +214,216 @@ export default {
       }
     },
 
+    //获取必要的合约信息
+    async getContractInfo() {
+      try {
+        this.contractInfo = await this.drop.getInfo(this.carnivalContract)
+      } catch (err) {
+        console.log(err)
+        alert(err)
+      }
+    },
+    //初始化
+    async init({ accounts, chainId } = {}) {
+      if (!accounts || !accounts.length) {
+        return
+      }
+      if (!isSupportedChain(chainId)) {
+        alert('Please change your chain provider to the Binance Smart Chain (or testnet)')
+        return
+      }
+      //初始化合约
+      this.chainId = chainId
+
+      this.fbxContract = getFbxContract()
+      this.drop = DROPS[this.keyMapName]
+      this.carnivalContract = this.drop.getContract(chainId)
+      await this.getContractInfo()
+    },
+  },
+  mounted() {
+    //获取和判断路由参数
+    this.keyMapName = this.$route.query.id || KEYS.nftbox
+    if (this.keyMapName.length == 0) {
+      alert('Please select a id')
+      return
+    }
+
+    emitter.on('connect-wallet', this.init)
+    this.$root.connectWallet()
+  },
+  unmounted() {
+    emitter.off('connect-wallet', this.init)
+  },
+}
+</script>
+
+<style lang="scss">
+@import './market.detail.scss';
+
+.market-detail-page.drops-detail-page {
+  .market-detail-image {
+    .image {
+      max-width: 76%;
+      max-height: 80%;
+      @media (max-width: 768.89px) {
+        max-width: 100%;
+        max-height: 100%;
+      }
+    }
+  }
+  .remaining {
+    float: right;
+    line-height: 1;
+    font-size: 0.7rem;
+    font-weight: normal;
+    .icon {
+      margin-right: 0.5rem;
+      width: 1rem;
+      height: 1rem;
+      vertical-align: middle;
+    }
+    span {
+      vertical-align: middle;
+    }
+    @media (max-width: 768.89px) {
+      font-size: 0.6rem;
+      .icon {
+        margin-right: 0.25rem;
+        width: 0.5rem;
+        height: 0.5rem;
+      }
+    }
+  }
+  .quantity {
+    font-size: 0.8rem;
+    margin: 1rem 0;
+    .icon {
+      margin-right: 0.5rem;
+      width: 1rem;
+      height: 1rem;
+      vertical-align: middle;
+    }
+    span {
+      vertical-align: middle;
+    }
+    .yellow {
+      color: #efb35c;
+    }
+    @media (max-width: 768.89px) {
+      font-size: 0.6rem;
+      margin: 0.7rem 0;
+      .icon {
+        margin-right: 0.25rem;
+        width: 0.5rem;
+        height: 0.5rem;
+      }
+    }
+  }
+  .xbox-remaining {
+    margin-bottom: 2rem;
+    padding-bottom: 1rem;
+    line-height: 2rem;
+    border-bottom: 0.05rem solid #5f6175;
+    @media (max-width: 768.89px) {
+      margin-bottom: 1rem;
+      padding-bottom: 0.5rem;
+      line-height: 1rem;
+      font-size: 0.6rem;
+    }
+    .icon {
+      height: 1rem;
+      margin-right: 1rem;
+      @media (max-width: 768.89px) {
+        height: 0.6rem;
+        margin-right: 0.5rem;
+        vertical-align: -0.05rem;
+      }
+    }
+  }
+  .btn-wraps {
+    display: flex;
+    margin-bottom: 1rem;
+    .fbx-btn {
+      position: relative;
+    }
+    .own-num {
+      position: absolute;
+      line-height: 1.6rem;
+      color: #fff;
+      font-size: 0.7rem;
+      left: 0;
+      width: 100%;
+      @media (max-width: 768.89px) {
+        font-size: 0.5rem;
+      }
+    }
+    .btn-xbox {
+      background-color: #33f0f1;
+      border-color: #33f0f1;
+      color: #353644;
+      .icon {
+        margin-right: 0.5rem;
+        width: 0.9rem;
+        vertical-align: -0.2rem;
+        @media (max-width: 768.89px) {
+          margin-right: 0.2rem;
+          width: 0.5rem;
+          vertical-align: middle;
+        }
+      }
+    }
+  }
+
+  .prizes-wrap {
+    .icon-list {
+      padding: 0.6rem 0;
+      display: flex;
+      flex-wrap: wrap;
+      li {
+        display: flex;
+        align-items: center;
+        width: 32%;
+        margin: 0 2% 0.4rem 0;
+        padding: 0.2rem;
+        background-color: #262734;
+        border-radius: 1.2rem;
+        border: 0.1rem solid #545e91;
+        box-sizing: border-box;
+        &:nth-child(3n) {
+          margin-right: 0;
+        }
+        img {
+          width: 100%;
+        }
+      }
+      @media (max-width: 768.89px) {
+        padding: 0.4rem 0;
+        li {
+          width: 32%;
+          margin: 0 2% 0.4rem 0;
+          padding: 0.55rem;
+          border-radius: 0.6rem;
+          border: 0.05rem solid #545e91;
+        }
+      }
+    }
+  }
+  .description-wrap {
+    ul {
+      margin-top: 0.5rem;
+      li {
+        font-size: 0.9rem;
+        margin-bottom: 1.2rem;
+      }
+      @media (max-width: 768.89px) {
+        margin-top: 0.35rem;
+        li {
+          font-size: 0.6rem;
+          margin-bottom: 0.6rem;
+        }
+      }
+    }
+  }
+}
+</style>

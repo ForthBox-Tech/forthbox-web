@@ -172,3 +172,91 @@ export default {
     }
     .text {
       @include ellipsis(1);
+      display: inline-block;
+      max-width: 80%;
+      vertical-align: middle;
+    }
+    .name {
+      font-size: 0;
+      .text {
+        font-size: 0.7rem;
+        color: $color-secondary;
+      }
+    }
+    .wallet {
+      font-size: 0;
+      .text {
+        font-size: 0.85rem;
+      }
+    }
+    .btn-edit,
+    .btn-copy {
+      position: relative;
+      margin-left: 0.5rem;
+      display: inline-block;
+      width: 1rem;
+      height: 1rem;
+      background: center center / 0.6rem no-repeat;
+      vertical-align: middle;
+    }
+    .btn-edit {
+      background-image: url('~@/assets/comp-user-modal/icon-edit.png');
+      &:hover {
+        background-image: url('~@/assets/comp-user-modal/icon-edit-a.png');
+      }
+    }
+    .btn-copy {
+      background-image: url('~@/assets/comp-user-modal/icon-copy.png');
+      &:hover {
+        background-image: url('~@/assets/comp-user-modal/icon-copy-a.png');
+      }
+    }
+  }
+  .row {
+    display: flex;
+    align-items: center;
+    padding: 0 1rem;
+    line-height: 2.7rem;
+    font-size: 0.8rem;
+    border-top: 0.05rem solid rgba($color-border, 0.75);
+    @media (max-width: 768.89px) {
+      &:last-child {
+        border-bottom: 0.05rem solid rgba($color-border, 0.75);
+      }
+    }
+    .icon {
+      display: block;
+      margin-right: 1rem;
+      width: 0.8rem;
+      height: 0.8rem;
+    }
+    .text {
+      display: block;
+      flex: 1;
+      width: 0;
+    }
+    .aside {
+      margin: 0 0.5rem;
+    }
+    &::after {
+      content: '';
+      display: block;
+      width: 0.3rem;
+      height: 0.3rem;
+      border-top: 0.1rem solid $color-secondary;
+      border-right: 0.1rem solid $color-secondary;
+      transform: rotate(45deg);
+    }
+    &:hover {
+      background-color: #f9f9f9;
+    }
+  }
+  .language-modal {
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+  }
+}
+</style>
+

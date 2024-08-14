@@ -42,3 +42,54 @@ export default {
       filters: [],
       filter: {},
 
+      getDegreeFilter: () => {},
+      getNameFilter: () => {},
+    }
+  },
+  computed: {
+    tabs() {
+      // 使用computed，确保支持多语言切换变化
+      return [
+        { text: this.$t('Market2.Items'), name: 'Items' },
+        { text: this.$t('Market2.Activity'), name: 'Activity' },
+      ]
+    },
+  },
+  methods: {
+    onTabChange(tab) {
+      this.filters = FILTERS[tab.name]
+      this.getDegreeFilter = this._getDegreeFilter
+      this.getNameFilter = this._getNameFilter
+    },
+    async _getDegreeFilter() {
+      const url = `${process.env.VUE_APP_API_FBOX2}/web/nft/collection_degree/list/get`
+      const params = {
+        collectionId: this.$route.query.id || '',
+      }
+
+      return await this.$axios.get(url, { params })
+    },
+    async _getNameFilter() {
+      const url = `${process.env.VUE_APP_API_FBOX2}/web/nft/collection_nft_names/list/get`
+      const params = {
+        collectionId: this.$route.query.id || '',
+      }
+
+      return await this.$axios.get(url, { params })
+    },
+  },
+}
+</script>
+
+<style lang="scss" scoped>
+@import '@/common/css/variable.scss';
+
+.market-marketplace-project {
+  .main {
+    display: flex;
+    @media (max-width: 768.89px) {
+      display: block;
+    }
+  }
+}
+</style>
