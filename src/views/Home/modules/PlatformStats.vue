@@ -89,3 +89,58 @@ export default {
 .home-stats {
   background: url('~@/assets/page-home/bg1.png') center center / 100% 100% no-repeat;
 
+  .list {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    flex-wrap: wrap;
+    margin: 1rem auto 3rem;
+    max-width: 65rem;
+    text-align: center;
+    @media (max-width: 768.89px) {
+      margin: 0.5rem auto 1.2rem;
+      padding: 0 0.4rem;
+    }
+  }
+  .item {
+    width: 46.5%;
+    box-sizing: border-box;
+    padding: 2rem 1rem;
+    margin: 1.2rem 0.6rem;
+    background-color: #f8f8ff;
+    border-radius: 0.5rem;
+    @media (max-width: 768.89px) {
+      width: 47%;
+      padding: 1.2rem 0.6rem;
+      margin: 0.3rem 0;
+    }
+    &:hover {
+      box-shadow: 0 0.15rem 0.5rem 0.05rem rgba(12, 69, 126, 0.16);
+    }
+    .image {
+      display: block;
+      margin: 0 auto 0.8rem;
+      width: 40%;
+      max-width: 4.5rem;
+      @media (max-width: 768.89px) {
+        margin-bottom: 0.5rem;
+      }
+    }
+    .value {
+      line-height: 1.5;
+      font-size: 2.1rem;
+      font-weight: bold;
+      @media (max-width: 768.89px) {
+        font-size: 1.2rem;
+      }
+    }
+    .text {
+      font-size: 1rem;
+      @media (max-width: 768.89px) {
+        font-size: 0.6rem;
+      }
+    }
+  }
+}
+</style>
+

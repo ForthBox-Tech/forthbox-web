@@ -75,3 +75,61 @@ export default {
       const firstSubTab = tab.subTabs[0]
       this.selectedSubTab = firstSubTab.key
 
+      last.tab = this.selectedTab
+      last.subTab = this.selectedSubTab
+    },
+    changeNavItem(subTab) {
+      this.selectedSubTab = subTab.key
+      last.subTab = this.selectedSubTab
+    },
+  },
+}
+</script>
+
+<style lang="scss">
+.market-artworks-page {
+  .nav-wrap {
+    margin: -1rem 0 1.5rem;
+    display: flex;
+    .current {
+      color: #efb35c;
+    }
+    .nav-left {
+      flex: 1;
+      font-size: 1.2rem;
+      span {
+        margin-right: 1.2rem;
+        cursor: pointer;
+        &.current {
+          border-bottom: 0.1rem solid #efb35c;
+        }
+      }
+    }
+    .nav-right {
+      font-size: 0.9rem;
+      span {
+        margin-left: 0.5rem;
+        padding-right: 0.5rem;
+        cursor: pointer;
+        &:not(:last-child) {
+          border-right: 0.05rem solid #5a5c66;
+        }
+      }
+    }
+    @media (max-width: 768.89px) {
+      margin: 0 0 0.7rem;
+      .nav-left {
+        font-size: 0.7rem;
+        span {
+          &.current {
+            border-bottom: 0.05rem solid #efb35c;
+          }
+        }
+      }
+      .nav-right {
+        font-size: 0.6rem;
+      }
+    }
+  }
+}
+</style>

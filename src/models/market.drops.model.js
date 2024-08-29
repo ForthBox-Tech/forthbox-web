@@ -227,3 +227,142 @@ class TowerBox extends Box {
   }
 }
 
+class XBox extends Box {
+  image = 'https://static.forthbox.io/image/nft/xbox.png'
+  imageStyle = 'width: 80%'
+  name = 'X-Box'
+  sIcon = require('@/assets/page-market/drops-icon-box.png')
+  desc = ''
+  date = '06-09-2022'
+  note = 'You have a chance to win prizes like Model 3, MacBook Pro, and PlayStation 5.'
+  price = ''
+  isEnd = false
+  visible = true
+  simplePrizes = [
+    require('@/assets/page-market/xbox-tsl.png'),
+    require('@/assets/page-market/xbox-mac.png'),
+    require('@/assets/page-market/xbox-game.png'),
+    require('@/assets/page-market/xbox-tower.png'),
+  ]
+  prizes = [
+    require('@/assets/page-market/xbox-tsl.png'),
+    require('@/assets/page-market/xbox-mac.png'),
+    require('@/assets/page-market/xbox-game.png'),
+    'https://static.forthbox.io/image/nft/ham-fantasy/Machine-gun.png',
+    'https://static.forthbox.io/image/nft/ham-fantasy/Frozen.png',
+    'https://static.forthbox.io/image/nft/ham-fantasy/Fire.png',
+    'https://static.forthbox.io/image/nft/ham-fantasy/Laser.png',
+    'https://static.forthbox.io/image/nft/ham-fantasy/Railgun.png',
+    'https://static.forthbox.io/image/nft/ham-fantasy/Missile.png',
+  ]
+  prizesStyle = 'width: 23%'
+  description = [
+    {
+      title: 'The following prizes are included in the X-Box.',
+      content: [
+        '1) 5 Tesla Model 3',
+        '2) 10 Apple MacBook Pro',
+        '3) 20 Sony PlayStation 5',
+        '4) 200 Machine Gun Tower NFTs of the Ham Fantasy Game',
+        '5) 200 Frozen Tower NFTs of the Ham Fantasy Game',
+        '6) 200 Fire Tower NFTs of the Ham Fantasy Game',
+        '7) 150 Laser Tower NFTs of the Ham Fantasy Game',
+        '8) 150 Railgun Tower NFTs of the Ham Fantasy Game',
+        '9) 89 Missile Tower NFTs of the Ham Fantasy Game',
+      ],
+    },
+    {
+      title: 'Launch time:',
+      content: ['24:00 SGT (16:00 PM UTC), June 8, 2022'],
+    },
+    {
+      title: 'Note:',
+      content: [
+        '1. The quantity of X-Box NFTs is 1,024 in total.',
+        '2. When a user opens an X-Box, the prize will be transferred to the winner’s wallet address as an NFT in real-time. The result of the lottery draw will be synchronized to the blockchain, on which users can search for on-chain data.',
+        '3. If you are the winner of the Tesla Model 3, MacBook Pro, and Sony PlayStation 5, please do not hesitate to contact the ForthBox admin or support on telegram. We need to verify your raffle result. There is no deadline for redeeming your prizes.',
+      ],
+    },
+  ]
+  // address = '0xe0aDb23Efa6d45Fc1a3dd947d066C52B038FF240' // 主网测试
+  address = '0x829d327BeBb654E7E7e224DB111cfeC1b7CAa432' // 主网正式
+  getContract() {
+    return new SellNFTManage(this.address)
+  }
+  // nftAddress = '0xC39a3522aDA30c8B1aBEe9C0D87787a8390f5CD3' // 主网测试
+  nftAddress = '0x3eB6f20CC03175A8686C3DEAc4De36fEb490212c' // 主网正式
+  getNftContract() {
+    return new NFT(this.nftAddress)
+  }
+  async initSimpleDetail() {
+    const contract = this.getNftContract()
+    const count = await contract.balanceof()
+    this.desc = `You own ${count}`
+  }
+  async getPrize(prize) {
+    const result = {
+      showText: '',
+      showImg: '',
+    }
+
+    Object.assign(result, {
+      showText: `You've got ${prize}`,
+      showImg: XBOX_IMAGE[prize],
+    })
+
+    return result
+  }
+  async getOwnNum(contract) {
+    return await contract.balanceof()
+  }
+  async getInfo() {
+    const info = {
+      addrLastNum: 0,
+      addrMaxNum: 0,
+      allLastNum: 0,
+      ownNum: 0,
+      unAvailable: false,
+    }
+
+    const contract = this.getNftContract()
+    info.ownNum = await contract.balanceof()
+    if (info.ownNum == 0) {
+      info.unAvailable = true
+    }
+
+    return info
+  }
+}
+
+export const DROPS = {
+  xbox: new XBox(),
+  towerboxround2: new TowerBox({
+    date: '04-25-2022',
+    description: [
+      {
+        title: 'The following prizes are included in the mystery box.',
+        content: [
+          '1) 100 Missile Tower NFT',
+          '2) 100 Railgun Tower NFT',
+          '3) 100 Laser Tower NFT',
+          '4) 200 Fire Tower NFT',
+          '5) 200 Frozen Tower NFT',
+          '6) 300 Machine-gun Tower NFT',
+        ],
+      },
+      {
+        title: 'Launch time:',
+        content: ['5:00 PM SGT (9:00 AM UTC), April 25, 2022'],
+      },
+      {
+        title: 'Note:',
+        content: [
+          '1.The quantity of Tower NFT in carnival is 1,000 in total.',
+          '2.Spend 2,000 FBX to buy a mystery box, up to 10 times for each BNB Smart Chain (BSC) address.',
+        ],
+      },
+    ],
+  }),
+  towerboxround1: new TowerBox(),
+  nftbox: new NFTBox(),
+}

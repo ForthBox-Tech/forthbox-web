@@ -77,3 +77,83 @@ export default class ForthBoxMarketSwap extends ContractBase {
       erc20Addr,
       price,
       key,
+    ])
+  }
+  async sell(id, token_id_sell, key) {
+    if (!cWebModel.mConnected) return
+    return this.sendTransaction('sell', [id, token_id_sell, key])
+  }
+  async buy(swapId, key) {
+    if (!cWebModel.mConnected) return
+    return this.sendTransaction('buy', [swapId, key])
+  }
+  async cancel(swapId, key) {
+    if (!cWebModel.mConnected) return
+    return this.sendTransaction('cancle', [swapId, key])
+  }
+  async fix(swapId, price, key) {
+    const tempPrice = window.web3.utils.toWei(String(price), 'ether')
+    price = web3.utils.toBN(tempPrice)
+    if (!cWebModel.mConnected) return
+    return this.sendTransaction('fix', [swapId, price, key])
+  }
+  async planSells(contractTypeInt, contractAddr, token_ids, amounts, erc20Addr, prices, key) {
+    if (!cWebModel.mConnected) return
+    for (var i = 0; i < prices.length; i++) {
+      var amount2 = window.web3.utils.toWei(String(prices[i]), 'ether')
+      prices[i] = web3.utils.toBN(amount2)
+    }
+    return this.sendTransaction('planSells', [
+      contractTypeInt,
+      contractAddr,
+      token_ids,
+      amounts,
+      erc20Addr,
+      prices,
+      key,
+    ])
+  }
+  async planBuys(contractTypeInt, contractAddr, token_ids, amounts, erc20Addr, prices, key) {
+    if (!cWebModel.mConnected) return
+    for (var i = 0; i < prices.length; i++) {
+      var amount2 = window.web3.utils.toWei(String(prices[i]), 'ether')
+      prices[i] = web3.utils.toBN(amount2)
+    }
+    return this.sendTransaction('planBuys', [
+      contractTypeInt,
+      contractAddr,
+      token_ids,
+      amounts,
+      erc20Addr,
+      prices,
+      key,
+    ])
+  }
+  async sells(ids, token_id_sells, key) {
+    if (!cWebModel.mConnected) return
+    return this.sendTransaction('sells', [ids, token_id_sells, key])
+  }
+  async buys(swapIds, key) {
+    if (!cWebModel.mConnected) return
+    return this.sendTransaction('buys', [swapIds, key])
+  }
+  async cancles(ids, key) {
+    if (!cWebModel.mConnected) return
+    return this.sendTransaction('cancles', [ids, key])
+  }
+  async fixs(ids, prices, key) {
+    for (var i = 0; i < prices.length; i++) {
+      var amount2 = window.web3.utils.toWei(String(prices[i]), 'ether')
+      prices[i] = web3.utils.toBN(amount2)
+    }
+    if (!cWebModel.mConnected) return
+    return this.sendTransaction('fixs', [ids, prices, key])
+  }
+  async tokenPlanSellInfo(userAddr, contractAddress, tokenId) {
+    if (!cWebModel.mConnected) return ''
+    const num = await this._contract.methods
+      .tokenPlanSellInfo(userAddr, contractAddress, tokenId)
+      .call()
+    return num
+  }
+}
