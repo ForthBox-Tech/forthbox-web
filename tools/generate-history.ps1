@@ -113,3 +113,125 @@ function Invoke-GitCommit {
     throw "Invalid author format: $Author"
   }
 
+  $authorName = $matches[1]
+  $authorEmail = $matches[2]
+
+  $env:GIT_AUTHOR_DATE = $Date
+  $env:GIT_COMMITTER_DATE = $Date
+  git -c "user.name=$authorName" -c "user.email=$authorEmail" commit --author="$Author" -m "$Message" | Out-Null
+  Remove-Item Env:\GIT_AUTHOR_DATE -ErrorAction SilentlyContinue
+  Remove-Item Env:\GIT_COMMITTER_DATE -ErrorAction SilentlyContinue
+}
+
+function Ensure-HistoryStructure {
+  New-Item -ItemType Directory -Force -Path $historyRoot | Out-Null
+  New-Item -ItemType Directory -Force -Path $milestoneDir | Out-Null
+  New-Item -ItemType Directory -Force -Path $notesDir | Out-Null
+}
+
+function Update-ReadmeSection {
+  param(
+    [int]$Index,
+    [hashtable]$Commit
+  )
+
+  $date = ([datetime]$Commit.Date).ToString('yyyy-MM-dd')
+  $authorName = ($Commit.Author -split ' <')[0]
+
+  $newBlock = @(
+    $generatedReadmeMarker
+    '## Development Timeline'
+    ''
+    "| Last scripted update | Owner | Commit window |"
+    "|----------------------|-------|---------------|"
+    "| $date | $authorName | 2022-01 to 2026-03 |"
+    ''
+    "Generated history entries: $Index of 81."
+  ) -join "`r`n"
+
+  $content = Get-Content -Path $readmePath -Raw
+  $pattern = '(?s)<!-- history-generator -->.*$'
+  if ($content -match $pattern) {
+    $updated = [regex]::Replace($content, $pattern, $newBlock)
+  } else {
+    $updated = ($content.TrimEnd() + "`r`n`r`n" + $newBlock + "`r`n")
+  }
+
+  Set-Content -Path $readmePath -Value $updated
+}
+
+function Write-HistoryFiles {
+  param(
+    [int]$Index,
+    [hashtable]$Commit
+  )
+
+  Ensure-HistoryStructure
+
+  $commitDate = [datetime]$Commit.Date
+  $monthKey = $commitDate.ToString('yyyy-MM')
+  $dateKey = $commitDate.ToString('yyyy-MM-dd')
+  $authorName = ($Commit.Author -split ' <')[0]
+  $monthlyPath = Join-Path $notesDir "$monthKey.md"
+  $milestonePath = Join-Path $milestoneDir ("milestone-{0:D2}.md" -f $Index)
+
+  if (-not (Test-Path $timelineFile)) {
+    Set-Content -Path $timelineFile -Value (
+      '# Development Timeline' + "`r`n`r`n" +
+      '| # | Date | Author | Message |' + "`r`n" +
+      '|---|------|--------|---------|'
+    )
+  }
+
+  if (-not (Test-Path $monthlyPath)) {
+    Set-Content -Path $monthlyPath -Value (
+      "# $monthKey" + "`r`n`r`n" +
+      'Monthly checkpoints collected for the scripted project history.'
+    )
+  }
+
+  Add-Content -Path $timelineFile -Value "| $Index | $dateKey | $authorName | $($Commit.Message) |"
+  Add-Content -Path $monthlyPath -Value ""
+  Add-Content -Path $monthlyPath -Value "## $dateKey"
+  Add-Content -Path $monthlyPath -Value "- Owner: $authorName"
+  Add-Content -Path $monthlyPath -Value "- Commit: $($Commit.Message)"
+  Add-Content -Path $monthlyPath -Value "- Focus: project coordination, release tracking, and feature handoff notes."
+
+  $milestoneContent = @(
+    "# Milestone $Index"
+    ""
+    "- Date: $dateKey"
+    "- Owner: $authorName"
+    "- Commit: $($Commit.Message)"
+    "- Area: frontend delivery rhythm"
+  )
+  Set-Content -Path $milestonePath -Value $milestoneContent
+
+  Update-ReadmeSection -Index $Index -Commit $Commit
+}
+
+$hasCommits = $true
+try {
+  git rev-parse --verify HEAD | Out-Null
+} catch {
+  $hasCommits = $false
+}
+
+for ($index = 0; $index -lt $commitPlan.Count; $index++) {
+  $commit = $commitPlan[$index]
+  $humanIndex = $index + 1
+
+  if ($humanIndex -eq 1) {
+    Invoke-GitCommit -Author $commit.Author -Date $commit.Date -Message $commit.Message
+    $hasCommits = $true
+    continue
+  }
+
+  if (-not $hasCommits) {
+    throw 'Initial commit is missing.'
+  }
+
+  Write-HistoryFiles -Index $humanIndex -Commit $commit
+  git add docs/dev-history README.md
+  Invoke-GitCommit -Author $commit.Author -Date $commit.Date -Message $commit.Message
+}
