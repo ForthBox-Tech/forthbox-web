@@ -101,3 +101,55 @@ export default {
       transform: translateY(-2.5%);
     }
     .info {
+      margin: 86% 12% 0;
+      line-height: 1.8;
+      text-align: left;
+    }
+    .name {
+      font-size: 1.2em;
+      font-weight: bold;
+    }
+    .user {
+      font-size: 0.8em;
+      font-weight: 400;
+      color: #2cf0ff;
+    }
+    .btn-play {
+      position: absolute;
+      bottom: 0;
+      left: 50%;
+      transform: translate(-50%, 50%);
+      display: inline-block;
+      width: 65%;
+      line-height: 2.86;
+      text-align: center;
+      text-transform: uppercase;
+      font-size: 0.7em;
+      font-weight: bold;
+      color: $color-primary;
+      background-color: #ffe603;
+      border-radius: 3em;
+      cursor: pointer;
+      &:hover {
+        box-shadow: 0 0 1.1em 0 #ffe603;
+      }
+      .text {
+        position: relative;
+        margin-right: 1em;
+        &::after {
+          content: '';
+          position: absolute;
+          right: -2.7em;
+          top: 50%;
+          transform: translate(-50%, -57%);
+          display: inline-block;
+          width: 1.4em;
+          height: 0.5em;
+          background: url('~@/assets/page-games/page-home/btn-arrow.png') center center / 100% auto
+            no-repeat;
+        }
+      }
+    }
+  }
+}
+</style>
