@@ -79,3 +79,53 @@ export default class MarketManage extends ContractBase {
       }
     }
 
+    return properties
+  }
+
+  /* ========== common account ========== */
+  async balanceof(nftAdress, Accountadress) {
+    if (!cWebModel.mConnected) return ''
+    if (!Accountadress) Accountadress = cWebModel.mAccount
+
+    const num = await this._contract.methods.balanceOf(nftAdress, Accountadress).call()
+    return num
+  }
+  async balanceofs(nftSwaps, Accountadress) {
+    if (!cWebModel.mConnected) return ''
+    if (!Accountadress) Accountadress = cWebModel.mAccount
+    console.log('nftSwaps', nftSwaps)
+    console.log('Accountadress', Accountadress)
+    const nums = await this._contract.methods.balanceOfs(nftSwaps, Accountadress).call()
+    return nums
+  }
+  async tokenOfOwner(nftSwap, Accountadress) {
+    if (!cWebModel.mConnected) return ''
+    if (!Accountadress) Accountadress = cWebModel.mAccount
+
+    const tokenIds = await this._contract.methods.tokenOfOwner(nftSwap, Accountadress).call()
+    return tokenIds
+  }
+  async bExistsID(nftAdress, tokenId) {
+    if (!cWebModel.mConnected) return ''
+    const bExist = await this._contract.methods.bExistsID(nftAdress, tokenId).call()
+    return bExist
+  }
+  async ownerOf(nftAdress, tokenId) {
+    if (!cWebModel.mConnected) return ''
+    const addr = await this._contract.methods.ownerOf(nftAdress, tokenId).call()
+    return addr
+  }
+
+  /* ========== only swsap ========== */
+  //获得卖信息
+  async getSellInfos(nftSwapAdress, tokenIdArr) {
+    if (!cWebModel.mConnected) return ''
+    const result = await this._contract.methods.getSellInfos(nftSwapAdress, tokenIdArr).call()
+    const priceFix = []
+    for (let i = 0; i < result.prices.length; i++) {
+      priceFix[i] = window.web3.utils.fromWei(result.prices[i] || '0', 'ether')
+    }
+    result.prices = priceFix
+    return result
+  }
+}
