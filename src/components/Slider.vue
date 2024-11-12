@@ -134,3 +134,68 @@ export default {
       }
     },
 
+    init() {
+      const slider = this.$refs.fbxSlider
+      this.pages = Array.from(slider.children) || []
+      this.index = this.current || 0
+
+      if (this.autoplay) {
+        this.loop()
+      }
+    },
+  },
+  mounted() {
+    this.init()
+  },
+  unmounted() {
+    this.stop()
+  },
+  created() {},
+}
+
+function animate(pages, currentIndex, nextIndex, direction, callback) {
+  // 方向：正值-向右，负值-向左
+  direction = direction > 0 ? 1 : -1
+
+  const $current = pages[currentIndex]
+  const $next = pages[nextIndex]
+
+  Object.assign($current.style, {
+    transform: `translateX(${direction * 100}%) translateZ(0)`,
+    transition: 'transform .5s',
+  })
+
+  Object.assign($next.style, {
+    zIndex: 1,
+    left: `${-direction * 100}%`,
+    transform: `translateX(${direction * 100}%) translateZ(0)`,
+    transition: 'transform .5s',
+  })
+
+  const end = () => {
+    Object.assign($current.style, {
+      zIndex: 0,
+      transform: '',
+      transition: '',
+    })
+
+    Object.assign($next.style, {
+      left: '',
+      transform: '',
+      transition: '',
+    })
+
+    typeof callback === 'function' && callback()
+    $next.removeEventListener('transitionend', end)
+  }
+  $next.addEventListener('transitionend', end)
+}
+</script>
+
+<style lang="scss">
+.fbx-slider {
+  position: relative;
+  overflow: hidden;
+}
+</style>
+
