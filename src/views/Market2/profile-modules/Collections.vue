@@ -97,3 +97,54 @@ export default {
         params.append(key, _params[key])
       })
 
+      const res = await this.$axios.post(url, params)
+      if (res.code != 200) {
+        this.total = 0
+        this.list = []
+        console.warn(res.msg)
+        return
+      }
+
+      const data = res.data || {}
+      this.total = data.Total || 0
+      this.list = (data.List || []).map((item) => ({
+        image: item.CoverUrl,
+        level: item.DegreeName,
+        invalid: item.ShowStatus == 'OFF',
+        status: item.OnSale ? 'on sale' : '',
+        name: item.Name,
+        tokenId: item.TokenId,
+        amount: item.Amount || '',
+        unitPrice: '',
+        totalPrice: '',
+        contractType: item.ContractType,
+        contractAddr: item.ContractAddr,
+      }))
+
+      this.$refs.refreshBar?.createTimer()
+    },
+    async init() {
+      this.keyword = ''
+
+      this.total = 0
+      this.pageNo = 1
+      await this._getList()
+    },
+  },
+  created() {
+    this.onSearch = debounce(this.onSearch, 500)
+  },
+}
+</script>
+
+<style lang="scss" scoped>
+@import '@/common/css/variable.scss';
+
+.profile-collections {
+  .search-select {
+    margin-left: 1rem;
+    width: 11rem;
+  }
+}
+</style>
+

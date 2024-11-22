@@ -105,3 +105,58 @@ export default class FBXTurretNFT extends ContractBase {
     return isOk
   }
 
+  //查询账户的所有tokenID
+  async getPropertiesByTokenIds(IDs) {
+    if (!cWebModel.mConnected) return
+    const numArr = await this._contract.methods.getPropertiesByTokenIds(IDs).call()
+    const properties = []
+    for (let i = 0; i < numArr.length / 2; i++) {
+      let ith = i * 2
+      const temp = {}
+      temp.id = parseInt(numArr[ith])
+      ith++
+      temp.degree = parseInt(numArr[ith])
+      ith++
+      properties.push(temp)
+    }
+    return properties
+  }
+
+  //查询tokenID可获得的炮塔等级数组
+  async mintFromHamLevelArr(hamTokenId) {
+    if (!cWebModel.mConnected) return
+    const numArr = await this._contract.methods.mintFromHamLevelArr(hamTokenId).call()
+    const levelList = []
+    for (let i = 0; i < numArr.length; i++) {
+      levelList.push(numArr[i])
+    }
+    return levelList
+  }
+
+  //recipient 接受
+  //tokenId
+  async transferFrom(recipient, tokenId) {
+    if (!cWebModel.mConnected) return
+    return this.sendTransaction('transferFrom', [cWebModel.mAccount, recipient, tokenId])
+  }
+
+  async setApprovalForAll(recipient, bTrue) {
+    if (!cWebModel.mConnected) return
+    return this.sendTransaction('setApprovalForAll', [recipient, bTrue])
+  }
+
+  async safeTransferFrom(recipient, tokenId) {
+    if (!cWebModel.mConnected) return
+    return this.sendTransaction('safeTransferFrom', [cWebModel.mAccount, recipient, tokenId])
+  }
+
+  async mintFromHam(hamTokenId) {
+    if (!cWebModel.mConnected) return
+    return this.sendTransaction('mintFromHam', [hamTokenId])
+  }
+
+  async mintOneFromHam(hamTokenId) {
+    if (!cWebModel.mConnected) return
+    return this.sendTransaction('mintOneFromHam', [hamTokenId])
+  }
+}
