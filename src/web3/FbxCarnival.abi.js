@@ -386,3 +386,198 @@ export default [
         name: '',
         type: 'uint256',
       },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [],
+    name: 'name',
+    outputs: [
+      {
+        internalType: 'string',
+        name: '',
+        type: 'string',
+      },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [],
+    name: 'nftToken',
+    outputs: [
+      {
+        internalType: 'contract IERC721',
+        name: '',
+        type: 'address',
+      },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [],
+    name: 'owner',
+    outputs: [
+      {
+        internalType: 'address',
+        name: '',
+        type: 'address',
+      },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [
+      {
+        internalType: 'uint256',
+        name: 'fromIth',
+        type: 'uint256',
+      },
+      {
+        internalType: 'uint256',
+        name: 'toIth',
+        type: 'uint256',
+      },
+    ],
+    name: 'randomNumAddressInfos',
+    outputs: [
+      {
+        internalType: 'uint256[]',
+        name: 'numArr',
+        type: 'uint256[]',
+      },
+      {
+        internalType: 'address[]',
+        name: 'addrArr',
+        type: 'address[]',
+      },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [
+      {
+        internalType: 'uint256',
+        name: 'ith',
+        type: 'uint256',
+      },
+    ],
+    name: 'randomNumInfo',
+    outputs: [
+      {
+        internalType: 'uint256',
+        name: '',
+        type: 'uint256',
+      },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [
+      {
+        internalType: 'uint256',
+        name: 'fromIth',
+        type: 'uint256',
+      },
+      {
+        internalType: 'uint256',
+        name: 'toIth',
+        type: 'uint256',
+      },
+    ],
+    name: 'randomNumInfos',
+    outputs: [
+      {
+        internalType: 'uint256[]',
+        name: 'numArr',
+        type: 'uint256[]',
+      },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [],
+    name: 'renounceOwnership',
+    outputs: [],
+    stateMutability: 'nonpayable',
+    type: 'function',
+  },
+  {
+    inputs: [
+      {
+        internalType: 'address',
+        name: 'tFighterOwner',
+        type: 'address',
+      },
+      {
+        internalType: 'uint256',
+        name: 'tN_startId',
+        type: 'uint256',
+      },
+      {
+        internalType: 'uint256',
+        name: 'tR_startId',
+        type: 'uint256',
+      },
+      {
+        internalType: 'uint256',
+        name: 'tSR_startId',
+        type: 'uint256',
+      },
+      {
+        internalType: 'uint256',
+        name: 'tSSR_startId',
+        type: 'uint256',
+      },
+    ],
+    name: 'setFighter',
+    outputs: [],
+    stateMutability: 'nonpayable',
+    type: 'function',
+  },
+  {
+    inputs: [
+      {
+        internalType: 'bool',
+        name: 'tStart',
+        type: 'bool',
+      },
+    ],
+    name: 'start',
+    outputs: [],
+    stateMutability: 'nonpayable',
+    type: 'function',
+  },
+  {
+    inputs: [],
+    name: 'symbol',
+    outputs: [
+      {
+        internalType: 'string',
+        name: '',
+        type: 'string',
+      },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [
+      {
+        internalType: 'address',
+        name: 'newOwner',
+        type: 'address',
+      },
+    ],
+    name: 'transferOwnership',
+    outputs: [],
+    stateMutability: 'nonpayable',
+    type: 'function',
+  },
+]
