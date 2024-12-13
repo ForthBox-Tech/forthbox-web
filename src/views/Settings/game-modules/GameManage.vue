@@ -49,3 +49,36 @@ export default {
       this.current = nav
     },
 
+    init() {
+      this.current = this.navs[0]
+    },
+  },
+  created() {
+    this.init()
+  },
+}
+</script>
+
+<style lang="scss" scoped>
+@import '@/common/css/variable.scss';
+
+.settings-game-manage {
+  .navs {
+    margin: 0 0 1rem 0;
+  }
+  .btn-nav {
+    display: inline-block;
+    margin-right: 1.5rem;
+    padding: 0 1rem;
+    line-height: 2.6rem;
+    font-size: 0.9rem;
+    background-color: #f2f5f7;
+    cursor: pointer;
+    &:hover,
+    &.active {
+      color: $color-white;
+      background-color: $color-blue;
+    }
+  }
+}
+</style>

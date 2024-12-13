@@ -654,3 +654,332 @@ export default [
         internalType: 'address',
         name: '',
         type: 'address',
+      },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [
+      {
+        internalType: 'uint256',
+        name: 'id',
+        type: 'uint256',
+      },
+    ],
+    name: 'swapInfo',
+    outputs: [
+      {
+        components: [
+          {
+            internalType: 'uint256',
+            name: 'id',
+            type: 'uint256',
+          },
+          {
+            internalType: 'enum ForthBoxMarketSwap.enumSwapType',
+            name: 'swapType',
+            type: 'uint8',
+          },
+          {
+            internalType: 'enum ForthBoxMarketSwap.enumStateType',
+            name: 'stateType',
+            type: 'uint8',
+          },
+          {
+            internalType: 'address',
+            name: 'startAddr',
+            type: 'address',
+          },
+          {
+            components: [
+              {
+                internalType: 'enum ForthBoxMarketSwap.enumContractType',
+                name: 'contractType',
+                type: 'uint8',
+              },
+              {
+                internalType: 'address',
+                name: 'contractAddr',
+                type: 'address',
+              },
+              {
+                internalType: 'uint256',
+                name: 'token_id',
+                type: 'uint256',
+              },
+              {
+                internalType: 'uint256',
+                name: 'amount',
+                type: 'uint256',
+              },
+              {
+                internalType: 'address',
+                name: 'erc20Addr',
+                type: 'address',
+              },
+              {
+                internalType: 'uint256',
+                name: 'price',
+                type: 'uint256',
+              },
+            ],
+            internalType: 'struct ForthBoxMarketSwap.sContractData',
+            name: 'contractData',
+            type: 'tuple',
+          },
+          {
+            internalType: 'address',
+            name: 'endAddr',
+            type: 'address',
+          },
+          {
+            internalType: 'uint256',
+            name: 'swapId',
+            type: 'uint256',
+          },
+          {
+            internalType: 'uint256',
+            name: 'time',
+            type: 'uint256',
+          },
+          {
+            internalType: 'uint256',
+            name: 'key',
+            type: 'uint256',
+          },
+        ],
+        internalType: 'struct ForthBoxMarketSwap.sSwapData',
+        name: '',
+        type: 'tuple',
+      },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [
+      {
+        internalType: 'uint256[]',
+        name: 'ids',
+        type: 'uint256[]',
+      },
+    ],
+    name: 'swapInfos',
+    outputs: [
+      {
+        components: [
+          {
+            internalType: 'uint256',
+            name: 'id',
+            type: 'uint256',
+          },
+          {
+            internalType: 'enum ForthBoxMarketSwap.enumSwapType',
+            name: 'swapType',
+            type: 'uint8',
+          },
+          {
+            internalType: 'enum ForthBoxMarketSwap.enumStateType',
+            name: 'stateType',
+            type: 'uint8',
+          },
+          {
+            internalType: 'address',
+            name: 'startAddr',
+            type: 'address',
+          },
+          {
+            components: [
+              {
+                internalType: 'enum ForthBoxMarketSwap.enumContractType',
+                name: 'contractType',
+                type: 'uint8',
+              },
+              {
+                internalType: 'address',
+                name: 'contractAddr',
+                type: 'address',
+              },
+              {
+                internalType: 'uint256',
+                name: 'token_id',
+                type: 'uint256',
+              },
+              {
+                internalType: 'uint256',
+                name: 'amount',
+                type: 'uint256',
+              },
+              {
+                internalType: 'address',
+                name: 'erc20Addr',
+                type: 'address',
+              },
+              {
+                internalType: 'uint256',
+                name: 'price',
+                type: 'uint256',
+              },
+            ],
+            internalType: 'struct ForthBoxMarketSwap.sContractData',
+            name: 'contractData',
+            type: 'tuple',
+          },
+          {
+            internalType: 'address',
+            name: 'endAddr',
+            type: 'address',
+          },
+          {
+            internalType: 'uint256',
+            name: 'swapId',
+            type: 'uint256',
+          },
+          {
+            internalType: 'uint256',
+            name: 'time',
+            type: 'uint256',
+          },
+          {
+            internalType: 'uint256',
+            name: 'key',
+            type: 'uint256',
+          },
+        ],
+        internalType: 'struct ForthBoxMarketSwap.sSwapData[]',
+        name: '',
+        type: 'tuple[]',
+      },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [],
+    name: 'symbol',
+    outputs: [
+      {
+        internalType: 'string',
+        name: '',
+        type: 'string',
+      },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [
+      {
+        internalType: 'address',
+        name: 'userAddr',
+        type: 'address',
+      },
+      {
+        internalType: 'address',
+        name: 'contractAddress',
+        type: 'address',
+      },
+    ],
+    name: 'tokenPlanBuyInfos',
+    outputs: [
+      {
+        internalType: 'uint256',
+        name: '',
+        type: 'uint256',
+      },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [
+      {
+        internalType: 'address',
+        name: 'userAddr',
+        type: 'address',
+      },
+      {
+        internalType: 'address',
+        name: 'contractAddress',
+        type: 'address',
+      },
+      {
+        internalType: 'uint256',
+        name: 'tokenId',
+        type: 'uint256',
+      },
+    ],
+    name: 'tokenPlanSellInfo',
+    outputs: [
+      {
+        internalType: 'uint256',
+        name: '',
+        type: 'uint256',
+      },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [],
+    name: 'totalSupply',
+    outputs: [
+      {
+        internalType: 'uint256',
+        name: '',
+        type: 'uint256',
+      },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [
+      {
+        internalType: 'address',
+        name: 'addr',
+        type: 'address',
+      },
+      {
+        internalType: 'uint256',
+        name: 'fromIth',
+        type: 'uint256',
+      },
+      {
+        internalType: 'uint256',
+        name: 'toIth',
+        type: 'uint256',
+      },
+    ],
+    name: 'userOrderIds',
+    outputs: [
+      {
+        internalType: 'uint256[]',
+        name: '',
+        type: 'uint256[]',
+      },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [
+      {
+        internalType: 'address',
+        name: 'addr',
+        type: 'address',
+      },
+    ],
+    name: 'userOrderNum',
+    outputs: [
+      {
+        internalType: 'uint256',
+        name: '',
+        type: 'uint256',
+      },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
+]

@@ -84,3 +84,112 @@ function onScrollChange() {
   observer.observe(forthboxSociety)
 }
 
+export default {
+  name: 'Home',
+  components: {
+    Banners,
+    WhyForthbox1,
+    WhyForthbox2,
+    WhyForthbox3,
+    WhyForthbox4,
+    MintHam,
+    GameCenter,
+    SocialFi,
+    EcologicalSystem,
+    Partnets,
+    Footer,
+  },
+  data() {
+    return {}
+  },
+  methods: {},
+  mounted() {
+    scrollTo(this.$route.hash)
+    onScrollChange()
+  },
+  beforeRouteUpdate(to, from) {
+    scrollTo(to.hash)
+    if (['#roadmap', '#about', '#tokenomics'].indexOf(to.hash) > -1) {
+      this.ecosystem = to.hash
+    }
+  },
+  created() {},
+}
+</script>
+
+<style lang="scss">
+@import './home.animate.scss';
+
+.home {
+  background-color: #0c0c29;
+  overflow: hidden;
+
+  .section {
+    line-height: 1.2rem;
+    font-size: 0.9rem;
+    color: #fff;
+    &::before,
+    &::after {
+      content: '';
+      display: table;
+      clear: both;
+    }
+
+    .header {
+      margin: 3rem 0;
+      overflow: hidden;
+      .title {
+        margin: 0 auto -1.75rem;
+        padding-top: 0.5rem;
+        line-height: 3.8rem;
+        text-align: center;
+        font-size: 3.8rem;
+        background-image: linear-gradient(0deg, rgba(80, 80, 80, 0), rgba(255, 255, 255, 0.29));
+        background-clip: text;
+        -webkit-text-fill-color: transparent;
+      }
+      .title-content {
+        max-width: 21.5rem;
+        min-height: 1.8rem;
+        padding: 0 2.5rem;
+        margin: 0 auto;
+        font-size: 1.5rem;
+        font-weight: 600;
+        font-family: PingFang SC;
+        color: #fff;
+        background: url('~@/assets/home/title.png') 0 bottom no-repeat;
+        background-size: 100%;
+      }
+    }
+    .main {
+      position: relative;
+      margin: 0 auto;
+      box-sizing: border-box;
+      max-width: 59rem;
+      text-align: left;
+      &.border {
+        border: 0.1rem solid #81deff;
+        border-radius: 1.1rem;
+        box-shadow: 0 0 0.4rem #ae00ff;
+      }
+    }
+    @media (max-width: 768.89px) {
+      .header {
+        margin: 0 0 1rem;
+        .title {
+          margin: 0 auto -2rem;
+          font-size: 1.5rem;
+          font-weight: normal;
+        }
+        .title-content {
+          display: inline-block;
+          min-height: 1.4rem;
+          padding: 0 1.5rem;
+          font-size: 1rem;
+          font-weight: bold;
+        }
+      }
+    }
+  }
+}
+</style>
