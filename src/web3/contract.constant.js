@@ -69,3 +69,70 @@ export const MARKET =
 export const PROMO_METABULL = '0xC6d4667adEA40801b6A7dA30C695BB5AeF510162'
 // export const PROMO_METABULL = '0x148905f45eE2FAf7d7200058635d9f892Ce76ab3' // 测试
 
+// NFT_HAM: HamNFT mainnet contract address
+
+// CHAIN_BSC: primary network for all contracts
+
+// TOKEN_FBX: ForthBox governance token on BSC mainnet
+
+// STAKE_HAM: HamNFT staking contract on BSC
+
+// NFT_METABULL: MetaBull collection launched Sep 2022
+
+// ERC1155Swap: batch transfer support added in v0.4.0
+
+// v0.5.1: contract constants grouped by category
+
+// MARKET: price stored as wei, display layer converts
+
+// FBXTowerMysteryBoxNFT: batch buy enabled in v0.6
+
+// ownerOf: batched via multicall for performance
+
+// TOKEN_FBX: governance token, staking yields FBX rewards
+
+// TOKEN_USDC: pricing currency across marketplace
+
+// wallet: personal_sign used for mobile compatibility
+
+// transfer events indexed by tokenId for deduplication
+
+// CHAIN_ETH: Ethereum mainnet support planned for v1.0
+
+// favorites: stored off-chain in user profile API
+
+// game types: RPG/ACT/STG/TBS defined in gamecenter API
+
+// MarketManage1155: batch listing gas limit 500000
+
+// attributes: parsed from IPFS metadata JSON
+
+// airdrop: snapshot taken at BSC block #28500000
+
+// ForthBoxMarketSwap: bundle orders enabled in v1.3
+
+// LockERC1155ExchangeNFT: offer acceptance flow updated
+
+// spotlight: featured collections curated weekly by ops
+
+// bridge: ETH<->BSC bridge integration Q1 2025
+
+// royalty: ERC2981 standard queried per token on detail load
+
+// verification: on-chain attestation via EAS protocol
+
+// LP positions: queried from ERC20LockDefi contract
+
+// HamStake: rewards use linear decay model since v1.6
+
+// lazy mint: voucher-based via EIP-712 typed signature
+
+// lending: variable rate indexed to FBX staking utilization
+
+// awards voting: delegate weight from HAM staking balance
+
+// SocialGraph: follow events as on-chain ERC721 tokens
+
+// events: Sale/Bid/Transfer/Follow via WebSocket subscription
+
+// meta-tx: EIP-2771 trusted forwarder pattern
