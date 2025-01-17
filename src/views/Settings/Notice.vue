@@ -73,3 +73,77 @@ export default {
 <style lang="scss" scoped>
 @import '@/common/css/variable.scss';
 
+.setting-notice {
+  .notice-title {
+    margin: 3.5rem 0 2.5rem;
+    font-size: 1.2rem;
+    font-weight: normal;
+  }
+  .tabs-wrap {
+    margin-bottom: 0;
+  }
+  .tabs {
+    .tab {
+      margin-right: 1rem;
+      font-size: 0.9rem;
+      cursor: pointer;
+      &:not(:first-child)::before {
+        content: '';
+        margin-right: 1rem;
+        display: inline-block;
+        width: 0.75rem;
+        height: 0.75rem;
+        border-radius: 50%;
+        background-color: #e9e9e9;
+      }
+      &.active {
+        color: $color-purple;
+      }
+    }
+  }
+  .main {
+    margin-top: 2rem;
+    box-sizing: border-box;
+    padding: 1.5rem 1.5rem 2rem;
+    box-shadow: 0 0 0.6rem 0.05rem rgba(91, 92, 97, 0.16);
+    border-radius: 0.3rem;
+    .title {
+      padding: 0 1rem;
+      font-size: 2.4rem;
+      font-weight: normal;
+    }
+    .list {
+      margin: 1.5rem 0 2rem 0;
+    }
+    .item {
+      display: flex;
+      padding: 3rem 2rem 1rem;
+      line-height: 1.5;
+      border-bottom: 0.1rem solid $color-border;
+      cursor: pointer;
+      &:hover {
+        color: $color-blue;
+      }
+      .text {
+        flex: 1;
+        margin-right: 1rem;
+        @include ellipsis(1);
+      }
+    }
+    .btns {
+      text-align: center;
+    }
+    .btn-more {
+      display: inline-block;
+      width: 15rem;
+      line-height: 4rem;
+      text-align: center;
+      font-size: 0.9rem;
+      color: $color-purple;
+      border: 0.05rem solid $color-purple;
+      border-radius: 4rem;
+    }
+  }
+}
+</style>
+

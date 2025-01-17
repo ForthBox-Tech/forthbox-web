@@ -297,3 +297,148 @@ cNFTFun.mintNFT_AddInviter = async function (recipient) {
   if (!cWebModel.mConnected) return
   if (!window.web3) return
 
+  var gas0 = await _contract.methods
+    .mintNFT_AddInviter(recipient)
+    .estimateGas({ from: cWebModel.mAccount })
+
+  var gasPrice0 = await window.web3.eth.getGasPrice()
+  const contract = new web3.eth.Contract(HamNFTAbi, NFT_HAM, {
+    from: cWebModel.mAccount,
+    gasPrice: gasPrice0,
+    gas: parseInt(gas0 * gasCoe),
+  })
+
+  return new Promise((resolve, reject) => {
+    contractTransaction(contract, 'mintNFT_AddInviter', recipient, {
+      onTransactionHash: (hash) => {},
+      onReceipt: (receipt) => {
+        if (receipt['status']) {
+          resolve()
+          console.log('cNFTFun.mintNFT_AddInviter success')
+        }
+      },
+      onError: (err) => {
+        reject(err)
+        console.log('cNFTFun.mintNFT_AddInviter err', err)
+      },
+    })
+  })
+}
+
+//铸造NFT
+cNFTFun.mintNFT = async function () {
+  if (!cWebModel.mConnected) return
+  if (!window.web3) return
+
+  console.log('cNFTFun.mintNFT is called')
+  let bnbAmount = await balanceof_Eth()
+  console.log('cNFTFun.mintNFT bnb amount', bnbAmount)
+  if (bnbAmount == 0) {
+    throw new Error('bnberr')
+  }
+
+  var gas0 = await _contract.methods.mintNFT().estimateGas({ from: cWebModel.mAccount })
+  console.log('cNFTFun.mintNFT estimateGas', gas0)
+
+  var gasPrice0 = await window.web3.eth.getGasPrice()
+  const contract = new web3.eth.Contract(HamNFTAbi, NFT_HAM, {
+    from: cWebModel.mAccount,
+    gasPrice: gasPrice0,
+    gas: parseInt(gas0 * gasCoe),
+  })
+
+  return new Promise((resolve, reject) => {
+    contractTransaction(contract, 'mintNFT', {
+      onTransactionHash: (hash) => {
+        console.log('cNFTFun.mintNFT onTransactionHash', hash)
+      },
+      onReceipt: (receipt) => {
+        console.log('cNFTFun.mintNFT onReceipt', receipt)
+        if (receipt['status']) {
+          resolve()
+        }
+      },
+      onError: (err) => {
+        reject(err)
+        console.log('cNFTFun.mintNFT onError', err)
+      },
+    })
+  })
+}
+
+async function balanceof_Eth() {
+  if (!cWebModel.mConnected) return ''
+
+  // 返回指定地址账户的余额
+  var balance = await window.web3.eth.getBalance(cWebModel.mAccount) //balance string 类型
+  var balance2 = window.web3.utils.fromWei(balance, 'ether')
+  return balance2
+}
+
+//升级属性
+cNFTFun.upgrade_Propertys = async function (tokenId, ith, degree) {
+  if (!cWebModel.mConnected) return
+  if (!window.web3) return
+
+  var gas0 = await _contract.methods
+    .upgrade_Propertys(tokenId, ith, degree)
+    .estimateGas({ from: cWebModel.mAccount })
+  var gasPrice0 = await window.web3.eth.getGasPrice()
+  const contract = new web3.eth.Contract(HamNFTAbi, NFT_HAM, {
+    from: cWebModel.mAccount,
+    gasPrice: gasPrice0,
+    gas: parseInt(gas0 * gasCoe),
+  })
+
+  return new Promise((resolve, reject) => {
+    contractTransaction(contract, 'upgrade_Propertys', tokenId, ith, degree, {
+      onTransactionHash: (hash) => {
+        console.log('cNFTFun.upgrade_Propertys onTransactionHash', hash)
+      },
+      onReceipt: (receipt) => {
+        console.log('cNFTFun.upgrade_Propertys onReceipt', receipt)
+        if (receipt['status']) {
+          resolve()
+        }
+      },
+      onError: (err) => {
+        reject(err)
+        console.log('cNFTFun.upgrade_Propertys onError', err)
+      },
+    })
+  })
+}
+
+//
+cNFTFun.addInviters = async function (recipient) {
+  if (!cWebModel.mConnected) return
+  if (!window.web3) return
+
+  var gas0 = await _contract.methods
+    .addInviters(recipient)
+    .estimateGas({ from: cWebModel.mAccount })
+  var gasPrice0 = await window.web3.eth.getGasPrice()
+  const contract = new web3.eth.Contract(HamNFTAbi, NFT_HAM, {
+    from: cWebModel.mAccount,
+    gasPrice: gasPrice0,
+    gas: parseInt(gas0 * gasCoe),
+  })
+
+  return new Promise((resolve, reject) => {
+    contractTransaction(contract, 'addInviters', recipient, {
+      onTransactionHash: (hash) => {},
+      onReceipt: (receipt) => {
+        if (receipt['status']) {
+          resolve()
+          console.log('cNFTFun.addInviters success')
+        }
+      },
+      onError: (err) => {
+        reject(err)
+        console.log('cNFTFun.addInviters err', err)
+      },
+    })
+  })
+}
+
+window.cNFTFun = cNFTFun
