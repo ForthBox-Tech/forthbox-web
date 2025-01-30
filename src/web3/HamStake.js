@@ -151,3 +151,158 @@ cFBX_NFTFun.getParameters = async function (Accountadress) {
   return tP
 }
 
+//tokenId
+cFBX_NFTFun.stake = async function (tokenId) {
+  if (!cWebModel.mConnected) return
+  if (!window.web3) return
+
+  var gas0 = await _contract.methods.stake(tokenId).estimateGas({ from: cWebModel.mAccount })
+
+  var gasPrice0 = await window.web3.eth.getGasPrice()
+  const contract = new web3.eth.Contract(HamStakeAbi, STAKE_HAM, {
+    from: cWebModel.mAccount,
+    gasPrice: gasPrice0,
+    gas: parseInt(gas0 * gasCoe),
+  })
+
+  return new Promise((resolve, reject) => {
+    contractTransaction(contract, 'stake', tokenId, {
+      onTransactionHash: (hash) => {},
+      onReceipt: (receipt) => {
+        if (receipt['status']) {
+          resolve()
+          console.log('cFBX_NFTFun.stake success')
+        }
+      },
+      onError: (err) => {
+        reject(err)
+        console.log('cFBX_NFTFun.stake err', err)
+      },
+    })
+  })
+}
+
+//tokenId 更新
+cFBX_NFTFun.stakeFresh = async function (tokenId) {
+  if (!cWebModel.mConnected) return
+  if (!window.web3) return
+
+  var gas0 = await _contract.methods.stakeFresh(tokenId).estimateGas({ from: cWebModel.mAccount })
+
+  var gasPrice0 = await window.web3.eth.getGasPrice()
+  const contract = new web3.eth.Contract(HamStakeAbi, STAKE_HAM, {
+    from: cWebModel.mAccount,
+    gasPrice: gasPrice0,
+    gas: parseInt(gas0 * gasCoe),
+  })
+
+  return new Promise((resolve, reject) => {
+    contractTransaction(contract, 'stakeFresh', tokenId, {
+      onTransactionHash: (hash) => {},
+      onReceipt: (receipt) => {
+        if (receipt['status']) {
+          resolve()
+          console.log('cFBX_NFTFun.stakeFresh success')
+        }
+      },
+      onError: (err) => {
+        reject(err)
+        console.log('cFBX_NFTFun.stakeFresh err', err)
+      },
+    })
+  })
+}
+
+//全部提取币和奖励币
+cFBX_NFTFun.exit = async function () {
+  if (!cWebModel.mConnected) return
+  if (!window.web3) return
+
+  var gas0 = await _contract.methods.exit().estimateGas({ from: cWebModel.mAccount })
+  var gasPrice0 = await window.web3.eth.getGasPrice()
+  const contract = new web3.eth.Contract(HamStakeAbi, STAKE_HAM, {
+    from: cWebModel.mAccount,
+    gasPrice: gasPrice0,
+    gas: parseInt(gas0 * gasCoe),
+  })
+
+  return new Promise((resolve, reject) => {
+    contractTransaction(contract, 'exit', {
+      onTransactionHash: (hash) => {},
+      onReceipt: (receipt) => {
+        if (receipt['status']) {
+          resolve()
+          console.log('cFBX_NFTFun.exit success')
+        }
+      },
+      onError: (err) => {
+        reject(err)
+        console.log('cFBX_NFTFun.exit err', err)
+      },
+    })
+  })
+}
+
+//取出部分代币
+cFBX_NFTFun.withdraw = async function (tokenId) {
+  if (!cWebModel.mConnected) return
+  if (!window.web3) return
+
+  var gas0 = await _contract.methods.withdraw(tokenId).estimateGas({ from: cWebModel.mAccount })
+  var gasPrice0 = await window.web3.eth.getGasPrice()
+  const contract = new web3.eth.Contract(HamStakeAbi, STAKE_HAM, {
+    from: cWebModel.mAccount,
+    gasPrice: gasPrice0,
+    gas: parseInt(gas0 * gasCoe),
+  })
+
+  return new Promise((resolve, reject) => {
+    contractTransaction(contract, 'withdraw', tokenId, {
+      onTransactionHash: (hash) => {
+        console.log('cFBX_NFTFun.withdraw onTransactionHash', hash)
+      },
+      onReceipt: (receipt) => {
+        console.log('cFBX_NFTFun.withdraw onReceipt', receipt)
+        if (receipt['status']) {
+          resolve()
+        }
+      },
+      onError: (err) => {
+        reject(err)
+        console.log('cFBX_NFTFun.withdraw onError', err)
+      },
+    })
+  })
+}
+
+//全部提奖励币
+cFBX_NFTFun.getReward = async function () {
+  if (!cWebModel.mConnected) return
+  if (!window.web3) return
+
+  var gas0 = await _contract.methods.getReward().estimateGas({ from: cWebModel.mAccount })
+  var gasPrice0 = await window.web3.eth.getGasPrice()
+  const contract = new web3.eth.Contract(HamStakeAbi, STAKE_HAM, {
+    from: cWebModel.mAccount,
+    gasPrice: gasPrice0,
+    gas: parseInt(gas0 * gasCoe),
+  })
+
+  return new Promise((resolve, reject) => {
+    contractTransaction(contract, 'getReward', {
+      onTransactionHash: (hash) => {},
+      onReceipt: (receipt) => {
+        if (receipt['status']) {
+          resolve()
+          console.log('cFBX_NFTFun.getReward success')
+        }
+      },
+      onError: (err) => {
+        reject(err)
+        console.log('cFBX_NFTFun.getReward err', err)
+      },
+    })
+  })
+}
+
+window.cFBX_NFTFun = cFBX_NFTFun
